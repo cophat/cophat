@@ -1,0 +1,346 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.register.fragment.RegisterFragment">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.matheus.cophat.data.presenter.RegisterSchoolPresenter" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/tvTitleSchool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/id_form"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvSubtitleSchool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:gravity="center"
+                android:text="@{presenter.subtitle}"
+                android:textSize="@dimen/large_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleSchool"
+                tools:text="@string/finalize_register" />
+
+            <TextView
+                android:id="@+id/tvSchoolingSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:text="@string/schooling"
+                android:textSize="@dimen/title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSubtitleSchool" />
+
+            <RadioGroup
+                android:id="@+id/rgSchoolingSchool1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toStartOf="@+id/rgSchoolingSchool2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolingSchool">
+
+                <RadioButton
+                    android:id="@+id/rbPreSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/pre" />
+
+                <RadioButton
+                    android:id="@+id/rbFirstSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/first_year" />
+
+                <RadioButton
+                    android:id="@+id/rbSecondSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/second_year" />
+
+                <RadioButton
+                    android:id="@+id/rbThirdSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/third_year" />
+
+                <RadioButton
+                    android:id="@+id/rbFourthSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fourth_year" />
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/rgSchoolingSchool2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/rgSchoolingSchool1"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolingSchool">
+
+                <RadioButton
+                    android:id="@+id/rbFifthSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fifth_year" />
+
+                <RadioButton
+                    android:id="@+id/rbSixthSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sixth_year" />
+
+                <RadioButton
+                    android:id="@+id/rbSeventhSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seventh_year" />
+
+                <RadioButton
+                    android:id="@+id/rbEighthSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/eighth_year" />
+
+                <RadioButton
+                    android:id="@+id/rbNinthSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ninth_year" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tvOutSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:text="@string/school_internal"
+                android:textSize="@dimen/title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgSchoolingSchool2" />
+
+            <RadioGroup
+                android:id="@+id/rgOutSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvOutSchool">
+
+                <RadioButton
+                    android:id="@+id/rbOutYesSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={presenter.outYes}"
+                    tools:checked="true"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/rbOutNoSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={presenter.outNo}"
+                    android:text="@string/no" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tvResidentSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:text="@string/resident_here"
+                android:textSize="@dimen/title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgOutSchool" />
+
+            <RadioGroup
+                android:id="@+id/rgResidentSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvResidentSchool">
+
+                <RadioButton
+                    android:id="@+id/rbResidentYesSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={presenter.residentYes}"
+                    tools:checked="true"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/rbResidentNoSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={presenter.residentNo}"
+                    android:text="@string/no" />
+
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilAddressSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:hint="@string/address_city_state"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgResidentSchool">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/AppTheme.EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:text="@={presenter.address}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilIncomeSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:hint="@string/income_family"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilAddressSchool">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etIncomeSchool"
+                    style="@style/AppTheme.EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="12"
+                    android:inputType="number"
+                    android:text="@={presenter.income}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvEducationSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:text="@string/education_degree_chief"
+                android:textSize="@dimen/title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilIncomeSchool" />
+
+            <RadioGroup
+                android:id="@+id/rgEducationSchool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvEducationSchool">
+
+                <RadioButton
+                    android:id="@+id/rbIlliterateSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/illiterate" />
+
+                <RadioButton
+                    android:id="@+id/rbFundamental1School"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complete_fundamental_1" />
+
+                <RadioButton
+                    android:id="@+id/rbFundamental2School"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complete_fundamental_2" />
+
+                <RadioButton
+                    android:id="@+id/rbMediumSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complete_medium" />
+
+                <RadioButton
+                    android:id="@+id/rbGraduatedSchool"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/graduated" />
+
+            </RadioGroup>
+
+            <com.matheus.cophat.ui.base.view.BottomButtonsView
+                android:id="@+id/bbvSchool"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottom_button_height"
+                app:bbv_primary_enabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgEducationSchool" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

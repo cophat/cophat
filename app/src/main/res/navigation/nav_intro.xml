@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_intro"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.matheus.cophat.feature.intro.fragment.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_beginFragment"
+            app:destination="@id/beginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_intro"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/beginFragment"
+        android:name="com.matheus.cophat.feature.intro.fragment.BeginFragment"
+        android:label="BeginFragment"
+        tools:layout="@layout/fragment_begin">
+        <action
+            android:id="@+id/action_beginFragment_to_nav_configure"
+            app:destination="@id/nav_configure"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_beginFragment_to_nav_generate"
+            app:destination="@id/nav_generate"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_beginFragment_to_registerActivity"
+            app:destination="@id/registerActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_beginFragment_to_nav_questions"
+            app:destination="@id/nav_questions"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_beginFragment_to_questionnairesActivity"
+            app:destination="@id/questionnairesActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_beginFragment_to_excludeApplicationDialog"
+            app:destination="@id/excludeApplicationDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <include app:graph="@navigation/nav_configure" />
+    <include app:graph="@navigation/nav_generate" />
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.matheus.cophat.feature.register.activity.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register">
+        <argument
+            android:name="step"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </activity>
+    <include app:graph="@navigation/nav_questions" />
+    <activity
+        android:id="@+id/questionnairesActivity"
+        android:name="com.matheus.cophat.feature.questionnaires.activity.QuestionnairesActivity"
+        android:label="activity_questionnaires"
+        tools:layout="@layout/activity_questionnaires" />
+    <dialog
+        android:id="@+id/excludeApplicationDialog"
+        android:name="com.matheus.cophat.feature.intro.fragment.ExcludeApplicationDialog"
+        android:label="dialog_exclude_application"
+        tools:layout="@layout/dialog_exclude_application" >
+        <action
+            android:id="@+id/action_excludeApplicationDialog_to_beginFragment"
+            app:destination="@id/beginFragment"
+            app:popUpTo="@+id/nav_intro"
+            app:popUpToInclusive="true" />
+    </dialog>
+</navigation>

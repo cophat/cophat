@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BottomButtonsView">
+        <attr name="bbv_primary_enabled" format="boolean" />
+        <attr name="bbv_primary_name" format="string" />
+        <attr name="bbv_secondary_name" format="string" />
+        <attr name="bbv_is_small" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.base.view.ThermometerView">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivThermometer"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:contentDescription="@string/thermometer"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_thermometer1"
+            app:layout_constraintBottom_toBottomOf="@+id/rgThermometer"
+            app:layout_constraintEnd_toStartOf="@+id/rgThermometer"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rgThermometer" />
+
+
+
+        <RadioGroup
+            android:id="@+id/rgThermometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/big_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivThermometer"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/rbAlways"
+                style="@style/AppTheme.RadioButtonLargeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/always" />
+
+            <RadioButton
+                android:id="@+id/rbOften"
+                style="@style/AppTheme.RadioButtonLargeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/often" />
+
+            <RadioButton
+                android:id="@+id/rbSometimes"
+                style="@style/AppTheme.RadioButtonLargeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sometimes" />
+
+            <RadioButton
+                android:id="@+id/rbAlmostNever"
+                style="@style/AppTheme.RadioButtonLargeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/almost_never" />
+
+            <RadioButton
+                android:id="@+id/rbNever"
+                style="@style/AppTheme.RadioButtonLargeTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/never" />
+
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

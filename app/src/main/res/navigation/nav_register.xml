@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_register"
+    app:startDestination="@id/registerParentsFragment">
+
+    <fragment
+        android:id="@+id/registerParentsFragment"
+        android:name="com.matheus.cophat.feature.register.fragment.RegisterParentsFragment"
+        android:label="RegisterParentsFragment"
+        tools:layout="@layout/fragment_register_parents">
+        <action
+            android:id="@+id/action_registerParentsFragment_to_registerPatientFragment"
+            app:destination="@id/registerPatientFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_register"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPatientFragment"
+        android:name="com.matheus.cophat.feature.register.fragment.RegisterPatientFragment"
+        android:label="RegisterPatientFragment"
+        tools:layout="@layout/fragment_register_patient">
+        <action
+            android:id="@+id/action_registerPatientFragment_to_registerInternalFragment"
+            app:destination="@id/registerInternalFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_register"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerInternalFragment"
+        android:name="com.matheus.cophat.feature.register.fragment.RegisterInternalFragment"
+        android:label="RegisterInternalFragment"
+        tools:layout="@layout/fragment_register_internal">
+        <action
+            android:id="@+id/action_registerInternalFragment_to_registerSchoolFragment"
+            app:destination="@id/registerSchoolFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_register"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerSchoolFragment"
+        android:name="com.matheus.cophat.feature.register.fragment.RegisterSchoolFragment"
+        android:label="RegisterSchoolFragment"
+        tools:layout="@layout/fragment_register_school" >
+        <action
+            android:id="@+id/action_registerSchoolFragment_to_nav_questions"
+            app:destination="@id/nav_questions"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_register"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <include app:graph="@navigation/nav_questions" />
+</navigation>

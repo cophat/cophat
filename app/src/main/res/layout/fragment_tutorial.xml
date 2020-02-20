@@ -1,0 +1,209 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.generate.fragment.TutorialFragment">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/tvIntroTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/lets_learn"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitleTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_margin"
+            android:text="@string/emotions"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvIntroTutorial" />
+
+        <TextView
+            android:id="@+id/tvSubtitleTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/emotions_description"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleTutorial" />
+
+        <TextView
+            android:id="@+id/tvHappyTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:drawableTop="@drawable/ic_face_smile"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/happy"
+            app:layout_constraintEnd_toStartOf="@+id/tvSadTutorial"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitleTutorial" />
+
+        <TextView
+            android:id="@+id/tvSadTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_face_sad"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/sad"
+            app:layout_constraintEnd_toStartOf="@+id/tvScaredTutorial"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvHappyTutorial"
+            app:layout_constraintTop_toTopOf="@+id/tvHappyTutorial" />
+
+        <TextView
+            android:id="@+id/tvScaredTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_face_scared"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/scared"
+            app:layout_constraintEnd_toStartOf="@+id/tvAngryTutorial"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvSadTutorial"
+            app:layout_constraintTop_toTopOf="@+id/tvHappyTutorial" />
+
+        <TextView
+            android:id="@+id/tvAngryTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_face_angry"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/angry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvScaredTutorial"
+            app:layout_constraintTop_toTopOf="@+id/tvHappyTutorial" />
+
+        <TextView
+            android:id="@+id/tvTitleThermTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/big_margin"
+            android:text="@string/thermometer"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAngryTutorial" />
+
+        <TextView
+            android:id="@+id/tvSubtitleThermTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/thermometer_description"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleThermTutorial" />
+
+        <TextView
+            android:id="@+id/tvThermometer1Tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:drawableTop="@drawable/ic_thermometer1"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/always"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toStartOf="@+id/tvThermometer2Tutorial"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitleThermTutorial" />
+
+        <TextView
+            android:id="@+id/tvThermometer2Tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_thermometer2"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/often"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toStartOf="@+id/tvThermometer3Tutorial"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvThermometer1Tutorial"
+            app:layout_constraintTop_toTopOf="@+id/tvThermometer1Tutorial" />
+
+        <TextView
+            android:id="@+id/tvThermometer3Tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_thermometer3"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/sometimes"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvThermometer2Tutorial"
+            app:layout_constraintTop_toTopOf="@+id/tvThermometer1Tutorial" />
+
+        <TextView
+            android:id="@+id/tvThermometer4Tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:drawableTop="@drawable/ic_thermometer4"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/almost_never"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toStartOf="@+id/tvThermometer5Tutorial"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvThermometer1Tutorial" />
+
+        <TextView
+            android:id="@+id/tvThermometer5Tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_thermometer5"
+            android:drawablePadding="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/never"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvThermometer4Tutorial"
+            app:layout_constraintTop_toTopOf="@+id/tvThermometer4Tutorial" />
+
+        <com.matheus.cophat.ui.base.view.BottomButtonsView
+            android:id="@+id/bbvTutorial"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/bottom_button_height"
+            app:bbv_primary_enabled="true"
+            app:bbv_primary_name="@string/start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvThermometer5Tutorial" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.questions.adapter.SubQuestionViewHolder">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvAlternative"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_toStartOf="@+id/rgThermometerAlternative"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textAlignment="center"
+            tools:text="Falta de apetite" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAlternative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_toStartOf="@+id/rgThermometerAlternative"
+            android:hint="@string/describe"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAlternative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:enabled="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/rgThermometerAlternative"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbNeverAlternative"
+                style="@style/AppTheme.RadioButtonSmallTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/zero" />
+
+            <RadioButton
+                android:id="@+id/rbAlmostNeverAlternative"
+                style="@style/AppTheme.RadioButtonSmallTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/one" />
+
+            <RadioButton
+                android:id="@+id/rbSometimesAlternative"
+                style="@style/AppTheme.RadioButtonSmallTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/two" />
+
+            <RadioButton
+                android:id="@+id/rbOftenAlternative"
+                style="@style/AppTheme.RadioButtonSmallTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/three" />
+
+            <RadioButton
+                android:id="@+id/rbAlwaysAlternative"
+                style="@style/AppTheme.RadioButtonSmallTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/four" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+</layout>

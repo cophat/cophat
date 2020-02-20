@@ -1,0 +1,91 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.questions.fragment.QuestionsFragment">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.matheus.cophat.data.presenter.QuestionsPresenter" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCodeQuestions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding"
+                android:text="@{presenter.code}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="MRLHCU12102019" />
+
+            <TextView
+                android:id="@+id/tvStateQuestions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding"
+                android:text="@{presenter.state}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1 / 35" />
+
+            <ProgressBar
+                android:id="@+id/pbStatusQuestions"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:progress="@{presenter.progress}"
+                android:progressDrawable="@drawable/bg_progress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStateQuestions"
+                tools:progress="10" />
+
+            <TextView
+                android:id="@+id/tvStatementQuestions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/big_margin"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:layout_marginEnd="@dimen/big_margin"
+                android:gravity="center"
+                android:text="@{presenter.statement}"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pbStatusQuestions"
+                tools:text="Quando eu pergunto sobre a minha doença, as respostas ainda me deixam com dúvidas." />
+
+            <com.matheus.cophat.ui.base.view.ThermometerView
+                android:id="@+id/vQuestions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStatementQuestions" />
+
+            <com.matheus.cophat.ui.base.view.BottomButtonsView
+                android:id="@+id/bbvQuestions"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottom_button_height"
+                app:bbv_primary_enabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vQuestions" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.questionnaires.adapter.QuestionnaireViewHolder">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.matheus.cophat.data.presenter.ItemQuestionnairePresenter" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/small_margin"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="@dimen/content_padding">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvIdentifyQuestionnaire"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tiny_margin"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@{presenter.applicationId}"
+                android:textSize="@dimen/default_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="MRL27102019HCU - Matheus Ribero Lima" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineQuestionnaire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/tvChildrenQuestionnaire"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:background="?attr/selectableItemBackground"
+                android:drawablePadding="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:text="@{presenter.childrenState}"
+                android:textSize="@dimen/default_size"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineQuestionnaire"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvIdentifyQuestionnaire"
+                tools:drawableStart="@drawable/ic_boy"
+                tools:text="Completo" />
+
+            <TextView
+                android:id="@+id/tvParentsQuestionnaire"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:background="?attr/selectableItemBackground"
+                android:drawableStart="@drawable/ic_parents"
+                android:drawablePadding="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:text="@{presenter.parentsState}"
+                android:textSize="@dimen/default_size"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineQuestionnaire"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvChildrenQuestionnaire"
+                tools:text="Incompleto" />
+
+            <TextView
+                android:id="@+id/tvTimeQuestionnaire"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:drawableStart="@drawable/ic_hourglass"
+                android:drawablePadding="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:text="@{presenter.applicationsTime}"
+                android:textSize="@dimen/default_size"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineQuestionnaire"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvParentsQuestionnaire"
+                tools:text="1h15m CA\n1d+ P" />
+
+            <TextView
+                android:id="@+id/tvHospitalQuestionnaire"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:drawableStart="@drawable/ic_hospital"
+                android:drawablePadding="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:text="@{presenter.hospital}"
+                android:textSize="@dimen/default_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guidelineQuestionnaire"
+                app:layout_constraintTop_toBottomOf="@+id/tvIdentifyQuestionnaire"
+                tools:text="Hospital do Câncer de Uberlândia" />
+
+            <TextView
+                android:id="@+id/tvAdminQuestionnaire"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:drawableStart="@drawable/ic_admin"
+                android:drawablePadding="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:text="@{presenter.admin}"
+                android:textSize="@dimen/default_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guidelineQuestionnaire"
+                app:layout_constraintTop_toBottomOf="@+id/tvHospitalQuestionnaire"
+                tools:text="Jodi Dee Hunt Ferreira do Amaral" />
+
+            <TextView
+                android:id="@+id/tvExcelQuestionnaire"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="@{presenter.excelEnabled}"
+                android:drawableStart="@drawable/ic_excel"
+                android:drawablePadding="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:text="@string/export_sheet"
+                android:textSize="@dimen/default_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guidelineQuestionnaire"
+                app:layout_constraintTop_toBottomOf="@+id/tvAdminQuestionnaire" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.questions.fragment.SubQuestionDialog">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/tvTitleSubQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            tools:text="Parece que sinto:" />
+
+        <FrameLayout
+            android:id="@+id/fSubQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/big_margin"
+            android:layout_below="@+id/tvTitleSubQuestion">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSubQuestion"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_sub_question" />
+
+        </FrameLayout>
+
+        <com.matheus.cophat.ui.base.view.BottomButtonsView
+            android:id="@+id/bbvSubQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_button_height"
+            app:bbv_primary_enabled="true"
+            app:bbv_primary_name="@string/save"
+            app:bbv_secondary_name="@string/cancel"
+            android:layout_below="@+id/fSubQuestion"/>
+
+    </RelativeLayout>
+
+</layout>

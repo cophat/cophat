@@ -1,0 +1,162 @@
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'de.mannodermaus.android-junit5'
+
+android {
+    compileSdkVersion target_version
+    defaultConfig {
+        applicationId "com.matheus.cophat"
+        minSdkVersion min_version
+        targetSdkVersion target_version
+        versionCode code_version
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
+        testInstrumentationRunnerArgument "listener", "leakcanary.FailTestOnLeakRunListener"
+        buildConfigField("String", "BASE_URL", '"https://cophat-matheus.firebaseio.com"')
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "default"
+    productFlavors {
+        children {
+            applicationId "com.matheus.cophat.ca"
+            buildConfigField("boolean", "IS_CHILDREN", "true")
+            buildConfigField("String", "APP_NAME", '"@string/app_name_children"')
+            buildConfigField("String", "DATABASE_NAME", '"cophatca"')
+            manifestPlaceholders = [appIcon: "@drawable/ic_launcher", appLabel: "@string/app_name_children"]
+        }
+        parents {
+            applicationId "com.matheus.cophat.p"
+            buildConfigField("boolean", "IS_CHILDREN", "false")
+            buildConfigField("String", "APP_NAME", '"@string/app_name_parents"')
+            buildConfigField("String", "DATABASE_NAME", '"cophatp"')
+            manifestPlaceholders = [appIcon: "@drawable/ic_launcher", appLabel: "@string/app_name_parents"]
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    androidExtensions {
+        experimental = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    packagingOptions {
+        exclude "META-INF/LICENSE*"
+    }
+    testOptions {
+        unitTests {
+            returnDefaultValues true
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Core
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.core:core-ktx:$core_version"
+
+    // Layout
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutine_version"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // Storage
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$roomcompiler_version"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-core:$firebase_version"
+    implementation "com.google.firebase:firebase-database:$database_version"
+    implementation "com.firebaseui:firebase-ui-database:$ui_version"
+
+    // Crashlytics
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
+
+    // Dependency injection
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    // Web communication
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+
+    // Animations
+    implementation "com.daimajia.easing:library:$easing_version"
+    implementation "com.daimajia.androidanimations:library:$animation_version"
+
+    // Loading
+    implementation "com.wang.avi:library:$loading_version"
+
+    // Export Excel
+    implementation "org.apache.poi:poi:$poi_version"
+
+    // LeakCanary
+    //debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_version"
+
+    // Test helpers
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    testImplementation "androidx.room:room-testing:$room_version"
+    testImplementation "org.koin:koin-test:$koin_version"
+    androidTestImplementation "androidx.test:runner:$runner_version"
+    androidTestImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    androidTestImplementation "de.mannodermaus.junit5:android-test-core:$junit5_version"
+    androidTestRuntimeOnly "de.mannodermaus.junit5:android-test-runner:$junit5_version"
+    androidTestImplementation "io.mockk:mockk-android:$mockk_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:$leak_version"
+}
+
+apply plugin: 'com.google.gms.google-services'

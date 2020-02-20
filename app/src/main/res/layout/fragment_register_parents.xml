@@ -1,0 +1,234 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.register.fragment.RegisterFragment">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.matheus.cophat.data.presenter.RegisterParentsPresenter" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/tvTitleRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/id_form"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvSubtitleRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:gravity="center"
+                android:text="@{presenter.subtitle}"
+                android:textSize="@dimen/large_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleRegister"
+                tools:text="@string/patient_parents" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilMotherRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:hint="@string/mother_profession"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSubtitleRegister">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/AppTheme.EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:text="@={presenter.motherProfession}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilFatherRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:hint="@string/father_profession"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilMotherRegister">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/AppTheme.EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:text="@={presenter.fatherProfession}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvMaritalStatusRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:text="@string/marital_status"
+                android:textSize="@dimen/title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilFatherRegister" />
+
+            <RadioGroup
+                android:id="@+id/rgMaritalStatusRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMaritalStatusRegister">
+
+                <RadioButton
+                    android:id="@+id/rbMarriedRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/married" />
+
+                <RadioButton
+                    android:id="@+id/rbAmassedRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/amassed" />
+
+                <RadioButton
+                    android:id="@+id/rbDivorcedRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/divorced" />
+
+                <RadioButton
+                    android:id="@+id/rbSingleRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/single" />
+
+                <RadioButton
+                    android:id="@+id/rbWidowerRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/widower" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tvReligionRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:text="@string/family_religion"
+                android:textSize="@dimen/title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgMaritalStatusRegister" />
+
+            <RadioGroup
+                android:id="@+id/rgReligionRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvReligionRegister">
+
+                <RadioButton
+                    android:id="@+id/rbCatholicRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/catholic" />
+
+                <RadioButton
+                    android:id="@+id/rbEvangelicalRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/evangelical" />
+
+                <RadioButton
+                    android:id="@+id/rbSpiritistRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spiritist" />
+
+                <RadioButton
+                    android:id="@+id/rbOtherRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilOtherRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/other_religion">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOtherRegister"
+                        style="@style/AppTheme.EditTextTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="textCapSentences"
+                        android:text="@={presenter.religion}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RadioButton
+                    android:id="@+id/rbNoneRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/none" />
+
+            </RadioGroup>
+
+            <com.matheus.cophat.ui.base.view.BottomButtonsView
+                android:id="@+id/bbvRegister"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottom_button_height"
+                app:bbv_primary_enabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgReligionRegister" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_generate"
+    app:startDestination="@id/generateCodeFragment">
+
+    <fragment
+        android:id="@+id/generateCodeFragment"
+        android:name="com.matheus.cophat.feature.generate.fragment.GenerateCodeFragment"
+        android:label="GenerateCodeFragment"
+        tools:layout="@layout/fragment_generate_code">
+        <action
+            android:id="@+id/action_generateCodeFragment_to_nav_register"
+            app:destination="@id/nav_register"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_generate"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_generateCodeFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_generate"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <include app:graph="@navigation/nav_questions" />
+    <include app:graph="@navigation/nav_register" />
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="com.matheus.cophat.feature.generate.fragment.TutorialFragment"
+        android:label="fragment_tutorial"
+        tools:layout="@layout/fragment_tutorial" >
+        <action
+            android:id="@+id/action_tutorialFragment_to_nav_questions"
+            app:destination="@id/nav_questions"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_generate"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

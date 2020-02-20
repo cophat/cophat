@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_questions"
+    app:startDestination="@id/questionsFragment">
+
+    <fragment
+        android:id="@+id/questionsFragment"
+        android:name="com.matheus.cophat.feature.questions.fragment.QuestionsFragment"
+        android:label="fragment_questions"
+        tools:layout="@layout/fragment_questions" >
+        <action
+            android:id="@+id/action_questionsFragment_to_subQuestionDialog"
+            app:destination="@id/subQuestionDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_questionsFragment_to_completeFragment"
+            app:destination="@id/completeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_questions"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/subQuestionDialog"
+        android:name="com.matheus.cophat.feature.questions.fragment.SubQuestionDialog"
+        android:label="dialog_sub_question"
+        tools:layout="@layout/dialog_sub_question" >
+        <argument
+            android:name="subQuestion"
+            app:argType="com.matheus.cophat.data.presenter.SubQuestionPresenter" />
+        <action
+            android:id="@+id/action_subQuestionDialog_to_questionsFragment"
+            app:destination="@id/questionsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_questions"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <fragment
+        android:id="@+id/completeFragment"
+        android:name="com.matheus.cophat.feature.questions.fragment.CompleteFragment"
+        android:label="fragment_complete"
+        tools:layout="@layout/fragment_complete" />
+</navigation>

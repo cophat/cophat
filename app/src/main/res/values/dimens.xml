@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_size">16sp</dimen>
+    <dimen name="large_size">20sp</dimen>
+    <dimen name="big_size">24sp</dimen>
+    <dimen name="title_size">26sp</dimen>
+    <dimen name="default_padding">20dp</dimen>
+    <dimen name="tiny_margin">4dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="medium_margin">16dp</dimen>
+    <dimen name="large_margin">24dp</dimen>
+    <dimen name="big_margin">32dp</dimen>
+    <dimen name="bigger_margin">44dp</dimen>
+    <dimen name="extra_margin">60dp</dimen>
+    <dimen name="button_margin">50dp</dimen>
+    <dimen name="button_radius">50dp</dimen>
+    <dimen name="button_height">60dp</dimen>
+    <dimen name="bottom_button_height">130dp</dimen>
+    <dimen name="thermometer_height">300dp</dimen>
+    <dimen name="thermometer_width">180dp</dimen>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="content_padding">4dp</dimen>
+</resources>
