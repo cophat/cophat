@@ -195,7 +195,7 @@
             app:layout_constraintStart_toEndOf="@+id/tvThermometer4Tutorial"
             app:layout_constraintTop_toTopOf="@+id/tvThermometer4Tutorial" />
 
-        <com.matheus.cophat.ui.base.view.BottomButtonsView
+        <com.jodi.cophat.ui.base.view.BottomButtonsView
             android:id="@+id/bbvTutorial"
             android:layout_width="0dp"
             android:layout_height="@dimen/bottom_button_height"

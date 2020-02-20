@@ -7,7 +7,7 @@
 
         <variable
             name="presenter"
-            type="com.matheus.cophat.data.presenter.QuestionsPresenter" />
+            type="com.jodi.cophat.data.presenter.QuestionsPresenter" />
     </data>
 
     <ScrollView
@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/pbStatusQuestions"
                 tools:text="Quando eu pergunto sobre a minha doença, as respostas ainda me deixam com dúvidas." />
 
-            <com.matheus.cophat.ui.base.view.ThermometerView
+            <com.jodi.cophat.ui.base.view.ThermometerView
                 android:id="@+id/vQuestions"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvStatementQuestions" />
 
-            <com.matheus.cophat.ui.base.view.BottomButtonsView
+            <com.jodi.cophat.ui.base.view.BottomButtonsView
                 android:id="@+id/bbvQuestions"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/bottom_button_height"

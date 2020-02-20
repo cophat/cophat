@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/registerParentsFragment"
-        android:name="com.matheus.cophat.feature.register.fragment.RegisterParentsFragment"
+        android:name="com.jodi.cophat.feature.register.fragment.RegisterParentsFragment"
         android:label="RegisterParentsFragment"
         tools:layout="@layout/fragment_register_parents">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerPatientFragment"
-        android:name="com.matheus.cophat.feature.register.fragment.RegisterPatientFragment"
+        android:name="com.jodi.cophat.feature.register.fragment.RegisterPatientFragment"
         android:label="RegisterPatientFragment"
         tools:layout="@layout/fragment_register_patient">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerInternalFragment"
-        android:name="com.matheus.cophat.feature.register.fragment.RegisterInternalFragment"
+        android:name="com.jodi.cophat.feature.register.fragment.RegisterInternalFragment"
         android:label="RegisterInternalFragment"
         tools:layout="@layout/fragment_register_internal">
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerSchoolFragment"
-        android:name="com.matheus.cophat.feature.register.fragment.RegisterSchoolFragment"
+        android:name="com.jodi.cophat.feature.register.fragment.RegisterSchoolFragment"
         android:label="RegisterSchoolFragment"
         tools:layout="@layout/fragment_register_school" >
         <action

@@ -8,7 +8,7 @@
 
         <variable
             name="presenter"
-            type="com.matheus.cophat.data.presenter.ItemAdminPresenter" />
+            type="com.jodi.cophat.data.presenter.ItemAdminPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

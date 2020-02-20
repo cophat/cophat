@@ -6,7 +6,7 @@
     app:startDestination="@id/adminFragment">
     <fragment
         android:id="@+id/adminFragment"
-        android:name="com.matheus.cophat.feature.configure.fragment.AdminFragment"
+        android:name="com.jodi.cophat.feature.configure.fragment.AdminFragment"
         android:label="AdminFragment"
         tools:layout="@layout/fragment_admin">
         <action
@@ -26,12 +26,12 @@
     </fragment>
     <dialog
         android:id="@+id/adminDialog"
-        android:name="com.matheus.cophat.feature.configure.fragment.AdminDialog"
+        android:name="com.jodi.cophat.feature.configure.fragment.AdminDialog"
         android:label="AdminDialog"
         tools:layout="@layout/dialog_admin">
         <argument
             android:name="presenter"
-            app:argType="com.matheus.cophat.data.presenter.AdminConfigurePresenter" />
+            app:argType="com.jodi.cophat.data.presenter.AdminConfigurePresenter" />
         <argument
             android:name="key"
             android:defaultValue="@null"
@@ -49,7 +49,7 @@
     </dialog>
     <dialog
         android:id="@+id/configureExcludeDialog"
-        android:name="com.matheus.cophat.feature.configure.fragment.ConfigureExcludeDialog"
+        android:name="com.jodi.cophat.feature.configure.fragment.ConfigureExcludeDialog"
         android:label="ConfigureExcludeDialog"
         tools:layout="@layout/dialog_configure_exclude">
         <argument

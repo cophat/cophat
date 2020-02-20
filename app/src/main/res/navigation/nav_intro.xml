@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.matheus.cophat.feature.intro.fragment.SplashFragment"
+        android:name="com.jodi.cophat.feature.intro.fragment.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/beginFragment"
-        android:name="com.matheus.cophat.feature.intro.fragment.BeginFragment"
+        android:name="com.jodi.cophat.feature.intro.fragment.BeginFragment"
         android:label="BeginFragment"
         tools:layout="@layout/fragment_begin">
         <action
@@ -71,7 +71,7 @@
     <include app:graph="@navigation/nav_generate" />
     <activity
         android:id="@+id/registerActivity"
-        android:name="com.matheus.cophat.feature.register.activity.RegisterActivity"
+        android:name="com.jodi.cophat.feature.register.activity.RegisterActivity"
         android:label="activity_register"
         tools:layout="@layout/activity_register">
         <argument
@@ -82,12 +82,12 @@
     <include app:graph="@navigation/nav_questions" />
     <activity
         android:id="@+id/questionnairesActivity"
-        android:name="com.matheus.cophat.feature.questionnaires.activity.QuestionnairesActivity"
+        android:name="com.jodi.cophat.feature.questionnaires.activity.QuestionnairesActivity"
         android:label="activity_questionnaires"
         tools:layout="@layout/activity_questionnaires" />
     <dialog
         android:id="@+id/excludeApplicationDialog"
-        android:name="com.matheus.cophat.feature.intro.fragment.ExcludeApplicationDialog"
+        android:name="com.jodi.cophat.feature.intro.fragment.ExcludeApplicationDialog"
         android:label="dialog_exclude_application"
         tools:layout="@layout/dialog_exclude_application" >
         <action

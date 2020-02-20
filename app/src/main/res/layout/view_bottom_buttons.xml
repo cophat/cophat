@@ -8,7 +8,7 @@
 
         <variable
             name="buttonPresenter"
-            type="com.matheus.cophat.data.presenter.BottomButtonPresenter" />
+            type="com.jodi.cophat.data.presenter.BottomButtonPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

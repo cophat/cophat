@@ -7,7 +7,7 @@
 
         <variable
             name="presenter"
-            type="com.matheus.cophat.data.presenter.RegisterInternalPresenter" />
+            type="com.jodi.cophat.data.presenter.RegisterInternalPresenter" />
     </data>
 
     <ScrollView
@@ -125,7 +125,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.matheus.cophat.ui.base.view.BottomButtonsView
+            <com.jodi.cophat.ui.base.view.BottomButtonsView
                 android:id="@+id/bbvInternal"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/bottom_button_height"

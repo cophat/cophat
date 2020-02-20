@@ -17,6 +17,6 @@
     volatile <fields>;
 }
 -keepattributes Signature
--keepclassmembers class com.matheus.cophat.data** {
+-keepclassmembers class jodi.cophat.data** {
     *;
 }

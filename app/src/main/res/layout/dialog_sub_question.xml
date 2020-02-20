@@ -44,7 +44,7 @@
 
         </FrameLayout>
 
-        <com.matheus.cophat.ui.base.view.BottomButtonsView
+        <com.jodi.cophat.ui.base.view.BottomButtonsView
             android:id="@+id/bbvSubQuestion"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_button_height"

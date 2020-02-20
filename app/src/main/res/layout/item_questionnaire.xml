@@ -8,7 +8,7 @@
 
         <variable
             name="presenter"
-            type="com.matheus.cophat.data.presenter.ItemQuestionnairePresenter" />
+            type="com.jodi.cophat.data.presenter.ItemQuestionnairePresenter" />
     </data>
 
     <androidx.cardview.widget.CardView

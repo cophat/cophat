@@ -7,7 +7,7 @@
 
         <variable
             name="presenter"
-            type="com.matheus.cophat.data.presenter.RegisterSchoolPresenter" />
+            type="com.jodi.cophat.data.presenter.RegisterSchoolPresenter" />
     </data>
 
     <ScrollView
@@ -330,7 +330,7 @@
 
             </RadioGroup>
 
-            <com.matheus.cophat.ui.base.view.BottomButtonsView
+            <com.jodi.cophat.ui.base.view.BottomButtonsView
                 android:id="@+id/bbvSchool"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/bottom_button_height"

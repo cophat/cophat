@@ -9,7 +9,7 @@ apply plugin: 'de.mannodermaus.android-junit5'
 android {
     compileSdkVersion target_version
     defaultConfig {
-        applicationId "com.matheus.cophat"
+        applicationId "com.jodi.cophat"
         minSdkVersion min_version
         targetSdkVersion target_version
         versionCode code_version
@@ -17,7 +17,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
         testInstrumentationRunnerArgument "listener", "leakcanary.FailTestOnLeakRunListener"
-        buildConfigField("String", "BASE_URL", '"https://cophat-matheus.firebaseio.com"')
+        buildConfigField("String", "BASE_URL", '"https://cophat-jodi.firebaseio.com"')
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
@@ -41,14 +41,14 @@ android {
     flavorDimensions "default"
     productFlavors {
         children {
-            applicationId "com.matheus.cophat.ca"
+            applicationId "com.jodi.cophat.ca"
             buildConfigField("boolean", "IS_CHILDREN", "true")
             buildConfigField("String", "APP_NAME", '"@string/app_name_children"')
             buildConfigField("String", "DATABASE_NAME", '"cophatca"')
             manifestPlaceholders = [appIcon: "@drawable/ic_launcher", appLabel: "@string/app_name_children"]
         }
         parents {
-            applicationId "com.matheus.cophat.p"
+            applicationId "com.jodi.cophat.p"
             buildConfigField("boolean", "IS_CHILDREN", "false")
             buildConfigField("String", "APP_NAME", '"@string/app_name_parents"')
             buildConfigField("String", "DATABASE_NAME", '"cophatp"')
@@ -99,7 +99,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutine_version"
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifeextensions_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     // Storage

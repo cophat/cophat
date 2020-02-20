@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/questionsFragment"
-        android:name="com.matheus.cophat.feature.questions.fragment.QuestionsFragment"
+        android:name="com.jodi.cophat.feature.questions.fragment.QuestionsFragment"
         android:label="fragment_questions"
         tools:layout="@layout/fragment_questions" >
         <action
@@ -29,12 +29,12 @@
     </fragment>
     <dialog
         android:id="@+id/subQuestionDialog"
-        android:name="com.matheus.cophat.feature.questions.fragment.SubQuestionDialog"
+        android:name="com.jodi.cophat.feature.questions.fragment.SubQuestionDialog"
         android:label="dialog_sub_question"
         tools:layout="@layout/dialog_sub_question" >
         <argument
             android:name="subQuestion"
-            app:argType="com.matheus.cophat.data.presenter.SubQuestionPresenter" />
+            app:argType="com.jodi.cophat.data.presenter.SubQuestionPresenter" />
         <action
             android:id="@+id/action_subQuestionDialog_to_questionsFragment"
             app:destination="@id/questionsFragment"
@@ -47,7 +47,7 @@
     </dialog>
     <fragment
         android:id="@+id/completeFragment"
-        android:name="com.matheus.cophat.feature.questions.fragment.CompleteFragment"
+        android:name="com.jodi.cophat.feature.questions.fragment.CompleteFragment"
         android:label="fragment_complete"
         tools:layout="@layout/fragment_complete" />
 </navigation>

@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "46225384166",
-    "firebase_url": "https://cophat-matheus.firebaseio.com",
-    "project_id": "cophat-matheus",
-    "storage_bucket": "cophat-matheus.appspot.com"
+    "project_number": "440571273363",
+    "firebase_url": "https://cophat-jodi.firebaseio.com",
+    "project_id": "cophat-jodi",
+    "storage_bucket": "cophat-jodi.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:46225384166:android:7becf9601698735a",
+        "mobilesdk_app_id": "1:440571273363:android:90bb59265b19817542ad66",
         "android_client_info": {
-          "package_name": "com.matheus.cophat.ca"
+          "package_name": "com.jodi.cophat.ca"
         }
       },
       "oauth_client": [
         {
-          "client_id": "46225384166-i29dif5shnij0389dv2nnemfsbg7iihc.apps.googleusercontent.com",
+          "client_id": "440571273363-f9ngfoqldtc341ddskir03q37m6v7p3h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.matheus.cophat.ca",
-            "certificate_hash": "1c1ff50122325b579ebf46d6e01ceb29638fe479"
+            "package_name": "com.jodi.cophat.ca",
+            "certificate_hash": "d16195101450ce5100fbaaf6415eb35de81e7c56"
           }
         },
         {
-          "client_id": "46225384166-1vnhit91qtvcupch5q2uopab2qaf2veb.apps.googleusercontent.com",
+          "client_id": "440571273363-sd57ttnhnjg7qpulev6u9956r1c794ml.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAofyX6oKy9rU2FPqWyFp_hv3Q06rClvLk"
+          "current_key": "AIzaSyAHMktUH2G5n408zdgwGPxXNDF--vEz6P4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "46225384166-1vnhit91qtvcupch5q2uopab2qaf2veb.apps.googleusercontent.com",
+              "client_id": "440571273363-sd57ttnhnjg7qpulev6u9956r1c794ml.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -45,35 +45,35 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:46225384166:android:ec3abc871f6e5401",
+        "mobilesdk_app_id": "1:440571273363:android:e6c7e2eaeecc6d6142ad66",
         "android_client_info": {
-          "package_name": "com.matheus.cophat.p"
+          "package_name": "com.jodi.cophat.p"
         }
       },
       "oauth_client": [
         {
-          "client_id": "46225384166-73knl1hc3ffndrtekg6gqg8u20k1bq4c.apps.googleusercontent.com",
+          "client_id": "440571273363-0a57e7tr0etti2sq107l5kll6o5aoh8k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.matheus.cophat.p",
-            "certificate_hash": "1c1ff50122325b579ebf46d6e01ceb29638fe479"
+            "package_name": "com.jodi.cophat.p",
+            "certificate_hash": "d16195101450ce5100fbaaf6415eb35de81e7c56"
           }
         },
         {
-          "client_id": "46225384166-1vnhit91qtvcupch5q2uopab2qaf2veb.apps.googleusercontent.com",
+          "client_id": "440571273363-sd57ttnhnjg7qpulev6u9956r1c794ml.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAofyX6oKy9rU2FPqWyFp_hv3Q06rClvLk"
+          "current_key": "AIzaSyAHMktUH2G5n408zdgwGPxXNDF--vEz6P4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "46225384166-1vnhit91qtvcupch5q2uopab2qaf2veb.apps.googleusercontent.com",
+              "client_id": "440571273363-sd57ttnhnjg7qpulev6u9956r1c794ml.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
