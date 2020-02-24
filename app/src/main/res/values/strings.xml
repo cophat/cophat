@@ -152,4 +152,6 @@
     <string name="category">CATEGORIA</string>
     <string name="total">TOTAL</string>
     <string name="removed_application">Aplicação removida com sucesso</string>
+    <string name="child">Criança</string>
+    <string name="parent">Pai/Mãe</string>
 </resources>

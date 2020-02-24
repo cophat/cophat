@@ -87,13 +87,16 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                         ?.sortedBy { answer -> answer.id }
                     val parentsAnswers = parentApplication.answers?.values
                         ?.sortedBy { answer -> answer.id }
+                    createMainHeaderComparative(
+                        sheetComparative,
+                        questionnaire.familyId
+                    )
                     createSubTotalsComparative(
                         sheetComparative,
                         categories,
                         childrenAnswers,
                         parentsAnswers,
                         answerColumnComparative,
-                        questionnaire.familyId,
                         answerColumn
                     )
                     createTotalsComparative(
@@ -103,13 +106,16 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                         answerColumnComparative
                     )
 
+                    createMainHeaderComparativeSubQuestions(
+                        sheetSubComparative,
+                        questionnaire.familyId
+                    )
                     createSubTotalsComparativeSubQuestions(
                         sheetSubComparative,
                         categories,
                         childrenAnswers,
                         parentsAnswers,
                         answerColumnComparative,
-                        questionnaire.familyId,
                         answerColumn
                     )
                     createTotalsComparativeSubQuestions(
@@ -318,7 +324,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         }
     }
 
-    private fun createDescriptions(sheet: HSSFSheet) {
+    private fun createDescriptions(sheet: HSSFSheet) { // Abas questões
         val categoriesPositionRow = questionsSize + 3
         val categoriesHeaderRow = sheet.createRow(categoriesPositionRow)
         categoriesHeaderRow.createCell(descriptionColumn).apply {
@@ -334,7 +340,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         }
     }
 
-    private fun createSubDescriptions(sheet: HSSFSheet) {
+    private fun createSubDescriptions(sheet: HSSFSheet) { // Abas subquestões
         val categoriesPositionRow = subQuestionsSize + 3
         val categoriesHeaderRow = sheet.createRow(categoriesPositionRow)
         categoriesHeaderRow.createCell(descriptionColumn).apply {
@@ -381,13 +387,13 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
     }
 
     private fun createCategoriesComparative(sheet: HSSFSheet, categories: List<Category>) {
-        val categoriesHeaderRow = sheet.createRow(0)
+        val categoriesHeaderRow = sheet.createRow(1)
         categoriesHeaderRow.createCell(descriptionColumn).apply {
             setCellValue(resourceManager.getString(R.string.category))
             setCellStyle(boldStyle)
         }
 
-        var categoriesPositionRow = 1
+        var categoriesPositionRow = 2
 
         var categoriesRow: HSSFRow
         for (category in categories) {
@@ -494,7 +500,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         parentsAnswers: List<Answer>?,
         answerColumnComparative: Int
     ) {
-        val totalPositionRow = 6
+        val totalPositionRow = 7
         val totalRow: HSSFRow = sheet.createRow(totalPositionRow)
 
         val totalDescriptionRow = sheet.createRow(totalPositionRow)
@@ -532,7 +538,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         parentsAnswers: List<Answer>?,
         answerColumnComparative: Int
     ) {
-        val totalPositionRow = 6
+        val totalPositionRow = 7
         val totalRow: HSSFRow = sheet.createRow(totalPositionRow)
 
         val totalDescriptionRow = sheet.createRow(totalPositionRow)
@@ -624,21 +630,34 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         }
     }
 
-    private fun createSubTotalsComparative(
+    private fun createMainHeaderComparative( // header aba Questões CA x P
+        sheet: HSSFSheet,
+        familyId: String
+    ) {
+        val subTotalHeader = sheet.createRow(0).createCell(0)
+        sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 2))
+        subTotalHeader.setCellValue(familyId)
+        subTotalHeader.setCellStyle(boldStyle)
+
+    }
+
+    private fun createSubTotalsComparative( // colunas aba Questões CA x P
         sheet: HSSFSheet,
         categories: List<Category>,
         childrenAnswers: List<Answer>?,
         parentsAnswers: List<Answer>?,
         answerColumnComparative: Int,
-        familyId: String,
         answerColumn: Int
     ) {
-        val subTotalHeader = sheet.getRow(0).createCell(answerColumn)
-        sheet.addMergedRegion(CellRangeAddress(0, 0, 1, 2))
-        subTotalHeader.setCellValue(familyId)
-        subTotalHeader.setCellStyle(boldStyle)
+        val subTotalHeaderChild = sheet.getRow(1).createCell(answerColumn)
+        subTotalHeaderChild.setCellValue(resourceManager.getString(R.string.child))
+        subTotalHeaderChild.setCellStyle(boldStyle)
 
-        var categoriesPositionRow = 1
+        val subTotalHeaderParents = sheet.getRow(1).createCell(answerColumn + 1)
+        subTotalHeaderParents.setCellValue(resourceManager.getString(R.string.parent))
+        subTotalHeaderParents.setCellStyle(boldStyle)
+
+        var categoriesPositionRow = 2
 
         var categoriesRow: HSSFRow
         for (category in categories) {
@@ -666,21 +685,34 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         sheet.setColumnWidth(answerColumnComparative + 1, 3500)
     }
 
-    private fun createSubTotalsComparativeSubQuestions(
+    private fun createMainHeaderComparativeSubQuestions( // header aba Subquestões CA x P
+        sheet: HSSFSheet,
+        familyId: String
+    ) {
+        val subTotalHeaderSubQuestions = sheet.createRow(0).createCell(0)
+        sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 2))
+        subTotalHeaderSubQuestions.setCellValue(familyId)
+        subTotalHeaderSubQuestions.setCellStyle(boldStyle)
+
+    }
+
+    private fun createSubTotalsComparativeSubQuestions( // colunas aba Subquestões CA x P
         sheet: HSSFSheet,
         categories: List<Category>,
         childrenAnswers: List<Answer>?,
         parentsAnswers: List<Answer>?,
         answerColumnComparative: Int,
-        familyId: String,
         answerColumn: Int
     ) {
-        val subTotalHeader = sheet.getRow(0).createCell(answerColumn)
-        sheet.addMergedRegion(CellRangeAddress(0, 0, 1, 2))
-        subTotalHeader.setCellValue(familyId)
-        subTotalHeader.setCellStyle(boldStyle)
+        val subTotalHeaderChild = sheet.getRow(1).createCell(answerColumn)
+        subTotalHeaderChild.setCellValue(resourceManager.getString(R.string.child))
+        subTotalHeaderChild.setCellStyle(boldStyle)
 
-        var categoriesPositionRow = 1
+        val subTotalHeaderParents = sheet.getRow(1).createCell(answerColumn + 1)
+        subTotalHeaderParents.setCellValue(resourceManager.getString(R.string.parent))
+        subTotalHeaderParents.setCellStyle(boldStyle)
+
+        var categoriesPositionRow = 2
 
         var categoriesRow: HSSFRow
         for (category in categories) {
