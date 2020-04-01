@@ -23,6 +23,13 @@ class SubQuestionViewHolder(itemView: View, private val subQuestionListener: Sub
             subQuestionListener.onSubAnswerOtherChanged(presenter)
         }
 
+        if(presenter.type == SubAnswerType.OPEN){
+            binding?.rgThermometerAlternative?.visibility = View.INVISIBLE;
+            binding?.rgThermometerAlternative?.layoutParams?.width = 0
+            binding?.rgThermometerAlternative?.layoutParams?.height = 0
+            binding?.etAlternative?.isEnabled = true
+        }
+
         binding?.rgThermometerAlternative?.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 binding.rbAlwaysAlternative.id ->
