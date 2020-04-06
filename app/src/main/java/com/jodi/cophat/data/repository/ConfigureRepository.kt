@@ -8,6 +8,7 @@ class ConfigureRepository(private val database: DatabaseReference) : BaseReposit
 
     override fun getDatabase(): DatabaseReference {
         return database
+
     }
 
     suspend fun getAdmins(): List<ItemAdminPresenter> {
