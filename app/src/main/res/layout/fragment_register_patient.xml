@@ -87,6 +87,25 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilIdentifyCodePatient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:hint="@string/identify_code"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilMedicalRecordsPatient">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/AppTheme.EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:text="@={presenter.identifyCode}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBirthdayPatient"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -96,7 +115,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/tilAgePatient"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMedicalRecordsPatient">
+                app:layout_constraintTop_toBottomOf="@+id/tilIdentifyCodePatient">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etBirthdayPatient"
@@ -119,7 +138,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tilBirthdayPatient"
-                app:layout_constraintTop_toBottomOf="@+id/tilMedicalRecordsPatient">
+                app:layout_constraintTop_toBottomOf="@+id/tilIdentifyCodePatient">
 
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/AppTheme.EditTextTheme"

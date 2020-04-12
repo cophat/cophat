@@ -81,6 +81,7 @@
     <string name="confirm_patient">Agora, confirme algumas informações</string>
     <string name="patient_name">Nome do paciente</string>
     <string name="medical_records">Prontuário</string>
+    <string name="identify_code">Código de Identificação</string>
     <string name="birth_patient">Nascimento</string>
     <string name="age_patient">Idade</string>
     <string name="gender_patient">Sexo</string>

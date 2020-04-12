@@ -8,6 +8,7 @@ data class RegisterPatientPresenter(
     private var _subtitle: String = "",
     private var _name: String = "",
     private var _medicalRecords: String = "",
+    private var _identifyCode: String = "",
     private var _birthday: String = "",
     private var _age: String = "",
     private var _male: Boolean = true,
@@ -36,6 +37,14 @@ data class RegisterPatientPresenter(
         set(value) {
             _medicalRecords = value
             notifyPropertyChanged(BR.medicalRecords)
+        }
+
+    @get:Bindable
+    var identifyCode
+        get() = _identifyCode
+        set(value) {
+            _identifyCode = value
+            notifyPropertyChanged(BR.identifyCode)
         }
 
     @get:Bindable

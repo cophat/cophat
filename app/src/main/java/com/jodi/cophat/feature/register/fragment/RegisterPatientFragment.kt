@@ -30,6 +30,7 @@ class RegisterPatientFragment : BaseFragment<FragmentRegisterPatientBinding>() {
             binding.tvSubtitlePatient,
             binding.tilNamePatient,
             binding.tilMedicalRecordsPatient,
+            binding.tilIdentifyCodePatient,
             binding.tilBirthdayPatient,
             binding.tilAgePatient,//string
             binding.tvGenderPatient,

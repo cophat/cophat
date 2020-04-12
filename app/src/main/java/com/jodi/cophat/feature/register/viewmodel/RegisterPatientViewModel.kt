@@ -52,6 +52,7 @@ class RegisterPatientViewModel(
     fun validatePresenter() {
         if (presenter.name.trim().isNotEmpty() &&
            // presenter.medicalRecords.trim().isNotEmpty() &&
+            presenter.identifyCode.trim().isNotEmpty() &&
             presenter.birthday.trim().isValidDate("dd/MM/yyyy") &&
             presenter.birthday.trim().isBeforeToday("dd/MM/yyyy") &&
             presenter.age.trim().isNotEmpty() &&
@@ -73,6 +74,7 @@ class RegisterPatientViewModel(
 
                     val patient = application.patient
                     patient?.medicalRecords = presenter.medicalRecords
+                    patient?.identifyCode = presenter.identifyCode
                     patient?.birthday = presenter.birthday
                     patient?.age = Integer.valueOf(presenter.age)
 

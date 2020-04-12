@@ -11,6 +11,7 @@ data class Patient(
     var religion: String? = null,
     var patientName: String? = null,
     var medicalRecords: String? = null,
+    var identifyCode: String? = null,
     var birthday: String? = null,
     var age: Int? = null,
     var gender: String? = null,
