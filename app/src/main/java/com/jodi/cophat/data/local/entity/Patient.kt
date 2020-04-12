@@ -15,7 +15,7 @@ data class Patient(
     var age: Int? = null,
     var gender: String? = null,
     var diagnosis: String? = null,
-    var diagnosticTime: String? = null,
+    var diagnosticTime: Int? = null,
     var internedDays: Int? = null,
     var hospitalizations: Int? = null,
     var schooling: String? = null,

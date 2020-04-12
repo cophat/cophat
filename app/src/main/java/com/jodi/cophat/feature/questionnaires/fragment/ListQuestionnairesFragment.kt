@@ -21,6 +21,7 @@ import com.jodi.cophat.ui.BaseFragment
 import com.jodi.cophat.ui.BaseViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import kotlin.time.ExperimentalTime
 
 class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBinding>(),
     QuestionnaireListener {
@@ -38,6 +39,7 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
         return viewModel
     }
 
+    @ExperimentalTime
     override fun initBinding() {
         setViews(
             binding.tvTitleQuestionnaires,
@@ -52,6 +54,7 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
         checkWritePermission()
     }
 
+    @ExperimentalTime
     private fun configureAdapter() {
         options = DatabasePagingOptions.Builder<Questionnaire>()
             .setLifecycleOwner(this)

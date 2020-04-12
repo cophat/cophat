@@ -60,7 +60,7 @@ class RegisterInternalViewModel(
 
                     val patient = application.patient
                     patient?.diagnosis = presenter.diagnosis
-                    patient?.diagnosticTime = presenter.diagnosisTime
+                    patient?.diagnosticTime = Integer.valueOf(presenter.diagnosisTime)
                     patient?.internedDays = Integer.valueOf(presenter.daysHospitalized)
                     patient?.hospitalizations = Integer.valueOf(presenter.hospitalizations)
 

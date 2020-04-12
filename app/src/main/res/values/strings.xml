@@ -86,7 +86,7 @@
     <string name="gender_patient">Sexo</string>
     <string name="about_internal">Sobre a internação</string>
     <string name="diagnosis">Diagnóstico</string>
-    <string name="diagnosis_time">Tempo de diagnóstico</string>
+    <string name="diagnosis_time">Tempo de diagnóstico (meses)</string>
     <string name="days_hospitalized">Dias internado</string>
     <string name="hospitalizations">Internações</string>
     <string name="finalize_register">Para finalizar o cadastro, insira os últimos dados</string>

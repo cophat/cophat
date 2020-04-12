@@ -10,7 +10,9 @@ import com.jodi.cophat.data.presenter.ItemQuestionnairePresenter
 import com.jodi.cophat.data.repository.QuestionnairesRepository
 import com.jodi.cophat.helper.ResourceManager
 import com.jodi.cophat.ui.BaseViewModel
-import java.util.*
+import java.time.Duration
+import java.time.Instant
+import kotlin.time.ExperimentalTime
 
 class QuestionnairesViewModel(
     private val repository: QuestionnairesRepository,
@@ -23,6 +25,7 @@ class QuestionnairesViewModel(
         return repository.getQuery()
     }
 
+    @ExperimentalTime
     fun convertToPresenter(questionnaire: Questionnaire): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
 
@@ -81,12 +84,13 @@ class QuestionnairesViewModel(
         }
     }
 
+    @ExperimentalTime
     private fun generateApplicationsTime(questionnaire: Questionnaire): String {
         var childrenTime = ""
         questionnaire.childApplication?.let { application ->
             application.startHour?.let { startHour ->
                 application.endHour?.let { endHour ->
-                    childrenTime = formatHour(endHour - startHour)
+                    childrenTime = formatHour(endHour, startHour)
                 }
             }
         }
@@ -95,7 +99,7 @@ class QuestionnairesViewModel(
         questionnaire.parentApplication?.let { application ->
             application.startHour?.let { startHour ->
                 application.endHour?.let { endHour ->
-                    parentsTime = formatHour(endHour - startHour)
+                    parentsTime = formatHour(endHour, startHour)
                 }
             }
         }
@@ -111,17 +115,17 @@ class QuestionnairesViewModel(
         }
     }
 
-    private fun formatHour(timeStamp: Long): String {
-        val date = Calendar.getInstance().apply {
-            timeInMillis = timeStamp
-        }
-        val hour = date.get(Calendar.HOUR)
-        val min = date.get(Calendar.MINUTE)
+    @ExperimentalTime
+    private fun formatHour(endHour: Long, startHour: Long): String {
 
-        return if (hour > 24) {
+        val iInicial: Instant = Instant.ofEpochMilli(startHour)
+        val iFinal: Instant = Instant.ofEpochMilli(endHour)
+        val duracao: Duration = Duration.between(iInicial, iFinal)
+
+        return if (duracao.toHours() > 24) {
             resourceManager.getString(R.string.more_days)
         } else {
-            "${hour}h${min}m"
+            "${duracao.toHours()}h${duracao.toMinutes() % 60}m"
         }
     }
 
