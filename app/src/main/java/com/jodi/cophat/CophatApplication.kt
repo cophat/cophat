@@ -1,6 +1,7 @@
 package com.jodi.cophat
 
 import android.app.Application
+import com.google.firebase.database.FirebaseDatabase
 import com.jodi.cophat.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
@@ -17,6 +18,7 @@ class CophatApplication : Application() {
             androidContext(this@CophatApplication)
             androidFileProperties()
             modules(listOf(networkModule, dataModule, appModule, viewModelModule, repositoryModule))
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         }
     }
 }

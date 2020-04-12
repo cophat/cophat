@@ -14,6 +14,7 @@ class QuestionnairesRepository(private val database: DatabaseReference) : BaseRe
     }
 
     fun getQuery(): Query {
+        database.keepSynced(true)
         return database.child(FirebaseChild.QUESTIONNAIRES.pathName)
     }
 
