@@ -48,6 +48,115 @@
                 tools:text="@string/patient_parents" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilIntervieweeName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:hint="@string/interviewee_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSubtitleRegister">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/AppTheme.EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:text="@={presenter.intervieweeName}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRelationship"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/extra_margin"
+                android:text="@string/relationship"
+                android:textSize="@dimen/title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilIntervieweeName" />
+
+            <RadioGroup
+                android:id="@+id/rgRelationship"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRelationship">
+
+                <RadioButton
+                    android:id="@+id/rbFatherRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/father" />
+
+                <RadioButton
+                    android:id="@+id/rbMotherRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mother" />
+
+                <RadioButton
+                    android:id="@+id/rbGrandmotherpRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grandmother_p" />
+
+                <RadioButton
+                    android:id="@+id/rbGrandfatherpRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grandfather_p" />
+
+                <RadioButton
+                    android:id="@+id/rbGrandmothermRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grandmother_m" />
+
+                <RadioButton
+                    android:id="@+id/rbGrandfathermRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grandfather_m" />
+
+                <RadioButton
+                    android:id="@+id/rbOtherRelationshipRegister"
+                    style="@style/AppTheme.RadioButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/otherb" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilOtherRelationshipRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/other_relationship">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOtherRelationshipRegister"
+                        style="@style/AppTheme.EditTextTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="textCapSentences"
+                        android:text="@={presenter.relationship}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilMotherRegister"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -55,7 +164,7 @@
                 android:hint="@string/mother_profession"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSubtitleRegister">
+                app:layout_constraintTop_toBottomOf="@+id/rgRelationship">
 
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/AppTheme.EditTextTheme"

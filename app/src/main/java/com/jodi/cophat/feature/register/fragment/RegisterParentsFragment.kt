@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.MaritalStatusType
+import com.jodi.cophat.data.local.entity.RelationshipType
 import com.jodi.cophat.data.local.entity.ReligionType
 import com.jodi.cophat.databinding.FragmentRegisterParentsBinding
 import com.jodi.cophat.feature.register.viewmodel.RegisterParentsViewModel
@@ -29,6 +30,9 @@ class RegisterParentsFragment : BaseFragment<FragmentRegisterParentsBinding>() {
         setViews(
             binding.tvTitleRegister,
             binding.tvSubtitleRegister,
+            binding.tilIntervieweeName,
+            binding.tvRelationship,
+            binding.rgRelationship,
             binding.tilMotherRegister,
             binding.tilFatherRegister,
             binding.tvMaritalStatusRegister,
@@ -53,6 +57,31 @@ class RegisterParentsFragment : BaseFragment<FragmentRegisterParentsBinding>() {
     }
 
     private fun configureListeners() {
+        binding.rgRelationship.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                binding.rbFatherRegister.id ->
+                    binding.presenter?.relationshipType = RelationshipType.FATHER
+                binding.rbMotherRegister.id ->
+                    binding.presenter?.relationshipType = RelationshipType.MOTHER
+                binding.rbGrandmotherpRegister.id ->
+                    binding.presenter?.relationshipType = RelationshipType.GRAND_MOTHER_P
+                binding.rbGrandfatherpRegister.id ->
+                    binding.presenter?.relationshipType = RelationshipType.GRAND_FATHER_P
+                binding.rbGrandmothermRegister.id ->
+                    binding.presenter?.relationshipType = RelationshipType.GRAND_MOTHER_M
+                binding.rbGrandfathermRegister.id ->
+                    binding.presenter?.relationshipType = RelationshipType.GRAND_FATHER_M
+                binding.rbOtherRelationshipRegister.id ->
+                    binding.presenter?.relationshipType = RelationshipType.OTHER
+            }
+            when (checkedId) {
+                binding.rbOtherRelationshipRegister.id -> binding.etOtherRelationshipRegister.isEnabled = true
+                else -> {
+                    binding.etOtherRelationshipRegister.isEnabled = false
+                    binding.presenter?.relationship = ""
+                }
+            }
+        }
         binding.rgMaritalStatusRegister.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 binding.rbMarriedRegister.id ->

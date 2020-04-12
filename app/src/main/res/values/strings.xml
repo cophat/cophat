@@ -61,6 +61,14 @@
     <string name="success_remove">Remoção realizada com sucesso!</string>
     <string name="id_form">Ficha de Identificação</string>
     <string name="patient_parents">Primeiramente, me conte um pouco sobre os pais</string>
+    <string name="interviewee_name">Qual o nome do entrevistado?</string>
+    <string name="relationship">Qual o grau de parentesco com a criança?</string>
+    <string name="father">Pai</string>
+    <string name="mother">Mãe</string>
+    <string name="grandmother_p">Avó paterna</string>
+    <string name="grandfather_p">Avô paterno</string>
+    <string name="grandmother_m">Avó materna</string>
+    <string name="grandfather_m">Avô materno</string>
     <string name="mother_profession">Qual a profissão da mãe?</string>
     <string name="father_profession">Qual a profissão do pai?</string>
     <string name="marital_status">Qual o estado civil dos pais?</string>
@@ -74,6 +82,8 @@
     <string name="evangelical">Evangélica</string>
     <string name="spiritist">Espírita</string>
     <string name="other">Outra</string>
+    <string name="otherb">Outro</string>
+    <string name="other_relationship">Outro grau de parentesco.</string>
     <string name="other_religion">Outra religião</string>
     <string name="none">Nenhuma</string>
     <string name="male_treatment">" do "</string>

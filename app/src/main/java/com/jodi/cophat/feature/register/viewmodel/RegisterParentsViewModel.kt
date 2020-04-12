@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseException
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.ApplicationEntity
 import com.jodi.cophat.data.local.entity.GenderType
+import com.jodi.cophat.data.local.entity.RelationshipType
 import com.jodi.cophat.data.local.entity.ReligionType
 import com.jodi.cophat.data.presenter.RegisterParentsPresenter
 import com.jodi.cophat.data.repository.RegisterRepository
@@ -40,7 +41,9 @@ class RegisterParentsViewModel(
     }
 
     fun validatePresenter() {
-        if (presenter.motherProfession.trim().isNotEmpty() &&
+        if (presenter.intervieweeName.trim().isNotEmpty() &&
+            presenter.relationshipType != RelationshipType.OTHER || presenter.relationship.trim().isNotEmpty() &&
+            presenter.motherProfession.trim().isNotEmpty() &&
             presenter.fatherProfession.trim().isNotEmpty() &&
             (presenter.religionType != ReligionType.OTHER || presenter.religion.trim().isNotEmpty())
         ) {
@@ -59,6 +62,9 @@ class RegisterParentsViewModel(
                     val questionnaire = repository.getQuestionnaireByFamilyId(application.familyId)
 
                     val patient = application.patient
+                    patient?.intervieweeName = presenter.intervieweeName
+                    patient?.relationship = if (presenter.relationshipType != RelationshipType.OTHER)
+                        presenter.relationshipType.relationship else presenter.relationship
                     patient?.motherProfession = presenter.motherProfession
                     patient?.fatherProfession = presenter.fatherProfession
                     patient?.maritalStatus = presenter.maritalStatus.maritalStatus

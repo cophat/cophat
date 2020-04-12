@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Patient(
+    var intervieweeName: String? = null,
+    var relationship: String? = null,
     var motherProfession: String? = null,
     var fatherProfession: String? = null,
     var maritalStatus: String? = null,
