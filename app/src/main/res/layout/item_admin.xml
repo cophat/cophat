@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Matheus Ribeiro Lima" />
+            tools:text="JODI DEE HUNT FERREIRA DO AMARAL" />
 
         <TextView
             android:id="@+id/tvContactItemAdmin"
@@ -43,7 +43,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNameItemAdmin"
-            tools:text="matheusribeirolima@gmail.com" />
+            tools:text="cophatjodi@gmail.com" />
 
         <ImageView
             android:id="@+id/ivEditItemAdmin"
