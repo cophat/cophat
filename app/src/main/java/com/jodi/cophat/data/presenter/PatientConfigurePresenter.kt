@@ -178,7 +178,7 @@ data class PatientConfigurePresenter(
         get() = _diagnosticTime
         set(value) {
             _diagnosticTime = value
-            notifyPropertyChanged(BR.diagnosisTime)
+            notifyPropertyChanged(BR.diagnosticTime)
         }
 
     @IgnoredOnParcel

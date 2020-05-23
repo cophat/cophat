@@ -22,8 +22,8 @@ import kotlin.time.ExperimentalTime
 
 class QuestionnairesViewModel(
     private val repository: QuestionnairesRepository,
-    private val resourceManager: ResourceManager,
-    private val patientRepository: PatientRepository
+    private val resourceManager: ResourceManager
+//    private val patientRepository: PatientRepository
 ) : BaseViewModel() {
 
     lateinit var patient : List<ItemPatientPresenter>
@@ -34,11 +34,11 @@ class QuestionnairesViewModel(
             try {
                 isLoading.postValue(true)
 
-                patient = patientRepository.getPatients()
+//                patient = patientRepository.getPatients()
 
-                patientPresenter.postValue(
-                    PatientPresenter(patient.isEmpty().visibleOrGone(), patient)
-                )
+//                patientPresenter.postValue(
+//                    PatientPresenter(patient.isEmpty().visibleOrGone(), patient)
+//                )
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -54,18 +54,17 @@ class QuestionnairesViewModel(
     @ExperimentalTime
     fun convertToPresenter(questionnaire: Questionnaire): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
-        val patient =
 
         return ItemQuestionnairePresenter(
             applicationId = generateApplicationId(
-                questionnaire.familyId,
-                patient.get(patient.size.minus(1)).patientName
+                application?.identifyCode,
+                patient.get(patient.size.minus(1)).patientName // Apagar?
             ),
             childrenDrawable = generateChildrenDrawable(patient.get(patient.size.minus(1)).patientGender),
             childrenState = generateChildrenState(questionnaire.childApplication?.status),
             parentsState = generateParentsState(questionnaire.parentApplication?.status),
             applicationsTime = generateApplicationsTime(questionnaire),
-            hospital = generateHospital(questionnaire.hospital),
+            hospital = generateHospital(application?.hospital),
             admin = generateAdmin(questionnaire),
             excelEnabled = generateExcelEnabled(questionnaire),
             questionnaire = questionnaire
@@ -80,8 +79,8 @@ class QuestionnairesViewModel(
         }
     }
 
-    private fun generateApplicationId(familyId: String, childName: String?): String {
-        return "$familyId - $childName"
+    private fun generateApplicationId(identifyCode: String?, childName: String?): String {
+        return "$identifyCode - $childName"
     }
 
     private fun generateChildrenDrawable(gender: String?): Int {
@@ -190,15 +189,15 @@ class QuestionnairesViewModel(
 
     fun getArrayByQuestionnaire(questionnaire: Questionnaire): Array<Questionnaire> {
         return arrayOf(questionnaire.apply {
-            childApplication?.familyId = this.familyId
-            parentApplication?.familyId = this.familyId
+            childApplication?.identifyCode = this.childApplication?.identifyCode
+            parentApplication?.identifyCode = this.parentApplication?.identifyCode
         })
     }
 
     fun getArgsByQuestionnaire(questionnaire: Questionnaire?): Questionnaire? {
         return questionnaire?.apply {
-            childApplication?.familyId = this.familyId
-            parentApplication?.familyId = this.familyId
+            childApplication?.identifyCode = this.childApplication?.identifyCode
+            parentApplication?.identifyCode = this.parentApplication?.identifyCode
         }
     }
 }

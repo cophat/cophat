@@ -18,21 +18,20 @@ import kotlinx.coroutines.launch
 
 class RegisterParentsViewModel(
     private val repository: RegisterRepository,
-    private val resourceManager: ResourceManager,
-    private val patientRepository: PatientRepository
+    private val resourceManager: ResourceManager
 ) : BaseViewModel() {
 
     val presenter = RegisterParentsPresenter()
     var application: ApplicationEntity? = null
     val navigate = MutableLiveData<Int>()
-    lateinit var patient : List<ItemPatientPresenter>
+//    lateinit var patient : List<ItemPatientPresenter>
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
-                patient = patientRepository.getPatients()
+//                patient = patientRepository.getPatients()
                 application = repository.getApplication()
 
             } catch (e: DatabaseException) {
@@ -58,27 +57,18 @@ class RegisterParentsViewModel(
             try {
                 isLoading.postValue(true)
 
-//                application?.let { application ->
-//                    val questionnaire = repository.getQuestionnaireByFamilyId(application.familyId)
+                application?.let { application ->
+                    val questionnaire = repository.getQuestionnaireByFamilyId(application.identifyCode)
 
-                    // Apagar?
-                    val patient = patient.get(patient.size.minus(1))
-                    patient?.patientIntervieweeName = presenter.intervieweeName
-                    patient?.patientRelationship = if (presenter.relationshipType != RelationshipType.OTHER)
-                        presenter.relationshipType.relationship else presenter.relationship
 
-//                    repository.updateParentQuestionnaire(application, questionnaire)
-//                    repository.updateApplicationLocally(application)
+                    application.intervieweeName = presenter.intervieweeName
 
-                    // Apagar?
-//                    patientRepository.updatePatient(patient.patientIntervieweeName, patient.patientRelationship, patient.patientMotherProfession,
-//                        patient.patientFatherProfession, patient.patientMaritalStatus, patient.patientReligion, patient.patientName, patient.patientMedicalRecords,
-//                        patient.patientIdentifyCode, patient.patientBirthday, patient.patientAge, patient.patientGender, patient.patientDiagnosis, patient.patientDiagnosticTime,
-//                        patient.patientInternedDays, patient.patientHospitalizations, patient.patientSchooling, patient.patientSchoolFrequency, patient.patientLiveInThisCity,
-//                        patient.patientHome, patient.patientMonthlyIncome, patient.patientEducationDegree, patient.patientAdmin, patient.patientHospital, patient.patientFirebaseKey)
+                    repository.updateParentQuestionnaire(application, questionnaire)
+                    repository.updateApplicationLocally(application)
+
 
                     navigate.postValue(R.id.action_registerParentsFragment_to_registerPatientFragment)
-//                }
+                }
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -87,13 +77,4 @@ class RegisterParentsViewModel(
         }
     }
 
-//    private fun generateSubtitle(): String {
-////        val treatment = if (patient.get(patient.size.minus(1)).patientGender == GenderType.MALE.genderType)
-////            resourceManager.getString(R.string.male_treatment) else resourceManager.getString(R.string.female_treatment)
-////        val name = patient.get(patient.size.minus(1)).patientName
-//        val treatment = resourceManager.getString(R.string.male_treatment)
-//        val name = ""
-//
-//        return resourceManager.getString(R.string.patient_parents) + treatment + name
-//    }
 }

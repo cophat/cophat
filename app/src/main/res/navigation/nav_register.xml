@@ -12,51 +12,6 @@
         tools:layout="@layout/fragment_register_parents">
         <action
             android:id="@+id/action_registerParentsFragment_to_registerPatientFragment"
-            app:destination="@id/registerPatientFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/nav_register"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerPatientFragment"
-        android:name="com.jodi.cophat.feature.register.fragment.RegisterPatientFragment"
-        android:label="RegisterPatientFragment"
-        tools:layout="@layout/fragment_register_patient">
-        <action
-            android:id="@+id/action_registerPatientFragment_to_registerInternalFragment"
-            app:destination="@id/registerInternalFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/nav_register"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerInternalFragment"
-        android:name="com.jodi.cophat.feature.register.fragment.RegisterInternalFragment"
-        android:label="RegisterInternalFragment"
-        tools:layout="@layout/fragment_register_internal">
-        <action
-            android:id="@+id/action_registerInternalFragment_to_registerSchoolFragment"
-            app:destination="@id/registerSchoolFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/nav_register"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerSchoolFragment"
-        android:name="com.jodi.cophat.feature.register.fragment.RegisterSchoolFragment"
-        android:label="RegisterSchoolFragment"
-        tools:layout="@layout/fragment_register_school" >
-        <action
-            android:id="@+id/action_registerSchoolFragment_to_nav_questions"
             app:destination="@id/nav_questions"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"

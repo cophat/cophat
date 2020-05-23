@@ -9,10 +9,8 @@ import com.jodi.cophat.feature.questionnaires.viewmodel.QuestionnairesViewModel
 import com.jodi.cophat.feature.questions.viewmodel.CompleteViewModel
 import com.jodi.cophat.feature.questions.viewmodel.QuestionsViewModel
 import com.jodi.cophat.feature.questions.viewmodel.SubQuestionViewModel
-import com.jodi.cophat.feature.register.viewmodel.RegisterInternalViewModel
 import com.jodi.cophat.feature.register.viewmodel.RegisterParentsViewModel
 //import com.jodi.cophat.feature.register.viewmodel.RegisterPatientViewModel
-import com.jodi.cophat.feature.register.viewmodel.RegisterSchoolViewModel
 import com.jodi.cophat.ui.base.dialog.ErrorViewModel
 import com.jodi.cophat.ui.base.view.BottomButtonsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -25,7 +23,7 @@ val viewModelModule = module {
 
     viewModel { IntroViewModel(get(), get()) }
 
-    viewModel { QuestionnairesViewModel(get(), get(), get()) }
+    viewModel { QuestionnairesViewModel(get(), get()) }
 
     viewModel { ExportExcelViewModel(get()) }
 
@@ -35,13 +33,13 @@ val viewModelModule = module {
 
     viewModel { GenerateCodeViewModel(get(), get()) }
 
-    viewModel { RegisterParentsViewModel(get(), get(), get()) }
+    viewModel { RegisterParentsViewModel(get(), get()) }
 
 //    viewModel { RegisterPatientViewModel(get(), get(), get()) }
 
-    viewModel { RegisterInternalViewModel(get(), get(), get()) }
+//    viewModel { RegisterInternalViewModel(get(), get(), get()) }
 
-    viewModel { RegisterSchoolViewModel(get(), get(), get()) }
+//    viewModel { RegisterSchoolViewModel(get(), get(), get()) }
 
     viewModel { QuestionsViewModel(get(), get()) }
 

@@ -30,7 +30,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
     private var application: ApplicationEntity? = null
     private var questionnairePresenter: QuestionnairePresenter? = null
     private var hasSubQuestionToRespond: Boolean = false
-    private lateinit var familyId: String
+    private lateinit var identifyCode: String
     lateinit var patient : List<ItemPatientPresenter>
 
 
@@ -65,7 +65,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
 
     private suspend fun getUpdatedQuestionnaire() {
         repository.getFamilyId()?.let {
-            familyId = it
+            identifyCode = it
             questionnairePresenter = repository.getQuestionnaireByFamilyId(it)
         }
     }
@@ -80,21 +80,12 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
 
     // Corrigir para buscar o gênero
     private fun retrieveApplicationData() {
-        //Temp
+        //Temp // Apagar?
         patient?.let { patient ->
             GenderType.MALE
         }
         //Fim temp
 
-//        patient?.let { patient ->
-//            patient.get(patient.size.minus(1)).patientGender?.let {
-//                gender = if (it == GenderType.MALE.genderType) {
-//                    GenderType.MALE
-//                } else {
-//                    GenderType.FEMALE
-//                }
-//            }
-//        }
     }
 
     private fun retrievePositionInQuestionnaire() {
@@ -162,7 +153,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
     }
 
     private fun generatePresenter() {
-        presenter.code = familyId
+        presenter.code = identifyCode
         presenter.state = retrieveState()
         presenter.progress = retrieveProgress()
         presenter.statement = retrieveStatementByGender()

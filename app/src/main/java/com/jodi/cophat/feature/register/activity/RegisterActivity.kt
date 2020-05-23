@@ -31,9 +31,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
 
         when {
             args.step == 1 -> graph.startDestination = R.id.registerParentsFragment
-            args.step == 2 -> graph.startDestination = R.id.registerPatientFragment
-            args.step == 3 -> graph.startDestination = R.id.registerInternalFragment
-            args.step == 4 -> graph.startDestination = R.id.registerSchoolFragment
         }
         navHostFragment.navController.graph = graph
     }

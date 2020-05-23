@@ -7,7 +7,6 @@ import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.ApplicationEntity
 import com.jodi.cophat.data.local.entity.Admin
 import com.jodi.cophat.data.local.entity.Hospital
-import com.jodi.cophat.data.local.entity.Patient
 import com.jodi.cophat.data.presenter.GenerateCodePresenter
 import com.jodi.cophat.data.repository.GenerateCodeRepository
 import com.jodi.cophat.data.repository.PatientRepository
@@ -40,7 +39,8 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
     }
 
     fun validatePresenter() {
-        if (presenter.admin.name.trim().isNotEmpty() &&
+        if (presenter.identifyCode.trim().isNotEmpty() &&
+            presenter.admin.name.trim().isNotEmpty() &&
             presenter.hospital.name.trim().isNotEmpty()
         ) {
             isButtonEnabled.postValue(true)
@@ -54,20 +54,16 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
             try {
                 isLoading.postValue(true)
 
-                val identifyCode = presenter.identifyCode // Apagar?
+                val identifyCode = presenter.identifyCode // Apagar? Antes era o familyId
                 val application = generateApplicationEntity(identifyCode)
-//                generatePatient() // Apagar?
                 val questionnaire = repository.getQuestionnaireByFamilyId(identifyCode)
                 if (questionnaire == null) {
                     if (isChildren) {
                         repository.addChildQuestionnaire(
-                            identifyCode,
-                            presenter.hospital.name,
                             application
                         )
                     } else {
-                        repository.addParentQuestionnaire(identifyCode,
-                            presenter.hospital.name,
+                        repository.addParentQuestionnaire(
                             application)
                     }
                     repository.saveApplicationLocally(application)
@@ -75,14 +71,14 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
                     if (isChildren) {
                         questionnaire.questionnaire.childApplication?.let {
                             it.apply {
-//                                it.identifyCode = questionnaire.questionnaire.identifyCode
+                                it.identifyCode = questionnaire.questionnaire.childApplication?.identifyCode
                             }
                             repository.saveApplicationLocally(it)
                         }
                     } else {
                         questionnaire.questionnaire.parentApplication?.let {
                             it.apply {
-//                                it.identifyCode = questionnaire.questionnaire.identifyCode
+                                it.identifyCode = questionnaire.questionnaire.parentApplication?.identifyCode
                             }
                             repository.saveApplicationLocally(it)
                         }
@@ -96,35 +92,16 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
             }
         }
     }
-//
-//    //
-//    private fun generateFamilyId(): String {
-//        val childInitials = presenter.identifyCodeQuestions
-//            .split(' ')
-//            .mapNotNull { it.firstOrNull()?.toString() }
-//            .reduce { acc, s -> acc + s }
-//
-//        val nowFormatted = Calendar.getInstance().toString("ddMMyyyy")
-//
-//        return childInitials + nowFormatted +
-//    }
 
     private fun generateApplicationEntity(identifyCode: String): ApplicationEntity {
         return ApplicationEntity(
             identifyCode = identifyCode,
-//            patient = generatePatient(),
             admin = presenter.admin.name,
+            hospital = presenter.hospital.name,
             date = Calendar.getInstance().toString("dd/MM/yyyy"),
             startHour = Calendar.getInstance().timeInMillis
         )
     }
-
-    // Apagar?
-//    suspend fun generatePatient() {
-//        patientRepository.savePatient("", "", "", "", "", "", presenter.identifyCodeQuestions,
-//        "", "", "", 0,  "", 0, 0, 0, "",
-//            "", "", "", "", "", "", "")
-//    }
 
     private fun chooseDestination() {
         if (isChildren) {
@@ -134,17 +111,4 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
         }
     }
 
-    // Apagar?
-//    suspend fun getPatientName(): String {
-//        return try {
-//            isLoading.postValue(true)
-//
-//            repository.getPatientName() ?: ""
-//        } catch (e: DatabaseException) {
-//            handleError.postValue(e)
-//            ""
-//        } finally {
-//            isLoading.postValue(false)
-//        }
-//    }
 }

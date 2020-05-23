@@ -2,6 +2,7 @@ package com.jodi.cophat.data.local.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
@@ -11,9 +12,11 @@ import kotlinx.android.parcel.Parcelize
 @IgnoreExtraProperties
 @Entity(tableName = "application")
 data class ApplicationEntity(
-    @PrimaryKey
-    var identifyCode: String = "",
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null,
+    var identifyCode: String? = "",
     var hospital: String? = null,
+    var intervieweeName: String? = "",
     var admin: String? = null,
     var answers: HashMap<String, Answer>? = null,
     var date: String? = null,

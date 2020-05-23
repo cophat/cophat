@@ -89,7 +89,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                         ?.sortedBy { answer -> answer.id }
                     createMainHeaderComparative(
                         sheetComparative,
-                        questionnaire.familyId
+                        questionnaire.childApplication?.identifyCode
                     )
                     createSubTotalsComparative(
                         sheetComparative,
@@ -108,7 +108,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
                     createMainHeaderComparativeSubQuestions(
                         sheetSubComparative,
-                        questionnaire.familyId
+                        questionnaire.childApplication?.identifyCode
                     )
                     createSubTotalsComparativeSubQuestions(
                         sheetSubComparative,
@@ -133,7 +133,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         if (questionnaires.size > 1) {
             generateFile(resourceManager.getString(R.string.cophat), listener)
         } else {
-            generateFile(questionnaires[0].familyId, listener)
+            generateFile(questionnaires[0].childApplication?.identifyCode, listener)
         }
     }
 
@@ -264,7 +264,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var answerColumn = descriptionColumn + 1
         for (questionnaire in questionnaires) {
             headerRow.createCell(answerColumn).apply {
-                setCellValue(questionnaire.familyId)
+                setCellValue(questionnaire.childApplication?.identifyCode)
                 setCellStyle(boldStyle)
             }
             sheet.setColumnWidth(answerColumn, 6000)
@@ -282,7 +282,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var subAnswerColumn = descriptionColumn + 1
         for (questionnaire in questionnaires) {
             headerRow.createCell(subAnswerColumn).apply {
-                setCellValue(questionnaire.familyId)
+                setCellValue(questionnaire.childApplication?.identifyCode)
                 setCellStyle(boldStyle)
             }
             sheet.setColumnWidth(subAnswerColumn, 6000)
@@ -632,11 +632,11 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
     private fun createMainHeaderComparative( // header aba Questões CA x P
         sheet: HSSFSheet,
-        familyId: String
+        identifyCode: String?
     ) {
         val subTotalHeader = sheet.createRow(0).createCell(0)
         sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 2))
-        subTotalHeader.setCellValue(familyId)
+        subTotalHeader.setCellValue(identifyCode)
         subTotalHeader.setCellStyle(boldStyle)
 
     }
@@ -687,11 +687,11 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
     private fun createMainHeaderComparativeSubQuestions( // header aba Subquestões CA x P
         sheet: HSSFSheet,
-        familyId: String
+        identifyCode: String?
     ) {
         val subTotalHeaderSubQuestions = sheet.createRow(0).createCell(0)
         sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 2))
-        subTotalHeaderSubQuestions.setCellValue(familyId)
+        subTotalHeaderSubQuestions.setCellValue(identifyCode)
         subTotalHeaderSubQuestions.setCellStyle(boldStyle)
 
     }
@@ -752,8 +752,8 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         sheet.setColumnWidth(answerColumnComparative + 1, 3500)
     }
 
-    private fun generateFile(familyId: String, listener: ExportListener) {
-        val file = File(context.getExternalFilesDir(null), "$familyId.xls")
+    private fun generateFile(identifyCode: String?, listener: ExportListener) {
+        val file = File(context.getExternalFilesDir(null), "$identifyCode.xls")
         try {
             val os = FileOutputStream(file)
             workBook.write(os)

@@ -22,7 +22,7 @@ class QuestionsRepository(
     }
 
     suspend fun getFamilyId(): String? {
-        return dao.getApplication()?.familyId
+        return dao.getApplication()?.identifyCode
     }
 
 //    suspend fun getGender(): String? {
