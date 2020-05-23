@@ -14,6 +14,10 @@ val repositoryModule = module {
     }
 
     single {
+        PatientRepository(get())
+    }
+
+    single {
         GenerateCodeRepository(get(), get())
     }
 

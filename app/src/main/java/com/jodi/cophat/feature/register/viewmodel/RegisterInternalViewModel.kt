@@ -6,7 +6,9 @@ import com.google.firebase.database.DatabaseException
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.ApplicationEntity
 import com.jodi.cophat.data.local.entity.GenderType
+import com.jodi.cophat.data.presenter.ItemPatientPresenter
 import com.jodi.cophat.data.presenter.RegisterInternalPresenter
+import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.RegisterRepository
 import com.jodi.cophat.helper.ResourceManager
 import com.jodi.cophat.ui.BaseViewModel
@@ -15,18 +17,21 @@ import kotlinx.coroutines.launch
 
 class RegisterInternalViewModel(
     private val repository: RegisterRepository,
-    private val resourceManager: ResourceManager
+    private val resourceManager: ResourceManager,
+    private val patientRepository: PatientRepository
 ) : BaseViewModel() {
 
     val presenter = RegisterInternalPresenter()
     var application: ApplicationEntity? = null
     val navigate = MutableLiveData<Int>()
+    lateinit var patient : List<ItemPatientPresenter>
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
+                patient = patientRepository.getPatients()
                 application = repository.getApplication()
 
                 presenter.subtitle = generateSubtitle()
@@ -58,11 +63,11 @@ class RegisterInternalViewModel(
                 application?.let { application ->
                     val questionnaire = repository.getQuestionnaireByFamilyId(application.familyId)
 
-                    val patient = application.patient
-                    patient?.diagnosis = presenter.diagnosis
-                    patient?.diagnosticTime = Integer.valueOf(presenter.diagnosisTime)
-                    patient?.internedDays = Integer.valueOf(presenter.daysHospitalized)
-                    patient?.hospitalizations = Integer.valueOf(presenter.hospitalizations)
+                    val patient = patient.get(patient.size.minus(1))
+                    patient?.patientDiagnosis = presenter.diagnosis
+                    patient?.patientDiagnosticTime = Integer.valueOf(presenter.diagnosisTime)
+                    patient?.patientInternedDays = Integer.valueOf(presenter.daysHospitalized)
+                    patient?.patientHospitalizations = Integer.valueOf(presenter.hospitalizations)
 
                     repository.updateParentQuestionnaire(application, questionnaire)
                     repository.updateApplicationLocally(application)
@@ -77,9 +82,9 @@ class RegisterInternalViewModel(
     }
 
     private fun generateSubtitle(): String {
-        val treatment = if (application?.patient?.gender == GenderType.MALE.genderType)
+        val treatment = if (patient.get(patient.size.minus(1)).patientGender == GenderType.MALE.genderType)
             resourceManager.getString(R.string.male_treatment) else resourceManager.getString(R.string.female_treatment)
-        val name = application?.patient?.patientName
+        val name = patient.get(patient.size.minus(1)).patientName
 
         return resourceManager.getString(R.string.about_internal) + treatment + name
     }

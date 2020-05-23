@@ -2,6 +2,7 @@ package com.jodi.cophat.di
 
 import androidx.paging.PagedList
 import com.jodi.cophat.feature.configure.adapter.AdminRecyclerAdapter
+import com.jodi.cophat.feature.patient.adapter.PatientRecyclerAdapter
 import com.jodi.cophat.feature.questions.adapter.SubQuestionRecyclerAdapter
 import com.jodi.cophat.helper.ExportWorkbook
 import com.jodi.cophat.helper.ResourceManager
@@ -10,6 +11,10 @@ import org.koin.dsl.module
 val appModule = module {
     single {
         ResourceManager(get())
+    }
+
+    factory {
+        PatientRecyclerAdapter()
     }
 
     factory {

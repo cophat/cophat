@@ -1,6 +1,7 @@
 package com.jodi.cophat.di
 
 import com.jodi.cophat.feature.configure.viewmodel.ConfigureViewModel
+import com.jodi.cophat.feature.patient.viewmodel.PatientViewModel
 import com.jodi.cophat.feature.generate.viewmodel.GenerateCodeViewModel
 import com.jodi.cophat.feature.intro.viewmodel.IntroViewModel
 import com.jodi.cophat.feature.questionnaires.viewmodel.ExportExcelViewModel
@@ -10,7 +11,7 @@ import com.jodi.cophat.feature.questions.viewmodel.QuestionsViewModel
 import com.jodi.cophat.feature.questions.viewmodel.SubQuestionViewModel
 import com.jodi.cophat.feature.register.viewmodel.RegisterInternalViewModel
 import com.jodi.cophat.feature.register.viewmodel.RegisterParentsViewModel
-import com.jodi.cophat.feature.register.viewmodel.RegisterPatientViewModel
+//import com.jodi.cophat.feature.register.viewmodel.RegisterPatientViewModel
 import com.jodi.cophat.feature.register.viewmodel.RegisterSchoolViewModel
 import com.jodi.cophat.ui.base.dialog.ErrorViewModel
 import com.jodi.cophat.ui.base.view.BottomButtonsViewModel
@@ -24,23 +25,25 @@ val viewModelModule = module {
 
     viewModel { IntroViewModel(get(), get()) }
 
-    viewModel { QuestionnairesViewModel(get(), get()) }
+    viewModel { QuestionnairesViewModel(get(), get(), get()) }
 
     viewModel { ExportExcelViewModel(get()) }
 
+    viewModel { PatientViewModel(get(), get(), get()) }
+
     viewModel { ConfigureViewModel(get(), get()) }
 
-    viewModel { GenerateCodeViewModel(get()) }
+    viewModel { GenerateCodeViewModel(get(), get()) }
 
-    viewModel { RegisterParentsViewModel(get(), get()) }
+    viewModel { RegisterParentsViewModel(get(), get(), get()) }
 
-    viewModel { RegisterPatientViewModel(get(), get()) }
+//    viewModel { RegisterPatientViewModel(get(), get(), get()) }
 
-    viewModel { RegisterInternalViewModel(get(), get()) }
+    viewModel { RegisterInternalViewModel(get(), get(), get()) }
 
-    viewModel { RegisterSchoolViewModel(get(), get()) }
+    viewModel { RegisterSchoolViewModel(get(), get(), get()) }
 
-    viewModel { QuestionsViewModel(get()) }
+    viewModel { QuestionsViewModel(get(), get()) }
 
     viewModel { SubQuestionViewModel(get(), get()) }
 

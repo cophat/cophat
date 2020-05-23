@@ -17,6 +17,7 @@
     <string name="continue_questionnaire">Continuar questionário</string>
     <string name="list_questionnaires">Listar questionários</string>
     <string name="configurations">Configurações</string>
+    <string name="patients">Pacientes</string>
     <string name="emotions">Emoções</string>
     <string name="emotions_description">O que cada carinha significa?</string>
     <string name="happy">Feliz</string>
@@ -30,12 +31,12 @@
     <string name="sometimes">Às vezes</string>
     <string name="almost_never">Quase nunca</string>
     <string name="never">Nunca</string>
-    <string name="insert_data_before">Antes de começar, insira os dados abaixo para que seja gerado
-        o código da família</string>
+    <string name="insert_data_before">Antes de começar, insira os dados solicitados abaixo:</string>
     <string name="lets_learn">%1$s, vamos aprender o que significam as imagens?</string>
     <string name="advance">Avançar</string>
     <string name="go_back">Voltar</string>
     <string name="child_name">Qual o nome da criança?</string>
+    <string name="child_identify_code">Qual o código identificador da criança?</string>
     <string name="child_gender">Qual o sexo da criança?</string>
     <string name="male">Masculino</string>
     <string name="female">Feminino</string>
@@ -44,23 +45,29 @@
     <string name="choose_admin">Escolha o aplicador:</string>
     <string name="edit_or_remove_admin">Clique nos ícones para adicionar, editar ou remover
         qualquer aplicador no banco de dados da aplicação</string>
+    <string name="edit_or_remove_patient">Clique nos ícones para adicionar, editar ou remover
+        qualquer paciente no banco de dados da aplicação</string>
     <string name="edit">Editar</string>
     <string name="remove">Remover</string>
     <string name="add">Adicionar</string>
     <string name="add_admin">Adicionar aplicador</string>
     <string name="edit_admin">Editar aplicador</string>
+    <string name="add_patient">Adicionar paciente</string>
+    <string name="edit_patient">Editar paciente</string>
     <string name="add_desc_admin">Insira abaixo o nome e o e-mail do aplicador que deseja cadastrar</string>
     <string name="edit_desc_admin">Altere abaixo o nome ou o e-mail do aplicador selecionado</string>
+    <string name="add_desc_patient">Insira abaixo os dados do paciente que deseja cadastrar</string>
+    <string name="edit_desc_patient">Altere abaixo os dados do paciente selecionado</string>
     <string name="email">E-mail</string>
     <string name="cancel">Cancelar</string>
     <string name="save">Salvar</string>
     <string name="success_register">Cadastro realizado com sucesso!</string>
-    <string name="success_update">Ataulização realizada com sucesso!</string>
+    <string name="success_update">Atualização realizada com sucesso!</string>
     <string name="confirm">Confirmar</string>
     <string name="are_you_sure">Tem certeza que deseja prosseguir?\nEsta ação não poderá ser desfeita.</string>
     <string name="success_remove">Remoção realizada com sucesso!</string>
     <string name="id_form">Ficha de Identificação</string>
-    <string name="patient_parents">Primeiramente, me conte um pouco sobre os pais</string>
+    <string name="patient_parents">Primeiramente, me conte um pouco sobre a pessoa entrevistada.</string>
     <string name="interviewee_name">Qual o nome do entrevistado?</string>
     <string name="relationship">Qual o grau de parentesco com a criança?</string>
     <string name="father">Pai</string>

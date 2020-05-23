@@ -1,3 +1,5 @@
+//Apagar?
+
 package com.jodi.cophat.data.presenter
 
 import androidx.databinding.BaseObservable

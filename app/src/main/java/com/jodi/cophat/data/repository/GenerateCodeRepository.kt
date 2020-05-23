@@ -2,10 +2,7 @@ package com.jodi.cophat.data.repository
 
 import com.google.firebase.database.DatabaseReference
 import com.jodi.cophat.data.local.dao.ApplicationDao
-import com.jodi.cophat.data.local.entity.Admin
-import com.jodi.cophat.data.local.entity.ApplicationEntity
-import com.jodi.cophat.data.local.entity.Hospital
-import com.jodi.cophat.data.local.entity.Questionnaire
+import com.jodi.cophat.data.local.entity.*
 
 class GenerateCodeRepository(
     private val database: DatabaseReference,
@@ -29,28 +26,38 @@ class GenerateCodeRepository(
     }
 
     suspend fun addChildQuestionnaire(
-        familyId: String,
+        identifyCode: String,
         hospital: String,
         application: ApplicationEntity
     ) {
         addChild(
             FirebaseChild.QUESTIONNAIRES,
-            Questionnaire(familyId, hospital, childApplication = application)
+            Questionnaire(identifyCode, hospital, childApplication = application)
         )
     }
 
     suspend fun addParentQuestionnaire(
-        familyId: String,
+        identifyCode: String,
         hospital: String,
         application: ApplicationEntity
     ) {
         addChild(
             FirebaseChild.QUESTIONNAIRES,
-            Questionnaire(familyId, hospital, parentApplication = application)
+            Questionnaire(identifyCode, hospital, parentApplication = application)
         )
     }
 
-    suspend fun getPatientName(): String? {
-        return dao.getApplication()?.patient?.patientName
-    }
+    // Apagar?
+//    suspend fun getPatientName(): String {
+//        var list: List<Patient> = getDatabaseChild(FirebaseChild.PATIENTS, Patient::class.java)
+//        var index = 0
+//        if(list.size.compareTo(0) == 0) {
+//            return ""
+//        }
+//        return list?.get(index)?.name
+//    }
+
+//    suspend fun getPatientName(): String? {
+//        return dao.getApplication()?.patient?.patientName
+//    }
 }

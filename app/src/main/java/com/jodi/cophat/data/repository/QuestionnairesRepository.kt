@@ -2,10 +2,7 @@ package com.jodi.cophat.data.repository
 
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
-import com.jodi.cophat.data.local.entity.Category
-import com.jodi.cophat.data.local.entity.Form
-import com.jodi.cophat.data.local.entity.FormType
-import com.jodi.cophat.data.local.entity.Question
+import com.jodi.cophat.data.local.entity.*
 
 class QuestionnairesRepository(private val database: DatabaseReference) : BaseRepository() {
 
@@ -28,4 +25,5 @@ class QuestionnairesRepository(private val database: DatabaseReference) : BaseRe
             ?.map { entry -> entry.value }
             ?.sortedBy { it.id }
     }
+
 }

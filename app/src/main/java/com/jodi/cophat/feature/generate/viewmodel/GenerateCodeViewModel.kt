@@ -10,13 +10,14 @@ import com.jodi.cophat.data.local.entity.Hospital
 import com.jodi.cophat.data.local.entity.Patient
 import com.jodi.cophat.data.presenter.GenerateCodePresenter
 import com.jodi.cophat.data.repository.GenerateCodeRepository
+import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.helper.toString
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-class GenerateCodeViewModel(private val repository: GenerateCodeRepository) : BaseViewModel() {
+class GenerateCodeViewModel(private val repository: GenerateCodeRepository, private val patientRepository: PatientRepository) : BaseViewModel() {
 
     val admins = MutableLiveData<List<Admin>>()
     val hospitals = MutableLiveData<List<Hospital>>()
@@ -39,8 +40,7 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository) : Ba
     }
 
     fun validatePresenter() {
-        if (presenter.child.trim().isNotEmpty() &&
-            presenter.admin.name.trim().isNotEmpty() &&
+        if (presenter.admin.name.trim().isNotEmpty() &&
             presenter.hospital.name.trim().isNotEmpty()
         ) {
             isButtonEnabled.postValue(true)
@@ -54,18 +54,19 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository) : Ba
             try {
                 isLoading.postValue(true)
 
-                val familyId = generateFamilyId()
-                val application = generateApplicationEntity(familyId)
-                val questionnaire = repository.getQuestionnaireByFamilyId(familyId)
+                val identifyCode = presenter.identifyCode // Apagar?
+                val application = generateApplicationEntity(identifyCode)
+//                generatePatient() // Apagar?
+                val questionnaire = repository.getQuestionnaireByFamilyId(identifyCode)
                 if (questionnaire == null) {
                     if (isChildren) {
                         repository.addChildQuestionnaire(
-                            familyId,
+                            identifyCode,
                             presenter.hospital.name,
                             application
                         )
                     } else {
-                        repository.addParentQuestionnaire(familyId,
+                        repository.addParentQuestionnaire(identifyCode,
                             presenter.hospital.name,
                             application)
                     }
@@ -74,14 +75,14 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository) : Ba
                     if (isChildren) {
                         questionnaire.questionnaire.childApplication?.let {
                             it.apply {
-                                it.familyId = questionnaire.questionnaire.familyId
+//                                it.identifyCode = questionnaire.questionnaire.identifyCode
                             }
                             repository.saveApplicationLocally(it)
                         }
                     } else {
                         questionnaire.questionnaire.parentApplication?.let {
                             it.apply {
-                                it.familyId = questionnaire.questionnaire.familyId
+//                                it.identifyCode = questionnaire.questionnaire.identifyCode
                             }
                             repository.saveApplicationLocally(it)
                         }
@@ -95,34 +96,35 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository) : Ba
             }
         }
     }
+//
+//    //
+//    private fun generateFamilyId(): String {
+//        val childInitials = presenter.identifyCodeQuestions
+//            .split(' ')
+//            .mapNotNull { it.firstOrNull()?.toString() }
+//            .reduce { acc, s -> acc + s }
+//
+//        val nowFormatted = Calendar.getInstance().toString("ddMMyyyy")
+//
+//        return childInitials + nowFormatted +
+//    }
 
-    private fun generateFamilyId(): String {
-        val childInitials = presenter.child
-            .split(' ')
-            .mapNotNull { it.firstOrNull()?.toString() }
-            .reduce { acc, s -> acc + s }
-
-        val nowFormatted = Calendar.getInstance().toString("ddMMyyyy")
-
-        return childInitials + nowFormatted + presenter.hospital.code
-    }
-
-    private fun generateApplicationEntity(familyId: String): ApplicationEntity {
+    private fun generateApplicationEntity(identifyCode: String): ApplicationEntity {
         return ApplicationEntity(
-            familyId = familyId,
-            patient = generatePatient(),
+            identifyCode = identifyCode,
+//            patient = generatePatient(),
             admin = presenter.admin.name,
             date = Calendar.getInstance().toString("dd/MM/yyyy"),
             startHour = Calendar.getInstance().timeInMillis
         )
     }
 
-    private fun generatePatient(): Patient {
-        return Patient(
-            patientName = presenter.child,
-            gender = presenter.gender.genderType
-        )
-    }
+    // Apagar?
+//    suspend fun generatePatient() {
+//        patientRepository.savePatient("", "", "", "", "", "", presenter.identifyCodeQuestions,
+//        "", "", "", 0,  "", 0, 0, 0, "",
+//            "", "", "", "", "", "", "")
+//    }
 
     private fun chooseDestination() {
         if (isChildren) {
@@ -132,16 +134,17 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository) : Ba
         }
     }
 
-    suspend fun getPatientName(): String {
-        return try {
-            isLoading.postValue(true)
-
-            repository.getPatientName() ?: ""
-        } catch (e: DatabaseException) {
-            handleError.postValue(e)
-            ""
-        } finally {
-            isLoading.postValue(false)
-        }
-    }
+    // Apagar?
+//    suspend fun getPatientName(): String {
+//        return try {
+//            isLoading.postValue(true)
+//
+//            repository.getPatientName() ?: ""
+//        } catch (e: DatabaseException) {
+//            handleError.postValue(e)
+//            ""
+//        } finally {
+//            isLoading.postValue(false)
+//        }
+//    }
 }

@@ -92,9 +92,9 @@ abstract class BaseRepository {
                 .addOnFailureListener { d.resumeWithException(it) }
         }
 
-    suspend fun getQuestionnaireByFamilyId(familyId: String): QuestionnairePresenter? {
+    suspend fun getQuestionnaireByFamilyId(identifyCode: String): QuestionnairePresenter? {
         return getDatabaseChildHash(FirebaseChild.QUESTIONNAIRES, Questionnaire::class.java)
-            .filter { it.value.familyId == familyId }
+            .filter { it.value.identifyCode == identifyCode }
             .map { (key, value) -> QuestionnairePresenter(value, key) }
             .firstOrNull()
     }

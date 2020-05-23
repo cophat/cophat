@@ -1,0 +1,30 @@
+package com.jodi.cophat.data.presenter
+
+data class ItemPatientPresenter(
+    var patientIntervieweeName: String = "",
+    var patientRelationship: String = "",
+    var patientMotherProfession: String = "",
+    var patientFatherProfession: String = "",
+    var patientMaritalStatus: String = "",
+    var patientReligion: String = "",
+    var patientName: String = "",
+    var patientMedicalRecords: String = "",
+    var patientIdentifyCode: String = "",
+    var patientBirthday: String = "",
+    var patientAge: Int = 0,
+    var patientGender: String = "",
+    var patientDiagnosis: String = "",
+    var patientDiagnosticTime: Int = 0,
+    var patientInternedDays: Int = 0,
+    var patientHospitalizations: Int = 0,
+    var patientSchooling: String = "",
+    var patientSchoolFrequency: String = "",
+    var patientLiveInThisCity: String = "",
+    var patientHome: String = "",
+    var patientMonthlyIncome: String = "",
+    var patientEducationDegree: String = "",
+    var patientAdmin: String = "",
+    var patientHospital: String = "",
+    var patientFirebaseKey: String = "",
+    var patientDividerVisibility: Int = 0
+)

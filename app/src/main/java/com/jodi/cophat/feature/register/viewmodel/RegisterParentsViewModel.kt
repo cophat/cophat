@@ -1,14 +1,15 @@
+// Apagar?
+
 package com.jodi.cophat.feature.register.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
 import com.jodi.cophat.R
-import com.jodi.cophat.data.local.entity.ApplicationEntity
-import com.jodi.cophat.data.local.entity.GenderType
-import com.jodi.cophat.data.local.entity.RelationshipType
-import com.jodi.cophat.data.local.entity.ReligionType
+import com.jodi.cophat.data.local.entity.*
+import com.jodi.cophat.data.presenter.ItemPatientPresenter
 import com.jodi.cophat.data.presenter.RegisterParentsPresenter
+import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.RegisterRepository
 import com.jodi.cophat.helper.ResourceManager
 import com.jodi.cophat.ui.BaseViewModel
@@ -17,21 +18,23 @@ import kotlinx.coroutines.launch
 
 class RegisterParentsViewModel(
     private val repository: RegisterRepository,
-    private val resourceManager: ResourceManager
+    private val resourceManager: ResourceManager,
+    private val patientRepository: PatientRepository
 ) : BaseViewModel() {
 
     val presenter = RegisterParentsPresenter()
     var application: ApplicationEntity? = null
     val navigate = MutableLiveData<Int>()
+    lateinit var patient : List<ItemPatientPresenter>
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
+                patient = patientRepository.getPatients()
                 application = repository.getApplication()
 
-                presenter.subtitle = generateSubtitle()
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -42,10 +45,7 @@ class RegisterParentsViewModel(
 
     fun validatePresenter() {
         if (presenter.intervieweeName.trim().isNotEmpty() &&
-            presenter.relationshipType != RelationshipType.OTHER || presenter.relationship.trim().isNotEmpty() &&
-            presenter.motherProfession.trim().isNotEmpty() &&
-            presenter.fatherProfession.trim().isNotEmpty() &&
-            (presenter.religionType != ReligionType.OTHER || presenter.religion.trim().isNotEmpty())
+            presenter.relationshipType != RelationshipType.OTHER || presenter.relationship.trim().isNotEmpty()
         ) {
             isButtonEnabled.postValue(true)
         } else {
@@ -58,23 +58,27 @@ class RegisterParentsViewModel(
             try {
                 isLoading.postValue(true)
 
-                application?.let { application ->
-                    val questionnaire = repository.getQuestionnaireByFamilyId(application.familyId)
+//                application?.let { application ->
+//                    val questionnaire = repository.getQuestionnaireByFamilyId(application.familyId)
 
-                    val patient = application.patient
-                    patient?.intervieweeName = presenter.intervieweeName
-                    patient?.relationship = if (presenter.relationshipType != RelationshipType.OTHER)
+                    // Apagar?
+                    val patient = patient.get(patient.size.minus(1))
+                    patient?.patientIntervieweeName = presenter.intervieweeName
+                    patient?.patientRelationship = if (presenter.relationshipType != RelationshipType.OTHER)
                         presenter.relationshipType.relationship else presenter.relationship
-                    patient?.motherProfession = presenter.motherProfession
-                    patient?.fatherProfession = presenter.fatherProfession
-                    patient?.maritalStatus = presenter.maritalStatus.maritalStatus
-                    patient?.religion = if (presenter.religionType != ReligionType.OTHER)
-                        presenter.religionType.religion else presenter.religion
 
-                    repository.updateParentQuestionnaire(application, questionnaire)
-                    repository.updateApplicationLocally(application)
+//                    repository.updateParentQuestionnaire(application, questionnaire)
+//                    repository.updateApplicationLocally(application)
+
+                    // Apagar?
+//                    patientRepository.updatePatient(patient.patientIntervieweeName, patient.patientRelationship, patient.patientMotherProfession,
+//                        patient.patientFatherProfession, patient.patientMaritalStatus, patient.patientReligion, patient.patientName, patient.patientMedicalRecords,
+//                        patient.patientIdentifyCode, patient.patientBirthday, patient.patientAge, patient.patientGender, patient.patientDiagnosis, patient.patientDiagnosticTime,
+//                        patient.patientInternedDays, patient.patientHospitalizations, patient.patientSchooling, patient.patientSchoolFrequency, patient.patientLiveInThisCity,
+//                        patient.patientHome, patient.patientMonthlyIncome, patient.patientEducationDegree, patient.patientAdmin, patient.patientHospital, patient.patientFirebaseKey)
+
                     navigate.postValue(R.id.action_registerParentsFragment_to_registerPatientFragment)
-                }
+//                }
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -83,11 +87,13 @@ class RegisterParentsViewModel(
         }
     }
 
-    private fun generateSubtitle(): String {
-        val treatment = if (application?.patient?.gender == GenderType.MALE.genderType)
-            resourceManager.getString(R.string.male_treatment) else resourceManager.getString(R.string.female_treatment)
-        val name = application?.patient?.patientName
-
-        return resourceManager.getString(R.string.patient_parents) + treatment + name
-    }
+//    private fun generateSubtitle(): String {
+////        val treatment = if (patient.get(patient.size.minus(1)).patientGender == GenderType.MALE.genderType)
+////            resourceManager.getString(R.string.male_treatment) else resourceManager.getString(R.string.female_treatment)
+////        val name = patient.get(patient.size.minus(1)).patientName
+//        val treatment = resourceManager.getString(R.string.male_treatment)
+//        val name = ""
+//
+//        return resourceManager.getString(R.string.patient_parents) + treatment + name
+//    }
 }

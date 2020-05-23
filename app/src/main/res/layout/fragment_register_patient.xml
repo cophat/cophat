@@ -1,201 +1,201 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".feature.register.fragment.RegisterFragment">
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    tools:context=".feature.register.fragment.RegisterFragment">-->
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="presenter"
-            type="com.jodi.cophat.data.presenter.RegisterPatientPresenter" />
-    </data>
+<!--        <variable-->
+<!--            name="presenter"-->
+<!--            type="com.jodi.cophat.data.presenter.RegisterPatientPresenter" />-->
+<!--    </data>-->
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:padding="@dimen/default_padding">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:focusableInTouchMode="true"-->
+<!--            android:padding="@dimen/default_padding">-->
 
-            <TextView
-                android:id="@+id/tvTitlePatient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/id_form"
-                android:textSize="@dimen/title_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <TextView-->
+<!--                android:id="@+id/tvTitlePatient"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/id_form"-->
+<!--                android:textSize="@dimen/title_size"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-            <TextView
-                android:id="@+id/tvSubtitlePatient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/large_margin"
-                android:gravity="center"
-                android:text="@{presenter.subtitle}"
-                android:textSize="@dimen/large_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitlePatient"
-                tools:text="@string/confirm_patient" />
+<!--            <TextView-->
+<!--                android:id="@+id/tvSubtitlePatient"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/large_margin"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@{presenter.subtitle}"-->
+<!--                android:textSize="@dimen/large_size"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvTitlePatient"-->
+<!--                tools:text="@string/confirm_patient" />-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilNamePatient"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/extra_margin"
-                android:hint="@string/patient_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSubtitlePatient">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/tilNamePatient"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/extra_margin"-->
+<!--                android:hint="@string/patient_name"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvSubtitlePatient">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/AppTheme.EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:inputType="textCapWords"
-                    android:text="@={presenter.name}" />
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    style="@style/AppTheme.EditTextTheme"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:enabled="false"-->
+<!--                    android:inputType="textCapWords"-->
+<!--                    android:text="@={presenter.name}" />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilMedicalRecordsPatient"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/extra_margin"
-                android:hint="@string/medical_records"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilNamePatient">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/tilMedicalRecordsPatient"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/extra_margin"-->
+<!--                android:hint="@string/medical_records"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tilNamePatient">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/AppTheme.EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:text="@={presenter.medicalRecords}" />
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    style="@style/AppTheme.EditTextTheme"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="textCapSentences"-->
+<!--                    android:text="@={presenter.medicalRecords}" />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilIdentifyCodePatient"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/extra_margin"
-                android:hint="@string/identify_code"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMedicalRecordsPatient">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/tilIdentifyCodePatient"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/extra_margin"-->
+<!--                android:hint="@string/identify_code"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tilMedicalRecordsPatient">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/AppTheme.EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:text="@={presenter.identifyCode}" />
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    style="@style/AppTheme.EditTextTheme"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="textCapSentences"-->
+<!--                    android:text="@={presenter.identifyCode}" />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilBirthdayPatient"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/extra_margin"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:hint="@string/birth_patient"
-                app:layout_constraintEnd_toStartOf="@+id/tilAgePatient"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilIdentifyCodePatient">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/tilBirthdayPatient"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/extra_margin"-->
+<!--                android:layout_marginEnd="@dimen/medium_margin"-->
+<!--                android:hint="@string/birth_patient"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/tilAgePatient"-->
+<!--                app:layout_constraintHorizontal_bias="0.5"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tilIdentifyCodePatient">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etBirthdayPatient"
-                    style="@style/AppTheme.EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:text="@={presenter.birthday}" />
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/etBirthdayPatient"-->
+<!--                    style="@style/AppTheme.EditTextTheme"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="number"-->
+<!--                    android:maxLength="10"-->
+<!--                    android:text="@={presenter.birthday}" />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilAgePatient"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_marginTop="@dimen/extra_margin"
-                android:hint="@string/age_patient"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tilBirthdayPatient"
-                app:layout_constraintTop_toBottomOf="@+id/tilIdentifyCodePatient">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/tilAgePatient"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/medium_margin"-->
+<!--                android:layout_marginTop="@dimen/extra_margin"-->
+<!--                android:hint="@string/age_patient"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.5"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/tilBirthdayPatient"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tilIdentifyCodePatient">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/AppTheme.EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:text="@={presenter.age}" />
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    style="@style/AppTheme.EditTextTheme"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="number"-->
+<!--                    android:maxLength="2"-->
+<!--                    android:text="@={presenter.age}" />-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <TextView
-                android:id="@+id/tvGenderPatient"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/extra_margin"
-                android:text="@string/gender_patient"
-                android:textSize="@dimen/title_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilAgePatient" />
+<!--            <TextView-->
+<!--                android:id="@+id/tvGenderPatient"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/extra_margin"-->
+<!--                android:text="@string/gender_patient"-->
+<!--                android:textSize="@dimen/title_size"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tilAgePatient" />-->
 
-            <RadioButton
-                android:id="@+id/rbMalePatient"
-                style="@style/AppTheme.RadioButtonTheme"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:checked="@{presenter.male}"
-                android:enabled="false"
-                android:text="@string/male"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvGenderPatient" />
+<!--            <RadioButton-->
+<!--                android:id="@+id/rbMalePatient"-->
+<!--                style="@style/AppTheme.RadioButtonTheme"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:checked="@{presenter.male}"-->
+<!--                android:enabled="false"-->
+<!--                android:text="@string/male"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvGenderPatient" />-->
 
-            <RadioButton
-                android:id="@+id/rbFemalePatient"
-                style="@style/AppTheme.RadioButtonTheme"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:checked="@{presenter.female}"
-                android:enabled="false"
-                android:text="@string/female"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rbMalePatient" />
+<!--            <RadioButton-->
+<!--                android:id="@+id/rbFemalePatient"-->
+<!--                style="@style/AppTheme.RadioButtonTheme"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:checked="@{presenter.female}"-->
+<!--                android:enabled="false"-->
+<!--                android:text="@string/female"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/rbMalePatient" />-->
 
-            <com.jodi.cophat.ui.base.view.BottomButtonsView
-                android:id="@+id/bbvPatient"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/bottom_button_height"
-                app:bbv_primary_enabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rbFemalePatient" />
+<!--            <com.jodi.cophat.ui.base.view.BottomButtonsView-->
+<!--                android:id="@+id/bbvPatient"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="@dimen/bottom_button_height"-->
+<!--                app:bbv_primary_enabled="false"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/rbFemalePatient" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-    </ScrollView>
+<!--    </ScrollView>-->
 
-</layout>
+<!--</layout>-->

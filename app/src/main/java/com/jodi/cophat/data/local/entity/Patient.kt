@@ -1,30 +1,35 @@
 package com.jodi.cophat.data.local.entity
 
-import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.net.Inet4Address
 
-@Parcelize
 data class Patient(
-    var intervieweeName: String? = null,
-    var relationship: String? = null,
-    var motherProfession: String? = null,
-    var fatherProfession: String? = null,
-    var maritalStatus: String? = null,
-    var religion: String? = null,
-    var patientName: String? = null,
-    var medicalRecords: String? = null,
-    var identifyCode: String? = null,
-    var birthday: String? = null,
-    var age: Int? = null,
-    var gender: String? = null,
-    var diagnosis: String? = null,
-    var diagnosticTime: Int? = null,
-    var internedDays: Int? = null,
-    var hospitalizations: Int? = null,
-    var schooling: String? = null,
-    var schoolFrequency: Boolean? = null,
-    var liveInThisCity: Boolean? = null,
-    var home: String? = null,
-    var monthlyIncome: String? = null,
-    var educationDegree: String? = null
-) : Parcelable
+    var intervieweeName: String = "",
+    var relationship: String = "",
+    var motherProfession: String = "",
+    var fatherProfession: String = "",
+    var maritalStatus: String = "",
+    var religion: String = "",
+    var name: String = "",
+    var medicalRecords: String = "",
+    var identifyCode: String = "",
+    var birthday: String = "",
+    var age: Int = 0,
+    var gender: String = "",
+    var diagnosis: String = "",
+    var diagnosticTime: Int = 0,
+    var internedDays: Int = 0,
+    var hospitalizations: Int = 0,
+    var schooling: String = "",
+    var schoolFrequency: String = "",
+    var liveInThisCity: String = "",
+    var address: String = "",
+    var monthlyIncome: String = "",
+    var educationDegree: String = "",
+    var hospital: String = "",
+    var admin: String = ""
+) {
+    override fun toString(): String {
+        return name
+    }
+}

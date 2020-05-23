@@ -1,25 +1,51 @@
 package com.jodi.cophat.feature.questionnaires.viewmodel
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.Query
 import com.jodi.cophat.R
-import com.jodi.cophat.data.local.entity.ApplicationEntity
-import com.jodi.cophat.data.local.entity.ApplicationStatus
-import com.jodi.cophat.data.local.entity.GenderType
-import com.jodi.cophat.data.local.entity.Questionnaire
+import com.jodi.cophat.data.local.entity.*
+import com.jodi.cophat.data.presenter.ItemPatientPresenter
 import com.jodi.cophat.data.presenter.ItemQuestionnairePresenter
+import com.jodi.cophat.data.presenter.PatientPresenter
+import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.QuestionnairesRepository
 import com.jodi.cophat.helper.ResourceManager
+import com.jodi.cophat.helper.visibleOrGone
 import com.jodi.cophat.ui.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.Instant
 import kotlin.time.ExperimentalTime
 
 class QuestionnairesViewModel(
     private val repository: QuestionnairesRepository,
-    private val resourceManager: ResourceManager
+    private val resourceManager: ResourceManager,
+    private val patientRepository: PatientRepository
 ) : BaseViewModel() {
 
-    override fun initialize() {}
+    lateinit var patient : List<ItemPatientPresenter>
+    val patientPresenter = MutableLiveData<PatientPresenter>()
+
+    override fun initialize() {
+        viewModelScope.launch(context = Dispatchers.IO) {
+            try {
+                isLoading.postValue(true)
+
+                patient = patientRepository.getPatients()
+
+                patientPresenter.postValue(
+                    PatientPresenter(patient.isEmpty().visibleOrGone(), patient)
+                )
+            } catch (e: DatabaseException) {
+                handleError.postValue(e)
+            } finally {
+                isLoading.postValue(false)
+            }
+        }
+    }
 
     fun getQuery(): Query {
         return repository.getQuery()
@@ -28,13 +54,14 @@ class QuestionnairesViewModel(
     @ExperimentalTime
     fun convertToPresenter(questionnaire: Questionnaire): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
+        val patient =
 
         return ItemQuestionnairePresenter(
             applicationId = generateApplicationId(
                 questionnaire.familyId,
-                application?.patient?.patientName
+                patient.get(patient.size.minus(1)).patientName
             ),
-            childrenDrawable = generateChildrenDrawable(application?.patient?.gender),
+            childrenDrawable = generateChildrenDrawable(patient.get(patient.size.minus(1)).patientGender),
             childrenState = generateChildrenState(questionnaire.childApplication?.status),
             parentsState = generateParentsState(questionnaire.parentApplication?.status),
             applicationsTime = generateApplicationsTime(questionnaire),

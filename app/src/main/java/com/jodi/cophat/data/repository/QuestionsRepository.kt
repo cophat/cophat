@@ -25,8 +25,14 @@ class QuestionsRepository(
         return dao.getApplication()?.familyId
     }
 
-    suspend fun getGender(): String? {
-        return dao.getApplication()?.patient?.gender
+//    suspend fun getGender(): String? {
+//        return dao.getApplication()?.patient?.gender
+//    }
+
+    suspend fun getGender(): String {
+        var list: List<Patient> = getDatabaseChild(FirebaseChild.PATIENTS, Patient::class.java)
+//        return list.get(list.size.minus(1)).gender // Temp
+        return GenderType.MALE.genderType
     }
 
     suspend fun updateParentQuestionnaire(questionnaire: QuestionnairePresenter?) {

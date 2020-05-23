@@ -34,8 +34,6 @@ class GenerateCodeFragment : BaseFragment<FragmentGenerateCodeBinding>() {
         setViews(
             binding.tvTitleCode,
             binding.tilChildCode,
-            binding.tvGenderCode,
-            binding.rgGenderCode,
             binding.tvHospitalCode,
             binding.sHospitalCode,
             binding.tvAdminCode,
@@ -69,12 +67,6 @@ class GenerateCodeFragment : BaseFragment<FragmentGenerateCodeBinding>() {
     }
 
     private fun configureListeners() {
-        binding.rgGenderCode.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                binding.rbMaleCode.id -> binding.presenter?.gender = GenderType.MALE
-                binding.rbFemaleCode.id -> binding.presenter?.gender = GenderType.FEMALE
-            }
-        }
 
         binding.bbvCode.setBottomButtonsListener(object : BottomButtonsListener {
             override fun onPrimaryClick() {

@@ -31,6 +31,9 @@
             android:name=".feature.configure.activity.ConfigureActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
+            android:name=".feature.patient.activity.PatientActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
             android:name=".feature.questionnaires.activity.QuestionnairesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity

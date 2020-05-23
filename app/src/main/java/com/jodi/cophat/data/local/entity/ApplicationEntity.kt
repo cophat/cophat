@@ -12,8 +12,8 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "application")
 data class ApplicationEntity(
     @PrimaryKey
-    @get:Exclude var familyId: String = "",
-    var patient: Patient? = null,
+    var identifyCode: String = "",
+    var hospital: String? = null,
     var admin: String? = null,
     var answers: HashMap<String, Answer>? = null,
     var date: String? = null,

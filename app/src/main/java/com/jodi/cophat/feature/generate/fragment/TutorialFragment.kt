@@ -42,10 +42,10 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
             binding.bbvTutorial
         )
 
-        lifecycleScope.launch {
-            binding.tvIntroTutorial.text =
-                getString(R.string.lets_learn, viewModel.getPatientName())
-        }
+//        lifecycleScope.launch {
+//            binding.tvIntroTutorial.text =
+//                getString(R.string.lets_learn, viewModel.getPatientName())
+//        }
 
         binding.bbvTutorial.setBottomButtonsListener(object : BottomButtonsListener {
             override fun onPrimaryClick() {

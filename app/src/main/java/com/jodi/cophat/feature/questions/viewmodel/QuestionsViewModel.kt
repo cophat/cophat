@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
+import com.jodi.cophat.data.presenter.ItemPatientPresenter
 import com.jodi.cophat.data.presenter.QuestionnairePresenter
 import com.jodi.cophat.data.presenter.QuestionsPresenter
 import com.jodi.cophat.data.presenter.SubQuestionPresenter
 import com.jodi.cophat.data.repository.FirebaseChild
+import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.QuestionsRepository
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class QuestionsViewModel(private val repository: QuestionsRepository) : BaseViewModel() {
+class QuestionsViewModel(private val repository: QuestionsRepository, private val patientRepository: PatientRepository) : BaseViewModel() {
 
     val questions = ArrayList<Question>()
     val presenter = QuestionsPresenter()
@@ -29,12 +31,15 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
     private var questionnairePresenter: QuestionnairePresenter? = null
     private var hasSubQuestionToRespond: Boolean = false
     private lateinit var familyId: String
+    lateinit var patient : List<ItemPatientPresenter>
+
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
+                patient = patientRepository.getPatients()
                 getQuestions()
                 getUpdatedQuestionnaire()
                 getApplication()
@@ -73,16 +78,23 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
         }
     }
 
+    // Corrigir para buscar o gênero
     private fun retrieveApplicationData() {
-        application?.patient?.let { patient ->
-            patient.gender?.let {
-                gender = if (it == GenderType.MALE.genderType) {
-                    GenderType.MALE
-                } else {
-                    GenderType.FEMALE
-                }
-            }
+        //Temp
+        patient?.let { patient ->
+            GenderType.MALE
         }
+        //Fim temp
+
+//        patient?.let { patient ->
+//            patient.get(patient.size.minus(1)).patientGender?.let {
+//                gender = if (it == GenderType.MALE.genderType) {
+//                    GenderType.MALE
+//                } else {
+//                    GenderType.FEMALE
+//                }
+//            }
+//        }
     }
 
     private fun retrievePositionInQuestionnaire() {
@@ -182,15 +194,16 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
     }
 
     private fun retrieveStatementByGender(): String? {
-        return if (questions[position].statement.isNullOrEmpty()) {
-            if (gender == GenderType.MALE) {
-                questions[position].statementMale
-            } else {
-                questions[position].statementFemale
-            }
-        } else {
-            questions[position].statement
-        }
+        return questions[position].statementMale // Temp
+//        return if (questions[position].statement.isNullOrEmpty()) {
+//            if (gender == GenderType.MALE) {
+//                questions[position].statementMale
+//            } else {
+//                questions[position].statementFemale
+//            }
+//        } else {
+//            questions[position].statement
+//        }
     }
 
     fun updateApplication() {

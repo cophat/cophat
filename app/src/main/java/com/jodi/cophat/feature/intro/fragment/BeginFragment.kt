@@ -34,6 +34,7 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
             binding.tvSubtitleBegin,
             binding.btFormBegin,
             binding.btCloseBegin,
+            binding.btPatientBegin,
             binding.btListFormsBegin,
             binding.btConfigureBegin
         )
@@ -77,6 +78,10 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
 
         binding.btCloseBegin.setOnClickListener {
             findNavController().navigate(R.id.action_beginFragment_to_excludeApplicationDialog)
+        }
+
+        binding.btPatientBegin.setOnClickListener {
+            findNavController().navigate(R.id.action_beginFragment_to_nav_patient)
         }
 
         binding.btListFormsBegin.setOnClickListener {

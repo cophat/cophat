@@ -32,6 +32,13 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
+            android:id="@+id/action_beginFragment_to_nav_patient"
+            app:destination="@id/nav_patient"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
             android:id="@+id/action_beginFragment_to_nav_generate"
             app:destination="@id/nav_generate"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -68,6 +75,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <include app:graph="@navigation/nav_configure" />
+    <include app:graph="@navigation/nav_patient" />
     <include app:graph="@navigation/nav_generate" />
     <activity
         android:id="@+id/registerActivity"

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_patient"
+    app:startDestination="@id/patientFragment">
+    <fragment
+        android:id="@+id/patientFragment"
+        android:name="com.jodi.cophat.feature.patient.fragment.PatientFragment"
+        android:label="PatientFragment"
+        tools:layout="@layout/fragment_patient">
+        <action
+            android:id="@+id/action_patientFragment_to_patientDialog"
+            app:destination="@id/patientDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_patientFragment_to_configureExcludeDialog"
+            app:destination="@id/configureExcludeDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <dialog
+        android:id="@+id/patientDialog"
+        android:name="com.jodi.cophat.feature.patient.fragment.PatientDialog"
+        android:label="PatientDialog"
+        tools:layout="@layout/dialog_patient">
+        <argument
+            android:name="presenter"
+            app:argType="com.jodi.cophat.data.presenter.PatientConfigurePresenter" />
+        <argument
+            android:name="key"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_patientDialog_to_patientFragment"
+            app:destination="@id/patientFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_configure"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/configureExcludeDialog"
+        android:name="com.jodi.cophat.feature.patient.fragment.PatientExcludeDialog"
+        android:label="ConfigureExcludeDialog"
+        tools:layout="@layout/dialog_configure_exclude">
+        <argument
+            android:name="key"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_configureExcludeDialog_to_patientFragment"
+            app:destination="@id/patientFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_configure"
+            app:popUpToInclusive="true" />
+    </dialog>
+</navigation>
