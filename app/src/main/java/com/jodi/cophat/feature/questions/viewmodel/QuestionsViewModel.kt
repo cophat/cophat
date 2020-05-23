@@ -43,7 +43,6 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
                 getQuestions()
                 getUpdatedQuestionnaire()
                 getApplication()
-                retrieveApplicationData()
                 retrievePositionInQuestionnaire()
                 verifyStep()
             } catch (e: DatabaseException) {
@@ -76,16 +75,6 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
         } else {
             questionnairePresenter?.questionnaire?.parentApplication
         }
-    }
-
-    // Corrigir para buscar o gênero
-    private fun retrieveApplicationData() {
-        //Temp // Apagar?
-        patient?.let { patient ->
-            GenderType.MALE
-        }
-        //Fim temp
-
     }
 
     private fun retrievePositionInQuestionnaire() {
@@ -185,16 +174,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
     }
 
     private fun retrieveStatementByGender(): String? {
-        return questions[position].statementMale // Temp
-//        return if (questions[position].statement.isNullOrEmpty()) {
-//            if (gender == GenderType.MALE) {
-//                questions[position].statementMale
-//            } else {
-//                questions[position].statementFemale
-//            }
-//        } else {
-//            questions[position].statement
-//        }
+        return questions[position].statement
     }
 
     fun updateApplication() {

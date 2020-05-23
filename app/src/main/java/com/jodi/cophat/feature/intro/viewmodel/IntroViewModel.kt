@@ -73,15 +73,8 @@ class IntroViewModel(
                     StepsPresenter.GENERATE_CODE_STEP_0
                 isChildren ->
                     StepsPresenter.CHILD_QUESTIONS
-                // Apagar?
-//                application?.patient?.motherProfession == null ->
-//                    StepsPresenter.REGISTER_PARENTS_STEP_1
-//                application?.patient?.medicalRecords == null ->
-//                    StepsPresenter.REGISTER_PATIENT_STEP_2
-//                application?.patient?.diagnosis == null ->
-//                    StepsPresenter.REGISTER_INTERNAL_STEP_3
-//                application?.patient?.schooling == null ->
-//                    StepsPresenter.REGISTER_SCHOOL_STEP_4
+                application?.identifyCode == null ->
+                    StepsPresenter.REGISTER_PARENTS_STEP_1
                 else ->
                     StepsPresenter.CONTINUE_QUESTIONNAIRE
             }

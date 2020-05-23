@@ -23,22 +23,15 @@ import kotlin.time.ExperimentalTime
 class QuestionnairesViewModel(
     private val repository: QuestionnairesRepository,
     private val resourceManager: ResourceManager
-//    private val patientRepository: PatientRepository
 ) : BaseViewModel() {
 
     lateinit var patient : List<ItemPatientPresenter>
-    val patientPresenter = MutableLiveData<PatientPresenter>()
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
-//                patient = patientRepository.getPatients()
-
-//                patientPresenter.postValue(
-//                    PatientPresenter(patient.isEmpty().visibleOrGone(), patient)
-//                )
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -54,11 +47,18 @@ class QuestionnairesViewModel(
     @ExperimentalTime
     fun convertToPresenter(questionnaire: Questionnaire): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
+        var patientName : String = ""
+
+        for(x in patient){
+            if(x.patientIdentifyCode.equals(application?.identifyCode)){
+                patientName = x.patientName
+            }
+        }
 
         return ItemQuestionnairePresenter(
             applicationId = generateApplicationId(
                 application?.identifyCode,
-                patient.get(patient.size.minus(1)).patientName // Apagar?
+                patientName
             ),
             childrenDrawable = generateChildrenDrawable(patient.get(patient.size.minus(1)).patientGender),
             childrenState = generateChildrenState(questionnaire.childApplication?.status),

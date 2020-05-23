@@ -1,5 +1,3 @@
-// Apagar?
-
 package com.jodi.cophat.feature.register.fragment
 
 import androidx.databinding.Observable

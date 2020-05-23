@@ -42,6 +42,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
             binding.bbvTutorial
         )
 
+        // Apagar?
 //        lifecycleScope.launch {
 //            binding.tvIntroTutorial.text =
 //                getString(R.string.lets_learn, viewModel.getPatientName())

@@ -29,14 +29,7 @@ class SubQuestionViewModel(
             try {
                 isLoading.postValue(true)
 
-                repository.getGender()?.let {
-                    val gender = if (it == GenderType.MALE.genderType) {
-                        GenderType.MALE
-                    } else {
-                        GenderType.FEMALE
-                    }
-                    statement.postValue(getStatement(gender))
-                }
+                statement.postValue(getStatement())
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -45,16 +38,8 @@ class SubQuestionViewModel(
         }
     }
 
-    private fun getStatement(gender: GenderType): String? {
-        return if (presenter.subQuestion.statement.isNullOrEmpty()) {
-            if (gender == GenderType.MALE) {
-                presenter.subQuestion.statementMale
-            } else {
-                presenter.subQuestion.statementFemale
-            }
-        } else {
-            presenter.subQuestion.statement
-        }
+    private fun getStatement(): String? {
+        return presenter.subQuestion.statement
     }
 
     fun getAlternatives(): List<ItemSubQuestionPresenter>? {

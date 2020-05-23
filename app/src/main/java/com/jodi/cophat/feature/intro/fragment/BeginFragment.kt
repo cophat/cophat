@@ -58,18 +58,6 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
                         findNavController().navigate(
                             BeginFragmentDirections.actionBeginFragmentToRegisterActivity(1)
                         )
-                    StepsPresenter.REGISTER_PATIENT_STEP_2 ->
-                        findNavController().navigate(
-                            BeginFragmentDirections.actionBeginFragmentToRegisterActivity(2)
-                        )
-                    StepsPresenter.REGISTER_INTERNAL_STEP_3 ->
-                        findNavController().navigate(
-                            BeginFragmentDirections.actionBeginFragmentToRegisterActivity(3)
-                        )
-                    StepsPresenter.REGISTER_SCHOOL_STEP_4 ->
-                        findNavController().navigate(
-                            BeginFragmentDirections.actionBeginFragmentToRegisterActivity(4)
-                        )
                     StepsPresenter.CONTINUE_QUESTIONNAIRE ->
                         findNavController().navigate(R.id.action_beginFragment_to_nav_questions)
                 }

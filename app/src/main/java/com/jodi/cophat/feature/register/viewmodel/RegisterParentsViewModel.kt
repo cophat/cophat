@@ -1,5 +1,3 @@
-// Apagar?
-
 package com.jodi.cophat.feature.register.viewmodel
 
 import androidx.lifecycle.MutableLiveData
@@ -24,14 +22,12 @@ class RegisterParentsViewModel(
     val presenter = RegisterParentsPresenter()
     var application: ApplicationEntity? = null
     val navigate = MutableLiveData<Int>()
-//    lateinit var patient : List<ItemPatientPresenter>
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
-//                patient = patientRepository.getPatients()
                 application = repository.getApplication()
 
             } catch (e: DatabaseException) {

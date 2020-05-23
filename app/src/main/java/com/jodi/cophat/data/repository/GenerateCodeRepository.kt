@@ -42,18 +42,4 @@ class GenerateCodeRepository(
             Questionnaire(parentApplication = application)
         )
     }
-
-    // Apagar?
-//    suspend fun getPatientName(): String {
-//        var list: List<Patient> = getDatabaseChild(FirebaseChild.PATIENTS, Patient::class.java)
-//        var index = 0
-//        if(list.size.compareTo(0) == 0) {
-//            return ""
-//        }
-//        return list?.get(index)?.name
-//    }
-
-//    suspend fun getPatientName(): String? {
-//        return dao.getApplication()?.patient?.patientName
-//    }
 }
