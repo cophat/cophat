@@ -36,7 +36,7 @@
                 android:text="@{presenter.state}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="1 / 35" />
+                tools:text="1 / 38" />
 
             <ProgressBar
                 android:id="@+id/pbStatusQuestions"

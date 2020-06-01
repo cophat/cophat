@@ -23,11 +23,25 @@ class RegisterRepository(
     }
 
     suspend fun updateParentQuestionnaire(
-        application: ApplicationEntity,
+        application: MutableList<ApplicationEntity>,
         questionnaire: QuestionnairePresenter?
     ) {
         questionnaire?.let {
             questionnaire.questionnaire.parentApplication = application
+            updateChild(
+                FirebaseChild.QUESTIONNAIRES,
+                questionnaire.questionnaireFirebaseKey,
+                questionnaire.questionnaire
+            )
+        }
+    }
+
+    suspend fun updateChildrenQuestionnaire(
+        application: ApplicationEntity,
+        questionnaire: QuestionnairePresenter?
+    ) {
+        questionnaire?.let {
+            questionnaire.questionnaire.childApplication = application
             updateChild(
                 FirebaseChild.QUESTIONNAIRES,
                 questionnaire.questionnaireFirebaseKey,

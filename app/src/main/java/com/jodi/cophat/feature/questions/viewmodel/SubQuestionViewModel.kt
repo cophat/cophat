@@ -23,13 +23,19 @@ class SubQuestionViewModel(
     lateinit var presenter: SubQuestionPresenter
     val isPrimaryButtonEnabled = MutableLiveData<Boolean>()
     val statement = MutableLiveData<String>()
+    lateinit var gender: String
+    private var application: ApplicationEntity? = null
+    private lateinit var identifyCode: String
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
-                statement.postValue(getStatement())
+                application = getApplication(getUpdatedQuestionnaire())
+
+                statement.postValue(getStatement(application?.gender))
+
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -38,8 +44,16 @@ class SubQuestionViewModel(
         }
     }
 
-    private fun getStatement(): String? {
-        return presenter.subQuestion.statement
+    private fun getStatement(gender: String?): String? {
+        return if (presenter.subQuestion.statement.isNullOrEmpty()) {
+            if (gender.equals(GenderType.MALE.genderType)) {
+                presenter.subQuestion.statementMale
+            } else {
+                presenter.subQuestion.statementFemale
+            }
+        } else {
+            presenter.subQuestion.statement
+        }
     }
 
     fun getAlternatives(): List<ItemSubQuestionPresenter>? {
@@ -134,7 +148,7 @@ class SubQuestionViewModel(
         return if (isChildren) {
             questionnairePresenter?.questionnaire?.childApplication
         } else {
-            questionnairePresenter?.questionnaire?.parentApplication
+            questionnairePresenter?.questionnaire?.parentApplication?.last()
         }
     }
 }

@@ -10,13 +10,18 @@ import com.jodi.cophat.data.local.entity.Hospital
 import com.jodi.cophat.data.presenter.GenerateCodePresenter
 import com.jodi.cophat.data.repository.GenerateCodeRepository
 import com.jodi.cophat.data.repository.PatientRepository
+import com.jodi.cophat.data.repository.RegisterRepository
 import com.jodi.cophat.helper.toString
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.collections.ArrayList
 
-class GenerateCodeViewModel(private val repository: GenerateCodeRepository, private val patientRepository: PatientRepository) : BaseViewModel() {
+class GenerateCodeViewModel(
+    private val repository: GenerateCodeRepository,
+    private val repositoryRegister: RegisterRepository
+) : BaseViewModel() {
 
     val admins = MutableLiveData<List<Admin>>()
     val hospitals = MutableLiveData<List<Hospital>>()
@@ -41,6 +46,7 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
     fun validatePresenter() {
         if (presenter.identifyCode.trim().isNotEmpty() &&
             presenter.admin.name.trim().isNotEmpty() &&
+            presenter.gender.trim().isNotEmpty() &&
             presenter.hospital.name.trim().isNotEmpty()
         ) {
             isButtonEnabled.postValue(true)
@@ -54,33 +60,43 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
             try {
                 isLoading.postValue(true)
 
-                val identifyCode = presenter.identifyCode // Apagar? Antes era o familyId
+                val identifyCode = presenter.identifyCode
                 val application = generateApplicationEntity(identifyCode)
+                val parentList: MutableList<ApplicationEntity> = arrayListOf()
+                parentList.add(application)
                 val questionnaire = repository.getQuestionnaireByFamilyId(identifyCode)
                 if (questionnaire == null) {
                     if (isChildren) {
                         repository.addChildQuestionnaire(
+                            identifyCode,
                             application
                         )
                     } else {
                         repository.addParentQuestionnaire(
-                            application)
+                            identifyCode,
+                            parentList
+                        )
                     }
                     repository.saveApplicationLocally(application)
                 } else {
                     if (isChildren) {
-                        questionnaire.questionnaire.childApplication?.let {
+
+                        questionnaire.questionnaire.let {
                             it.apply {
-                                it.identifyCode = questionnaire.questionnaire.childApplication?.identifyCode
+                                it.childApplication = application
                             }
-                            repository.saveApplicationLocally(it)
+                            repositoryRegister.updateChildrenQuestionnaire(questionnaire?.questionnaire?.childApplication!!, questionnaire)
+                            repository.saveApplicationLocally(it.childApplication!!)
                         }
+
                     } else {
-                        questionnaire.questionnaire.parentApplication?.let {
+
+                        questionnaire.questionnaire.let {
                             it.apply {
-                                it.identifyCode = questionnaire.questionnaire.parentApplication?.identifyCode
+                                it.parentApplication.add(application)
                             }
-                            repository.saveApplicationLocally(it)
+                            repositoryRegister.updateParentQuestionnaire(questionnaire?.questionnaire?.parentApplication!!, questionnaire)
+                            repository.saveParentApplicationLocally(it.parentApplication)
                         }
                     }
                 }
@@ -96,6 +112,7 @@ class GenerateCodeViewModel(private val repository: GenerateCodeRepository, priv
     private fun generateApplicationEntity(identifyCode: String): ApplicationEntity {
         return ApplicationEntity(
             identifyCode = identifyCode,
+            gender = presenter.gender,
             admin = presenter.admin.name,
             hospital = presenter.hospital.name,
             date = Calendar.getInstance().toString("dd/MM/yyyy"),

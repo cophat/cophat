@@ -15,10 +15,11 @@ import com.jodi.cophat.data.repository.QuestionsRepository
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
 
-class QuestionsViewModel(private val repository: QuestionsRepository, private val patientRepository: PatientRepository) : BaseViewModel() {
+class QuestionsViewModel(private val repository: QuestionsRepository) : BaseViewModel() {
 
     val questions = ArrayList<Question>()
     val presenter = QuestionsPresenter()
@@ -26,12 +27,11 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
     val completeQuestionnaire = MutableLiveData<Int>()
     private var position = 0
     private var subQuestionPosition = 0
-    lateinit var gender: GenderType
+    lateinit var gender: String
     private var application: ApplicationEntity? = null
     private var questionnairePresenter: QuestionnairePresenter? = null
     private var hasSubQuestionToRespond: Boolean = false
-    private lateinit var identifyCode: String
-    lateinit var patient : List<ItemPatientPresenter>
+    lateinit var  identifyCode: String
 
 
     override fun initialize() {
@@ -39,7 +39,6 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
             try {
                 isLoading.postValue(true)
 
-                patient = patientRepository.getPatients()
                 getQuestions()
                 getUpdatedQuestionnaire()
                 getApplication()
@@ -63,9 +62,11 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
     }
 
     private suspend fun getUpdatedQuestionnaire() {
-        repository.getFamilyId()?.let {
-            identifyCode = it
-            questionnairePresenter = repository.getQuestionnaireByFamilyId(it)
+        runBlocking<Unit> {
+            repository.getFamilyId()?.let {
+                identifyCode = it
+                questionnairePresenter = repository.getQuestionnaireByFamilyId(it)
+            }
         }
     }
 
@@ -73,7 +74,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
         application = if (isChildren) {
             questionnairePresenter?.questionnaire?.childApplication
         } else {
-            questionnairePresenter?.questionnaire?.parentApplication
+            questionnairePresenter?.questionnaire?.parentApplication?.last()
         }
     }
 
@@ -156,8 +157,8 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
                     Calendar.getInstance().timeInMillis
                 repository.updateChildrenQuestionnaire(it)
             } else {
-                it.questionnaire.parentApplication?.status = ApplicationStatus.COMPLETED
-                it.questionnaire.parentApplication?.endHour =
+                it.questionnaire.parentApplication.last().status = ApplicationStatus.COMPLETED
+                it.questionnaire.parentApplication.last().endHour =
                     Calendar.getInstance().timeInMillis
                 repository.updateParentQuestionnaire(it)
             }
@@ -174,7 +175,16 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
     }
 
     private fun retrieveStatementByGender(): String? {
-        return questions[position].statement
+        gender = application?.gender.toString()
+        return if (questions[position].statement.isNullOrEmpty()) {
+            if (gender.equals(GenderType.MALE.genderType)) {
+                questions[position].statementMale
+            } else {
+                questions[position].statementFemale
+            }
+        } else {
+            questions[position].statement
+        }
     }
 
     fun updateApplication() {
@@ -212,7 +222,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository, private va
             FirebaseChild.QUESTIONNAIRES.pathName +
                     "/" +
                     questionnairePresenter?.questionnaireFirebaseKey +
-                    "/parentApplication/answers"
+                    "/parentApplication/" + questionnairePresenter?.questionnaire?.parentApplication?.lastIndex + "/answers"
         }
     }
 

@@ -22,7 +22,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
     private val headerRow = 0
     private val descriptionColumn = 0
-    private var questionsSize = 35
+    private var questionsSize = 38
     private val subQuestionsSize = 46
     private val workBook = HSSFWorkbook()
     private lateinit var boldStyle: HSSFCellStyle
@@ -74,18 +74,19 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                 generateQuestionnaire(sheetChildren, application, categories, answerColumn)
                 generateSubQuestionnaire(sheetSubChildren, application, categories, answerColumn)
             }
-            questionnaire.parentApplication?.let { application ->
-                generateQuestionnaire(sheetParents, application, categories, answerColumn)
-                generateSubQuestionnaire(sheetSubParents, application, categories, answerColumn)
+            // Verificar
+            questionnaire.parentApplication.let { application ->
+                generateQuestionnaire(sheetParents, application.last(), categories, answerColumn)
+                generateSubQuestionnaire(sheetSubParents, application.last(), categories, answerColumn)
             }
 
             questionnaire.childApplication?.let { childApplication ->
-                questionnaire.parentApplication?.let { parentApplication ->
+                questionnaire.parentApplication.let { parentApplication ->
                     createCategoriesComparative(sheetComparative, categories)
                     createCategoriesComparative(sheetSubComparative, categories)
                     val childrenAnswers = childApplication.answers?.values
                         ?.sortedBy { answer -> answer.id }
-                    val parentsAnswers = parentApplication.answers?.values
+                    val parentsAnswers = parentApplication.last().answers?.values
                         ?.sortedBy { answer -> answer.id }
                     createMainHeaderComparative(
                         sheetComparative,

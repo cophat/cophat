@@ -1,41 +1,51 @@
+// AQUI
+
 package com.jodi.cophat.feature.questionnaires.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.Query
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
-import com.jodi.cophat.data.presenter.ItemPatientPresenter
 import com.jodi.cophat.data.presenter.ItemQuestionnairePresenter
-import com.jodi.cophat.data.presenter.PatientPresenter
 import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.QuestionnairesRepository
 import com.jodi.cophat.helper.ResourceManager
-import com.jodi.cophat.helper.visibleOrGone
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.Duration
 import java.time.Instant
 import kotlin.time.ExperimentalTime
 
 class QuestionnairesViewModel(
     private val repository: QuestionnairesRepository,
-    private val resourceManager: ResourceManager
+    private val resourceManager: ResourceManager,
+    private val repositoryPatients: PatientRepository
 ) : BaseViewModel() {
 
-    lateinit var patient : List<ItemPatientPresenter>
+    lateinit var patients : List<Patient>
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
+
+                getPatients()
                 isLoading.postValue(true)
 
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
                 isLoading.postValue(false)
+            }
+        }
+    }
+
+    private suspend fun getPatients() {
+        runBlocking {
+            repositoryPatients.getAllPatients()?.let {
+                patients = it
             }
         }
     }
@@ -47,22 +57,22 @@ class QuestionnairesViewModel(
     @ExperimentalTime
     fun convertToPresenter(questionnaire: Questionnaire): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
-        var patientName : String = ""
 
-        for(x in patient){
-            if(x.patientIdentifyCode.equals(application?.identifyCode)){
-                patientName = x.patientName
+        for(x in patients){
+            if(x.identifyCode.equals(application?.identifyCode)){
+                questionnaire.patient = x
             }
         }
 
+        // Verificar
         return ItemQuestionnairePresenter(
             applicationId = generateApplicationId(
                 application?.identifyCode,
-                patientName
+                questionnaire.patient?.name
             ),
-            childrenDrawable = generateChildrenDrawable(patient.get(patient.size.minus(1)).patientGender),
+            childrenDrawable = generateChildrenDrawable(questionnaire.patient?.gender),
             childrenState = generateChildrenState(questionnaire.childApplication?.status),
-            parentsState = generateParentsState(questionnaire.parentApplication?.status),
+            parentsState = generateParentsState(questionnaire.parentApplication?.last().status),
             applicationsTime = generateApplicationsTime(questionnaire),
             hospital = generateHospital(application?.hospital),
             admin = generateAdmin(questionnaire),
@@ -75,7 +85,7 @@ class QuestionnairesViewModel(
         return if (isChildren) {
             questionnaire.childApplication
         } else {
-            questionnaire.parentApplication
+            questionnaire.parentApplication.last()
         }
     }
 
@@ -123,8 +133,8 @@ class QuestionnairesViewModel(
 
         var parentsTime = ""
         questionnaire.parentApplication?.let { application ->
-            application.startHour?.let { startHour ->
-                application.endHour?.let { endHour ->
+            application.last().startHour?.let { startHour ->
+                application.last().endHour?.let { endHour ->
                     parentsTime = formatHour(endHour, startHour)
                 }
             }
@@ -161,7 +171,7 @@ class QuestionnairesViewModel(
 
     private fun generateAdmin(questionnaire: Questionnaire): String {
         val childrenAdmin = questionnaire.childApplication?.admin ?: ""
-        val parentsAdmin = questionnaire.parentApplication?.admin ?: ""
+        val parentsAdmin = questionnaire.parentApplication?.last().admin ?: ""
 
         return if (childrenAdmin.isEmpty() && parentsAdmin.isNotEmpty()) {
             "${parentsAdmin.substringBefore(" ")} - P"
@@ -181,7 +191,7 @@ class QuestionnairesViewModel(
             enabledExcel = it.isNotEmpty()
         }
 
-        questionnaire.parentApplication?.answers?.let {
+        questionnaire.parentApplication.last().answers?.let {
             enabledExcel = it.isNotEmpty()
         }
         return enabledExcel
@@ -190,14 +200,14 @@ class QuestionnairesViewModel(
     fun getArrayByQuestionnaire(questionnaire: Questionnaire): Array<Questionnaire> {
         return arrayOf(questionnaire.apply {
             childApplication?.identifyCode = this.childApplication?.identifyCode
-            parentApplication?.identifyCode = this.parentApplication?.identifyCode
+            parentApplication.last().identifyCode = this.parentApplication?.last().identifyCode
         })
     }
 
     fun getArgsByQuestionnaire(questionnaire: Questionnaire?): Questionnaire? {
         return questionnaire?.apply {
             childApplication?.identifyCode = this.childApplication?.identifyCode
-            parentApplication?.identifyCode = this.parentApplication?.identifyCode
+            parentApplication.last().identifyCode = this.parentApplication?.last().identifyCode
         }
     }
 }

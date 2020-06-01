@@ -22,7 +22,7 @@ val viewModelModule = module {
 
     viewModel { IntroViewModel(get(), get()) }
 
-    viewModel { QuestionnairesViewModel(get(), get()) }
+    viewModel { QuestionnairesViewModel(get(), get(), get()) }
 
     viewModel { ExportExcelViewModel(get()) }
 
@@ -32,9 +32,9 @@ val viewModelModule = module {
 
     viewModel { GenerateCodeViewModel(get(), get()) }
 
-    viewModel { RegisterParentsViewModel(get(), get()) }
+    viewModel { RegisterParentsViewModel(get()) }
 
-    viewModel { QuestionsViewModel(get(), get()) }
+    viewModel { QuestionsViewModel(get()) }
 
     viewModel { SubQuestionViewModel(get(), get()) }
 

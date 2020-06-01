@@ -1,8 +1,10 @@
 package com.jodi.cophat.data.local.entity
 
+import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.net.Inet4Address
 
+@Parcelize
 data class Patient(
     var intervieweeName: String = "",
     var relationship: String = "",
@@ -28,8 +30,4 @@ data class Patient(
     var educationDegree: String = "",
     var hospital: String = "",
     var admin: String = ""
-) {
-    override fun toString(): String {
-        return name
-    }
-}
+) : Parcelable

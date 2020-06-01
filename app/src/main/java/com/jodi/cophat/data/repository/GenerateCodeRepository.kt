@@ -25,21 +25,27 @@ class GenerateCodeRepository(
         dao.insertApplication(application)
     }
 
+    suspend fun saveParentApplicationLocally(application: MutableList<ApplicationEntity>) {
+        dao.insertParentApplication(application)
+    }
+
     suspend fun addChildQuestionnaire(
+        identifyCode: String,
         application: ApplicationEntity
     ) {
         addChild(
             FirebaseChild.QUESTIONNAIRES,
-            Questionnaire(childApplication = application)
+            Questionnaire(identifyCode, childApplication = application)
         )
     }
 
     suspend fun addParentQuestionnaire(
-        application: ApplicationEntity
+        identifyCode: String,
+        application: MutableList<ApplicationEntity>
     ) {
         addChild(
             FirebaseChild.QUESTIONNAIRES,
-            Questionnaire(parentApplication = application)
+            Questionnaire(identifyCode, parentApplication = application)
         )
     }
 }

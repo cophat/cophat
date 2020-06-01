@@ -94,7 +94,7 @@ abstract class BaseRepository {
 
     suspend fun getQuestionnaireByFamilyId(identifyCode: String?): QuestionnairePresenter? {
         return getDatabaseChildHash(FirebaseChild.QUESTIONNAIRES, Questionnaire::class.java)
-            .filter { it.value.childApplication?.identifyCode == identifyCode || it.value.parentApplication?.identifyCode == identifyCode }
+            .filter {  it.value.identifyCode == identifyCode }
             .map { (key, value) -> QuestionnairePresenter(value, key) }
             .firstOrNull()
     }

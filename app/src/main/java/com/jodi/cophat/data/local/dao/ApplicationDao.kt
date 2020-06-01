@@ -15,6 +15,9 @@ interface ApplicationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertApplication(applicationEntity: ApplicationEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertParentApplication(applicationEntity: MutableList<ApplicationEntity>)
+
     @Update
     suspend fun updateApplication(applicationEntity: ApplicationEntity)
 

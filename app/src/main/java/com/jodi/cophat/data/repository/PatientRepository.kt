@@ -11,6 +11,21 @@ class PatientRepository(private val database: DatabaseReference) : BaseRepositor
 
     }
 
+    suspend fun getAllPatients(): List<Patient> {
+        val list = ArrayList<Patient>()
+        getDatabaseChildHash(FirebaseChild.PATIENTS, Patient::class.java)
+            .forEach { (key, value) ->
+                list.add(Patient(value.intervieweeName, value.relationship,
+                    value.motherProfession, value.fatherProfession, value.maritalStatus,
+                    value.religion, value.name, value.medicalRecords, value.identifyCode,
+                    value.birthday, value.age, value.gender, value.diagnosis,
+                    value.diagnosticTime, value.internedDays, value.hospitalizations,
+                    value.schooling, value.schoolFrequency, value.liveInThisCity, value.address,
+                    value.monthlyIncome, value.educationDegree, value.admin, value.hospital))
+            }
+        return list
+    }
+
     suspend fun getPatients(): List<ItemPatientPresenter> {
         val list = ArrayList<ItemPatientPresenter>()
         getDatabaseChildHash(FirebaseChild.PATIENTS, Patient::class.java)

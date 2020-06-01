@@ -1,3 +1,5 @@
+// AQUI
+
 package com.jodi.cophat.feature.questionnaires.fragment
 
 import android.Manifest
@@ -81,7 +83,7 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
                 position: Int,
                 model: Questionnaire
             ) {
-                holder.bind(viewModel.convertToPresenter(model), position)
+//                holder.bind(viewModel.convertToPresenter(model), position)
             }
 
             override fun onLoadingStateChanged(state: LoadingState) {

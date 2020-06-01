@@ -15,8 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RegisterParentsViewModel(
-    private val repository: RegisterRepository,
-    private val resourceManager: ResourceManager
+    private val repository: RegisterRepository
 ) : BaseViewModel() {
 
     val presenter = RegisterParentsPresenter()
@@ -26,10 +25,9 @@ class RegisterParentsViewModel(
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
-                isLoading.postValue(true)
-
                 application = repository.getApplication()
 
+                isLoading.postValue(true)
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -40,7 +38,7 @@ class RegisterParentsViewModel(
 
     fun validatePresenter() {
         if (presenter.intervieweeName.trim().isNotEmpty() &&
-            presenter.relationshipType != RelationshipType.OTHER || presenter.relationship.trim().isNotEmpty()
+            (presenter.relationshipType != RelationshipType.OTHER || presenter.relationship.trim().isNotEmpty())
         ) {
             isButtonEnabled.postValue(true)
         } else {
@@ -56,12 +54,16 @@ class RegisterParentsViewModel(
                 application?.let { application ->
                     val questionnaire = repository.getQuestionnaireByFamilyId(application.identifyCode)
 
+                    questionnaire?.questionnaire?.parentApplication?.last()?.intervieweeName = presenter.intervieweeName
 
-                    application.intervieweeName = presenter.intervieweeName
+                    if(presenter.relationshipType.equals(RelationshipType.OTHER)){
+                        questionnaire?.questionnaire?.parentApplication?.last()?.relationship = presenter.relationship
+                    }else{
+                        questionnaire?.questionnaire?.parentApplication?.last()?.relationship = presenter.relationshipType.relationship
+                    }
 
-                    repository.updateParentQuestionnaire(application, questionnaire)
+                    repository.updateParentQuestionnaire(questionnaire?.questionnaire?.parentApplication!!, questionnaire)
                     repository.updateApplicationLocally(application)
-
 
                     navigate.postValue(R.id.action_registerParentsFragment_to_registerPatientFragment)
                 }

@@ -13,10 +13,12 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "application")
 data class ApplicationEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null,
+    @get:Exclude @set:Exclude var id: Int? = null,
     var identifyCode: String? = "",
     var hospital: String? = null,
-    var intervieweeName: String? = "",
+    var intervieweeName: String? = null,
+    var gender: String? = null,
+    var relationship: String? = null,
     var admin: String? = null,
     var answers: HashMap<String, Answer>? = null,
     var date: String? = null,

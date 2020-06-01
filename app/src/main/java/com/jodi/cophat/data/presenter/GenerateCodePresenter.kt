@@ -9,6 +9,7 @@ import com.jodi.cophat.data.local.entity.Hospital
 
 data class GenerateCodePresenter(
     private var _identifyCode: String = "",
+    private var _gender: String = "",
     private var _hospital: Hospital = Hospital(),
     private var _admin: Admin = Admin()
 ) : BaseObservable() {
@@ -18,6 +19,14 @@ data class GenerateCodePresenter(
         set(value) {
             _identifyCode = value
             notifyPropertyChanged(BR.identifyCode)
+        }
+
+    @get:Bindable
+    var gender
+        get() = _gender
+        set(value) {
+            _gender = value
+            notifyPropertyChanged(BR.gender)
         }
 
     @get:Bindable

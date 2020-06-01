@@ -10,8 +10,10 @@ import com.jodi.cophat.data.local.entity.ReligionType
 
 data class RegisterParentsPresenter(
     private var _intervieweeName: String = "",
-    private var _relationshipType: RelationshipType = RelationshipType.FATHER,
-    private var _relationship: String = ""
+    private var _relationshipType: RelationshipType = RelationshipType.OTHER,
+    private var _relationship: String = "",
+    private var _gender: String = ""
+
 ) : BaseObservable() {
 
     @get:Bindable
