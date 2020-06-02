@@ -1,12 +1,8 @@
-// Aqui
-
 package com.jodi.cophat.data.repository
 
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
 import com.jodi.cophat.data.local.entity.*
-import com.jodi.cophat.data.presenter.ItemPatientPresenter
-import com.jodi.cophat.data.presenter.ItemQuestionnairePresenter
 
 class QuestionnairesRepository(private val database: DatabaseReference) : BaseRepository() {
 
@@ -55,17 +51,20 @@ class QuestionnairesRepository(private val database: DatabaseReference) : BaseRe
         var listQuestionnaireReport = ArrayList<QuestionnaireReport>()
         list.map {q ->
             var patient: List<Patient?> = listPatients.filter { it.identifyCode == q.identifyCode}
-            if (q.childApplication != null && !q.parentApplication.isEmpty() && !patient.isEmpty()) {
+            if (q.childApplication != null && q.childApplication?.status == ApplicationStatus.COMPLETED && !q.parentApplication.isEmpty() && !patient.isEmpty()) {
                 q.parentApplication.map { pa ->
-                    listQuestionnaireReport.add(
-                        QuestionnaireReport(
-                            pa.identifyCode,
-                            patient.last(),
-                            q.childApplication,
-                            pa
+                    if(pa.status == ApplicationStatus.COMPLETED){
+                        listQuestionnaireReport.add(
+                            QuestionnaireReport(
+                                pa.identifyCode,
+                                patient.last(),
+                                q.childApplication,
+                                pa
+                            )
                         )
-                    )
+                    }
                 }
+
             }
         }
 

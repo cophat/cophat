@@ -15,7 +15,8 @@
     <string name="initiate_questionnaire">Iniciar questionário</string>
     <string name="done_questionnaire">Finalizar questionário</string>
     <string name="continue_questionnaire">Continuar questionário</string>
-    <string name="list_questionnaires">Listar questionários</string>
+    <string name="list_questionnaires">Relatórios</string>
+    <string name="pending_questionnaires">Questionários pendentes</string>
     <string name="configurations">Configurações</string>
     <string name="patients">Pacientes</string>
     <string name="emotions">Emoções</string>

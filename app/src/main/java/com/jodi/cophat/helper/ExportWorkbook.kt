@@ -23,7 +23,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
     private val headerRow = 0
     private val descriptionColumn = 0
     private var questionsSize = 38
-    private val subQuestionsSize = 46
+    private val subQuestionsSize = 51
     private val workBook = HSSFWorkbook()
     private lateinit var boldStyle: HSSFCellStyle
     private lateinit var centerWhiteStyle: HSSFCellStyle
@@ -75,9 +75,9 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                 generateSubQuestionnaire(sheetSubChildren, application, categories, answerColumn)
             }
 
-            questionnaire.parentApplication.let { application ->
-                generateQuestionnaire(sheetParents, application!!, categories, answerColumn)
-                generateSubQuestionnaire(sheetSubParents, application!!, categories, answerColumn)
+            questionnaire.parentApplication?.let { application ->
+                generateQuestionnaire(sheetParents, application, categories, answerColumn)
+                generateSubQuestionnaire(sheetSubParents, application, categories, answerColumn)
             }
 
             questionnaire.childApplication?.let { childApplication ->
@@ -90,7 +90,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                         ?.sortedBy { answer -> answer.id }
                     createMainHeaderComparative(
                         sheetComparative,
-                        questionnaire.childApplication?.identifyCode
+                        questionnaire.identifyCode
                     )
                     createSubTotalsComparative(
                         sheetComparative,
@@ -109,7 +109,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
                     createMainHeaderComparativeSubQuestions(
                         sheetSubComparative,
-                        questionnaire.childApplication?.identifyCode
+                        questionnaire.identifyCode
                     )
                     createSubTotalsComparativeSubQuestions(
                         sheetSubComparative,
@@ -134,7 +134,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         if (questionnaires.size > 1) {
             generateFile(resourceManager.getString(R.string.cophat), listener)
         } else {
-            generateFile(questionnaires[0].childApplication?.identifyCode, listener)
+            generateFile(questionnaires[0].identifyCode, listener)
         }
     }
 
@@ -265,7 +265,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var answerColumn = descriptionColumn + 1
         for (questionnaire in questionnaires) {
             headerRow.createCell(answerColumn).apply {
-                setCellValue(questionnaire.childApplication?.identifyCode)
+                setCellValue(questionnaire.identifyCode)
                 setCellStyle(boldStyle)
             }
             sheet.setColumnWidth(answerColumn, 6000)
@@ -283,7 +283,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var subAnswerColumn = descriptionColumn + 1
         for (questionnaire in questionnaires) {
             headerRow.createCell(subAnswerColumn).apply {
-                setCellValue(questionnaire.childApplication?.identifyCode)
+                setCellValue(questionnaire.identifyCode)
                 setCellStyle(boldStyle)
             }
             sheet.setColumnWidth(subAnswerColumn, 6000)

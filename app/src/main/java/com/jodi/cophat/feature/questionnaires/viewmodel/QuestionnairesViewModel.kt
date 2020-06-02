@@ -1,23 +1,18 @@
-// AQUI
-
 package com.jodi.cophat.feature.questionnaires.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
-import com.google.firebase.database.Query
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
 import com.jodi.cophat.data.presenter.ItemQuestionnairePresenter
 import com.jodi.cophat.data.presenter.QuestionnaireReportPresenter
-import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.QuestionnairesRepository
 import com.jodi.cophat.helper.ResourceManager
 import com.jodi.cophat.helper.visibleOrGone
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.time.Duration
 import java.time.Instant
 import kotlin.time.ExperimentalTime

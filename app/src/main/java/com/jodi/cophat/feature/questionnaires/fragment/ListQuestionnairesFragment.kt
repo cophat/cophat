@@ -1,5 +1,3 @@
-// AQUI
-
 package com.jodi.cophat.feature.questionnaires.fragment
 
 import android.Manifest
