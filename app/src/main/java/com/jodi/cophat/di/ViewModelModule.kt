@@ -22,7 +22,7 @@ val viewModelModule = module {
 
     viewModel { IntroViewModel(get(), get()) }
 
-    viewModel { QuestionnairesViewModel(get(), get(), get()) }
+    viewModel { QuestionnairesViewModel(get(), get()) }
 
     viewModel { ExportExcelViewModel(get()) }
 

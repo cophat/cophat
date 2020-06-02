@@ -3,7 +3,6 @@ package com.jodi.cophat.feature.patient.adapter
 import android.view.View
 import com.jodi.cophat.R
 import com.jodi.cophat.data.presenter.ItemPatientPresenter
-import com.jodi.cophat.feature.patient.adapter.PatientViewHolder
 import com.jodi.cophat.ui.BaseRecyclerView
 
 class PatientRecyclerAdapter :

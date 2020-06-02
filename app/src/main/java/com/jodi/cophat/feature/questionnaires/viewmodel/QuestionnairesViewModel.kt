@@ -2,15 +2,18 @@
 
 package com.jodi.cophat.feature.questionnaires.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.Query
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
 import com.jodi.cophat.data.presenter.ItemQuestionnairePresenter
+import com.jodi.cophat.data.presenter.QuestionnaireReportPresenter
 import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.QuestionnairesRepository
 import com.jodi.cophat.helper.ResourceManager
+import com.jodi.cophat.helper.visibleOrGone
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,17 +24,25 @@ import kotlin.time.ExperimentalTime
 
 class QuestionnairesViewModel(
     private val repository: QuestionnairesRepository,
-    private val resourceManager: ResourceManager,
-    private val repositoryPatients: PatientRepository
+    private val resourceManager: ResourceManager
 ) : BaseViewModel() {
 
-    lateinit var patients : List<Patient>
+
+    val questionnaireReportPresenter = MutableLiveData<QuestionnaireReportPresenter>()
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
 
-                getPatients()
+                val list = repository.getQuestionnaires()
+                for (i in list) {
+                    i.questionnaireDividerVisibility = (i != list.last()).visibleOrGone()
+                }
+
+                questionnaireReportPresenter.postValue(
+                    QuestionnaireReportPresenter(list.isEmpty().visibleOrGone(), list)
+                )
+
                 isLoading.postValue(true)
 
             } catch (e: DatabaseException) {
@@ -42,27 +53,9 @@ class QuestionnairesViewModel(
         }
     }
 
-    private suspend fun getPatients() {
-        runBlocking {
-            repositoryPatients.getAllPatients()?.let {
-                patients = it
-            }
-        }
-    }
-
-    fun getQuery(): Query {
-        return repository.getQuery()
-    }
-
     @ExperimentalTime
-    fun convertToPresenter(questionnaire: Questionnaire): ItemQuestionnairePresenter {
+    fun convertToPresenter(questionnaire: QuestionnaireReport): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
-
-        for(x in patients){
-            if(x.identifyCode.equals(application?.identifyCode)){
-                questionnaire.patient = x
-            }
-        }
 
         // Verificar
         return ItemQuestionnairePresenter(
@@ -70,22 +63,27 @@ class QuestionnairesViewModel(
                 application?.identifyCode,
                 questionnaire.patient?.name
             ),
+            parentInformation = generateParentInformation(questionnaire.parentApplication?.intervieweeName, questionnaire.parentApplication?.relationship),
             childrenDrawable = generateChildrenDrawable(questionnaire.patient?.gender),
             childrenState = generateChildrenState(questionnaire.childApplication?.status),
-            parentsState = generateParentsState(questionnaire.parentApplication?.last().status),
+            parentsState = generateParentsState(questionnaire.parentApplication?.status),
             applicationsTime = generateApplicationsTime(questionnaire),
             hospital = generateHospital(application?.hospital),
             admin = generateAdmin(questionnaire),
             excelEnabled = generateExcelEnabled(questionnaire),
-            questionnaire = questionnaire
+            questionnaireReport = questionnaire
         )
     }
 
-    private fun retrieveApplication(questionnaire: Questionnaire): ApplicationEntity? {
+    private fun generateParentInformation(intervieweeName: String?, relationShip: String?): String {
+        return "$intervieweeName - $relationShip"
+    }
+
+    private fun retrieveApplication(questionnaire: QuestionnaireReport): ApplicationEntity? {
         return if (isChildren) {
             questionnaire.childApplication
         } else {
-            questionnaire.parentApplication.last()
+            questionnaire.parentApplication
         }
     }
 
@@ -121,7 +119,7 @@ class QuestionnairesViewModel(
     }
 
     @ExperimentalTime
-    private fun generateApplicationsTime(questionnaire: Questionnaire): String {
+    private fun generateApplicationsTime(questionnaire: QuestionnaireReport): String {
         var childrenTime = ""
         questionnaire.childApplication?.let { application ->
             application.startHour?.let { startHour ->
@@ -133,8 +131,8 @@ class QuestionnairesViewModel(
 
         var parentsTime = ""
         questionnaire.parentApplication?.let { application ->
-            application.last().startHour?.let { startHour ->
-                application.last().endHour?.let { endHour ->
+            application.startHour?.let { startHour ->
+                application.endHour?.let { endHour ->
                     parentsTime = formatHour(endHour, startHour)
                 }
             }
@@ -169,9 +167,9 @@ class QuestionnairesViewModel(
         return hospital ?: ""
     }
 
-    private fun generateAdmin(questionnaire: Questionnaire): String {
+    private fun generateAdmin(questionnaire: QuestionnaireReport): String {
         val childrenAdmin = questionnaire.childApplication?.admin ?: ""
-        val parentsAdmin = questionnaire.parentApplication?.last().admin ?: ""
+        val parentsAdmin = questionnaire.parentApplication?.admin ?: ""
 
         return if (childrenAdmin.isEmpty() && parentsAdmin.isNotEmpty()) {
             "${parentsAdmin.substringBefore(" ")} - P"
@@ -185,29 +183,29 @@ class QuestionnairesViewModel(
         }
     }
 
-    private fun generateExcelEnabled(questionnaire: Questionnaire): Boolean {
+    private fun generateExcelEnabled(questionnaire: QuestionnaireReport): Boolean {
         var enabledExcel = false
         questionnaire.childApplication?.answers?.let {
             enabledExcel = it.isNotEmpty()
         }
 
-        questionnaire.parentApplication.last().answers?.let {
+        questionnaire.parentApplication?.answers?.let {
             enabledExcel = it.isNotEmpty()
         }
         return enabledExcel
     }
 
-    fun getArrayByQuestionnaire(questionnaire: Questionnaire): Array<Questionnaire> {
+    fun getArrayByQuestionnaire(questionnaire: QuestionnaireReport): Array<QuestionnaireReport> {
         return arrayOf(questionnaire.apply {
             childApplication?.identifyCode = this.childApplication?.identifyCode
-            parentApplication.last().identifyCode = this.parentApplication?.last().identifyCode
+            parentApplication?.identifyCode = this.parentApplication?.identifyCode
         })
     }
 
-    fun getArgsByQuestionnaire(questionnaire: Questionnaire?): Questionnaire? {
+    fun getArgsByQuestionnaire(questionnaire: QuestionnaireReport?): QuestionnaireReport? {
         return questionnaire?.apply {
             childApplication?.identifyCode = this.childApplication?.identifyCode
-            parentApplication.last().identifyCode = this.parentApplication?.last().identifyCode
+            parentApplication?.identifyCode = this.parentApplication?.identifyCode
         }
     }
 }

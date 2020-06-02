@@ -34,7 +34,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
     private lateinit var questions: List<Question>
 
     fun exportQuestionnaires(
-        questionnaires: Array<Questionnaire>,
+        questionnaires: Array<QuestionnaireReport>,
         categories: List<Category>,
         questionsList: List<Question>?,
         listener: ExportListener
@@ -70,14 +70,14 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var answerColumn = descriptionColumn + 1
         var answerColumnComparative = descriptionColumn + 1
         for (questionnaire in questionnaires) {
-            questionnaire.childApplication?.let { application ->
+            questionnaire.childApplication?.let { application -> // Aqui
                 generateQuestionnaire(sheetChildren, application, categories, answerColumn)
                 generateSubQuestionnaire(sheetSubChildren, application, categories, answerColumn)
             }
-            // Verificar
+
             questionnaire.parentApplication.let { application ->
-                generateQuestionnaire(sheetParents, application.last(), categories, answerColumn)
-                generateSubQuestionnaire(sheetSubParents, application.last(), categories, answerColumn)
+                generateQuestionnaire(sheetParents, application!!, categories, answerColumn)
+                generateSubQuestionnaire(sheetSubParents, application!!, categories, answerColumn)
             }
 
             questionnaire.childApplication?.let { childApplication ->
@@ -86,7 +86,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                     createCategoriesComparative(sheetSubComparative, categories)
                     val childrenAnswers = childApplication.answers?.values
                         ?.sortedBy { answer -> answer.id }
-                    val parentsAnswers = parentApplication.last().answers?.values
+                    val parentsAnswers = parentApplication?.answers?.values
                         ?.sortedBy { answer -> answer.id }
                     createMainHeaderComparative(
                         sheetComparative,
@@ -143,7 +143,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         application: ApplicationEntity,
         categories: List<Category>,
         answerColumn: Int
-    ) {
+    ) { // Aqui
         createQuestions(sheet)
         createDescriptions(sheet)
         createCategories(sheet, categories)
@@ -255,7 +255,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         }
     }
 
-    private fun createHeader(sheet: HSSFSheet, questionnaires: Array<Questionnaire>) {
+    private fun createHeader(sheet: HSSFSheet, questionnaires: Array<QuestionnaireReport>) {
         val headerRow = sheet.createRow(headerRow)
         headerRow.createCell(descriptionColumn).apply {
             setCellValue(resourceManager.getString(R.string.questions))
@@ -273,7 +273,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         }
     }
 
-    private fun createSubHeader(sheet: HSSFSheet, questionnaires: Array<Questionnaire>) {
+    private fun createSubHeader(sheet: HSSFSheet, questionnaires: Array<QuestionnaireReport>) {
         val headerRow = sheet.createRow(headerRow)
         headerRow.createCell(descriptionColumn).apply {
             setCellValue(resourceManager.getString(R.string.sub_questions))
@@ -408,6 +408,8 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         sheet.setColumnWidth(descriptionColumn, 7500)
     }
 
+
+    // Aqui
     private fun createAnswers(sheet: HSSFSheet, answers: List<Answer>, answerColumn: Int) {
         var answerRow: HSSFRow
         var answer: Int?

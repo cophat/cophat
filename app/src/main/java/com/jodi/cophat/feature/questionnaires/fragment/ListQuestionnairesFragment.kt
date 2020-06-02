@@ -3,20 +3,15 @@
 package com.jodi.cophat.feature.questionnaires.fragment
 
 import android.Manifest
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagedList
-import com.firebase.ui.database.paging.DatabasePagingOptions
-import com.firebase.ui.database.paging.FirebaseRecyclerPagingAdapter
-import com.firebase.ui.database.paging.LoadingState
 import com.jodi.cophat.R
-import com.jodi.cophat.data.local.entity.Questionnaire
+import com.jodi.cophat.data.local.entity.QuestionnaireReport
+import com.jodi.cophat.data.presenter.ItemQuestionnairePresenter
 import com.jodi.cophat.databinding.FragmentListQuestionnairesBinding
+import com.jodi.cophat.feature.patient.adapter.QuestionnaireRecyclerAdapter
 import com.jodi.cophat.feature.questionnaires.activity.QuestionnairesActivity
 import com.jodi.cophat.feature.questionnaires.adapter.QuestionnaireListener
-import com.jodi.cophat.feature.questionnaires.adapter.QuestionnaireViewHolder
 import com.jodi.cophat.feature.questionnaires.viewmodel.QuestionnairesViewModel
 import com.jodi.cophat.helper.showToast
 import com.jodi.cophat.ui.BaseFragment
@@ -29,9 +24,10 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
     QuestionnaireListener {
 
     private val viewModel: QuestionnairesViewModel by sharedViewModel()
-    private val config: PagedList.Config by inject()
-    lateinit var options: DatabasePagingOptions<Questionnaire>
-    lateinit var adapter: FirebaseRecyclerPagingAdapter<Questionnaire, QuestionnaireViewHolder>
+
+    private val adapter: QuestionnaireRecyclerAdapter by inject()
+
+    lateinit var questionnaireListener: QuestionnaireListener
 
     override fun getLayout(): Int {
         return R.layout.fragment_list_questionnaires
@@ -50,60 +46,18 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
             binding.rvQuestionnaires
         )
 
+        viewModel.initialize()
+
         configureAdapter()
         configureListeners()
         configureObservers()
         checkWritePermission()
     }
 
-    @ExperimentalTime
     private fun configureAdapter() {
-        options = DatabasePagingOptions.Builder<Questionnaire>()
-            .setLifecycleOwner(this)
-            .setQuery(viewModel.getQuery(), config, Questionnaire::class.java)
-            .build()
-
-        adapter = object :
-            FirebaseRecyclerPagingAdapter<Questionnaire, QuestionnaireViewHolder>(options) {
-            override fun onCreateViewHolder(
-                parent: ViewGroup,
-                viewType: Int
-            ): QuestionnaireViewHolder {
-                return QuestionnaireViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_questionnaire,
-                        parent,
-                        false
-                    ), this@ListQuestionnairesFragment
-                )
-            }
-
-            override fun onBindViewHolder(
-                holder: QuestionnaireViewHolder,
-                position: Int,
-                model: Questionnaire
-            ) {
-//                holder.bind(viewModel.convertToPresenter(model), position)
-            }
-
-            override fun onLoadingStateChanged(state: LoadingState) {
-                when (state) {
-                    LoadingState.LOADING_INITIAL, LoadingState.LOADING_MORE ->
-                        viewModel.isLoading.postValue(true)
-                    LoadingState.LOADED ->
-                        viewModel.isLoading.postValue(false)
-                    LoadingState.FINISHED -> {
-                        viewModel.isLoading.postValue(false)
-                        binding.btExcelQuestionnaires.alpha = 1f
-                        binding.btExcelQuestionnaires.isEnabled = true
-                        context?.showToast(getString(R.string.loaded_all))
-                    }
-                    LoadingState.ERROR -> retry()
-                }
-            }
-        }
-
+        adapter.questionnaireListener = this
         binding.rvQuestionnaires.adapter = adapter
+        binding.btExcelQuestionnaires.isEnabled = true
     }
 
     private fun configureListeners() {
@@ -114,7 +68,17 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
         }
     }
 
+    @ExperimentalTime
     private fun configureObservers() {
+        viewModel.questionnaireReportPresenter.observe(this,
+            Observer {
+                var temp: MutableList<ItemQuestionnairePresenter> = ArrayList<ItemQuestionnairePresenter>()
+                it.questionnaireReports.map { questionnaireReport ->
+                    temp.add(viewModel.convertToPresenter(questionnaireReport))
+                }
+                adapter.setItems(temp)
+            })
+
         viewModel.hasPermission.observe(this, Observer {
             if (!it) {
                 context?.showToast(getString(R.string.turn_on_permission))
@@ -127,20 +91,20 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
         baseActivity.requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
-    private fun generateQuestionnaires(): Array<Questionnaire>? {
-        return adapter.currentList
-            ?.map { snapshot ->
-                val questionnaire = snapshot.getValue(Questionnaire::class.java)
+    private fun generateQuestionnaires(): Array<QuestionnaireReport>? {
+        return adapter.presenterList
+            .map { snapshot ->
+                val questionnaire = snapshot.questionnaireReport
                 viewModel.getArgsByQuestionnaire(questionnaire)!!
             }
-            ?.toTypedArray()
+            .toTypedArray()
     }
 
-    override fun onClickExcel(item: Questionnaire) {
+    override fun onClickExcel(item: QuestionnaireReport) {
         showDialog(viewModel.getArrayByQuestionnaire(item))
     }
 
-    private fun showDialog(questionnaires: Array<Questionnaire>) {
+    private fun showDialog(questionnaires: Array<QuestionnaireReport>) {
         viewModel.hasPermission.value?.let {
             if (it) {
                 findNavController().navigate(
@@ -154,13 +118,4 @@ class ListQuestionnairesFragment : BaseFragment<FragmentListQuestionnairesBindin
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        adapter.startListening()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        adapter.stopListening()
-    }
 }

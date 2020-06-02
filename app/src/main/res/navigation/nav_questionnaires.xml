@@ -21,6 +21,6 @@
         tools:layout="@layout/dialog_export_excel" >
         <argument
             android:name="questionnaires"
-            app:argType="com.jodi.cophat.data.local.entity.Questionnaire[]" />
+            app:argType="com.jodi.cophat.data.local.entity.QuestionnaireReport[]" />
     </dialog>
 </navigation>

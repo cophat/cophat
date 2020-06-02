@@ -1,10 +1,14 @@
 package com.jodi.cophat.data.presenter
 
 import androidx.annotation.DrawableRes
+import com.jodi.cophat.data.local.entity.ApplicationEntity
+import com.jodi.cophat.data.local.entity.Patient
 import com.jodi.cophat.data.local.entity.Questionnaire
+import com.jodi.cophat.data.local.entity.QuestionnaireReport
 
 data class ItemQuestionnairePresenter(
     val applicationId: String,
+    val parentInformation: String,
     @DrawableRes
     val childrenDrawable: Int,
     val childrenState: String,
@@ -13,5 +17,5 @@ data class ItemQuestionnairePresenter(
     val hospital: String,
     val admin: String,
     val excelEnabled: Boolean,
-    val questionnaire: Questionnaire
+    val questionnaireReport: QuestionnaireReport
 )
