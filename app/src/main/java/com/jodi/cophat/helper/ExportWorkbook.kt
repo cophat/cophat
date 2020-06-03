@@ -1,7 +1,6 @@
 package com.jodi.cophat.helper
 
 import android.content.Context
-import android.util.AndroidException
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
 import org.apache.poi.hssf.record.cf.BorderFormatting
@@ -54,7 +53,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         val sheetSubChildren =
             workBook.createSheet(resourceManager.getString(R.string.sub_children))
         createSubHeader(sheetSubChildren, questionnaires)
-//
+
         val sheetParents =
             workBook.createSheet(resourceManager.getString(R.string.parents_responsible))
         createHeader(sheetParents, questionnaires, "parent")
@@ -63,81 +62,30 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
             workBook.createSheet(resourceManager.getString(R.string.sub_parents))
         createSubHeader(sheetSubParents, questionnaires)
 
-//        val sheetComparative = workBook.createSheet(resourceManager.getString(R.string.comparative))
-//
-//        val sheetSubComparative =
-//            workBook.createSheet(resourceManager.getString(R.string.sub_comparative))
+        val sheetComparative = workBook.createSheet(resourceManager.getString(R.string.comparative))
+        createMainHeaderComparative(sheetComparative, questionnaires)
 
-        var answerColumn = descriptionColumn + 1
-        var answerColumnComparative = descriptionColumn + 1
+        val sheetSubComparative =
+            workBook.createSheet(resourceManager.getString(R.string.sub_comparative))
+        createMainHeaderComparativeSubQuestions(sheetSubComparative, questionnaires)
+
         // Children Questions
         generateQuestionnaire(sheetChildren, questionnaires, categories, "children")
         generateSubQuestionnaire(sheetSubChildren, questionnaires, categories, "children")
+
         // Parents Questions
         generateQuestionnaire(sheetParents, questionnaires, categories, "parent")
         generateSubQuestionnaire(sheetSubParents, questionnaires, categories, "parent")
 
-//        for (questionnaire in questionnaires) {
-//            questionnaire.childApplication?.let { application -> // Aqui
-//                generateQuestionnaire(sheetChildren, application, categories, answerColumn)
-//                generateSubQuestionnaire(sheetSubChildren, application, categories, answerColumn)
-//            }
-//
-//            questionnaire.parentApplication?.let { application ->
-//                generateQuestionnaire(sheetParents, application, categories, answerColumn)
-//                generateSubQuestionnaire(sheetSubParents, application, categories, answerColumn)
-//            }
-//
-//            questionnaire.childApplication?.let { childApplication ->
-//                questionnaire.parentApplication.let { parentApplication ->
-//                    createCategoriesComparative(sheetComparative, categories)
-//                    createCategoriesComparative(sheetSubComparative, categories)
-//                    val childrenAnswers = childApplication.answers?.values
-//                        ?.sortedBy { answer -> answer.id }
-//                    val parentsAnswers = parentApplication?.answers?.values
-//                        ?.sortedBy { answer -> answer.id }
-//                    createMainHeaderComparative(
-//                        sheetComparative,
-//                        questionnaire.identifyCode
-//                    )
-//                    createSubTotalsComparative(
-//                        sheetComparative,
-//                        categories,
-//                        childrenAnswers,
-//                        parentsAnswers,
-//                        answerColumnComparative,
-//                        answerColumn
-//                    )
-//                    createTotalsComparative(
-//                        sheetComparative,
-//                        childrenAnswers,
-//                        parentsAnswers,
-//                        answerColumnComparative
-//                    )
-//
-//                    createMainHeaderComparativeSubQuestions(
-//                        sheetSubComparative,
-//                        questionnaire.identifyCode
-//                    )
-//                    createSubTotalsComparativeSubQuestions(
-//                        sheetSubComparative,
-//                        categories,
-//                        childrenAnswers,
-//                        parentsAnswers,
-//                        answerColumnComparative,
-//                        answerColumn
-//                    )
-//                    createTotalsComparativeSubQuestions(
-//                        sheetSubComparative,
-//                        childrenAnswers,
-//                        parentsAnswers,
-//                        answerColumnComparative
-//                    )
-//                    answerColumnComparative += 2
-//                }
-//            }
-//            answerColumn++
-//        }
+        // Comparative  Questions
+        createCategoriesComparative(sheetComparative, categories)
+        createSubTotalsComparative(sheetComparative, categories, questionnaires)
+        createTotalsComparative(sheetComparative, questionnaires)
+
+        // Comparative SubQuestions
+        createCategoriesComparative(sheetSubComparative, categories)
+        createSubTotalsComparativeSubQuestions(sheetSubComparative, categories, questionnaires)
+        createTotalsComparativeSubQuestions(sheetSubComparative, questionnaires)
 
         if (questionnaires.size > 1) {
             generateFile(resourceManager.getString(R.string.cophat), listener)
@@ -447,7 +395,6 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
             setCellValue(resourceManager.getString(R.string.category))
             setCellStyle(boldStyle)
         }
-
         var categoriesPositionRow = 2
 
         var categoriesRow: HSSFRow
@@ -591,12 +538,12 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
     private fun createTotalsComparative(
         sheet: HSSFSheet,
-        childrenAnswers: List<Answer>?,
-        parentsAnswers: List<Answer>?,
-        answerColumnComparative: Int
+        questionnaires: Array<QuestionnaireReport>
     ) {
         val totalPositionRow = 7
         val totalRow: HSSFRow = sheet.createRow(totalPositionRow)
+        var columnChildren = 1
+        var columnParents = 2
 
         val totalDescriptionRow = sheet.createRow(totalPositionRow)
         totalDescriptionRow.createCell(descriptionColumn).apply {
@@ -604,37 +551,43 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
             setCellStyle(boldStyle)
         }
 
-        var childrenTotal = 0
-        childrenAnswers?.let {
-            for (answer in childrenAnswers) {
-                childrenTotal += (answer.chosenAnswer?.chosenAnswerPoints ?: 0)
+        for(questionnaire in questionnaires){
+            var childrenTotal = 0
+            var childrenAnswer = questionnaire.childApplication?.answers!!
+            childrenAnswer.let {
+                for (answer in childrenAnswer) {
+                    childrenTotal += (answer.value.chosenAnswer?.chosenAnswerPoints ?: 0)
+                }
             }
-        }
-        totalRow.createCell(answerColumnComparative).apply {
-            setCellValue("$childrenTotal")
-            setCellStyle(boldStyle)
-        }
+            totalRow.createCell(columnChildren).apply {
+                setCellValue("$childrenTotal")
+                setCellStyle(boldStyle)
+            }
 
-        var parentsTotal = 0
-        parentsAnswers?.let {
-            for (answer in parentsAnswers) {
-                parentsTotal += (answer.chosenAnswer?.chosenAnswerPoints ?: 0)
+            var parentsTotal = 0
+            var parentAnswers = questionnaire.parentApplication?.answers!!
+            parentAnswers?.let {
+                for (answer in parentAnswers) {
+                    parentsTotal += (answer.value.chosenAnswer?.chosenAnswerPoints ?: 0)
+                }
             }
-        }
-        totalRow.createCell(answerColumnComparative + 1).apply {
-            setCellValue("$parentsTotal")
-            setCellStyle(boldStyle)
+            totalRow.createCell(columnParents).apply {
+                setCellValue("$parentsTotal")
+                setCellStyle(boldStyle)
+            }
+            columnChildren += 2
+            columnParents += 2
         }
     }
 
     private fun createTotalsComparativeSubQuestions(
         sheet: HSSFSheet,
-        childrenAnswers: List<Answer>?,
-        parentsAnswers: List<Answer>?,
-        answerColumnComparative: Int
+        questionnaires: Array<QuestionnaireReport>
     ) {
         val totalPositionRow = 7
         val totalRow: HSSFRow = sheet.createRow(totalPositionRow)
+        var columnChildren = 1
+        var columnParents = 2
 
         val totalDescriptionRow = sheet.createRow(totalPositionRow)
         totalDescriptionRow.createCell(descriptionColumn).apply {
@@ -642,35 +595,42 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
             setCellStyle(boldStyle)
         }
 
-        var childrenTotal = 0
-        childrenAnswers?.let {
-            for (answer in childrenAnswers) {
-                childrenTotal += (answer.subAnswers?.values?.sumBy { subAnswer ->
-                    subAnswer.alternatives?.values?.sumBy { alternative ->
-                        alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
-                    } ?: 0
-                } ?: 0)
+        for(questionnaire in questionnaires){
+            var childrenTotal = 0
+            var childrenAnswer = questionnaire.childApplication?.answers!!
+            childrenAnswer?.let {
+                for (answer in childrenAnswer) {
+                    childrenTotal += (answer.value.subAnswers?.values?.sumBy { subAnswer ->
+                        subAnswer.alternatives?.values?.sumBy { alternative ->
+                            alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
+                        } ?: 0
+                    } ?: 0)
+                }
             }
-        }
-        totalRow.createCell(answerColumnComparative).apply {
-            setCellValue("$childrenTotal")
-            setCellStyle(boldStyle)
+            totalRow.createCell(columnChildren).apply {
+                setCellValue("$childrenTotal")
+                setCellStyle(boldStyle)
+            }
+
+            var parentsTotal = 0
+            var parentAnswers = questionnaire.parentApplication?.answers!!
+            parentAnswers?.let {
+                for (answer in parentAnswers) {
+                    parentsTotal += (answer.value.subAnswers?.values?.sumBy { subAnswer ->
+                        subAnswer.alternatives?.values?.sumBy { alternative ->
+                            alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
+                        } ?: 0
+                    } ?: 0)
+                }
+            }
+            totalRow.createCell(columnParents).apply {
+                setCellValue("$parentsTotal")
+                setCellStyle(boldStyle)
+            }
+            columnChildren += 2
+            columnParents += 2
         }
 
-        var parentsTotal = 0
-        parentsAnswers?.let {
-            for (answer in parentsAnswers) {
-                parentsTotal += (answer.subAnswers?.values?.sumBy { subAnswer ->
-                    subAnswer.alternatives?.values?.sumBy { alternative ->
-                        alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
-                    } ?: 0
-                } ?: 0)
-            }
-        }
-        totalRow.createCell(answerColumnComparative + 1).apply {
-            setCellValue("$parentsTotal")
-            setCellStyle(boldStyle)
-        }
     }
 
     private fun createSubTotals(
@@ -747,124 +707,208 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
     private fun createMainHeaderComparative( // header aba Questões CA x P
         sheet: HSSFSheet,
-        identifyCode: String?
+        questionnaires: Array<QuestionnaireReport>
     ) {
-        val subTotalHeader = sheet.createRow(0).createCell(0)
-        sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 2))
-        subTotalHeader.setCellValue(identifyCode)
-        subTotalHeader.setCellStyle(boldStyle)
+        var children = 1
+        var parent = 2
+        var subTotalHeader = sheet.createRow(0)
+        for (questionnaire in questionnaires) {
 
+            subTotalHeader.createCell(children).apply {
+                setCellValue("${questionnaire.identifyCode} - ${questionnaire.patient?.name}")
+                setCellStyle(boldStyle)
+            }
+            sheet.addMergedRegion(CellRangeAddress(0, 0, children, parent))
+
+            children += 2
+            parent += 2
+        }
     }
 
     private fun createSubTotalsComparative( // colunas aba Questões CA x P
         sheet: HSSFSheet,
         categories: List<Category>,
-        childrenAnswers: List<Answer>?,
-        parentsAnswers: List<Answer>?,
-        answerColumnComparative: Int,
-        answerColumn: Int
+        questionnaires: Array<QuestionnaireReport>
     ) {
-        val subTotalHeaderChild = sheet.getRow(1).createCell(answerColumn)
-        subTotalHeaderChild.setCellValue(resourceManager.getString(R.string.child))
-        subTotalHeaderChild.setCellStyle(boldStyle)
-
-        val subTotalHeaderParents = sheet.getRow(1).createCell(answerColumn + 1)
-        subTotalHeaderParents.setCellValue(resourceManager.getString(R.string.parent))
-        subTotalHeaderParents.setCellStyle(boldStyle)
-
-        var categoriesPositionRow = 2
-
-        var categoriesRow: HSSFRow
-        for (category in categories) {
-            categoriesRow = sheet.getRow(categoriesPositionRow)
-
-            val categoryChildrenPoints =
-                childrenAnswers?.filter { questions[it.id - 1].category == category.type }
-                    ?.sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
-            categoriesRow.createCell(answerColumnComparative).apply {
-                setCellValue("$categoryChildrenPoints")
-                setCellStyle(getStyleByCategory(category.type))
+        var allAnswersChild: MutableList<Answer> = ArrayList()
+        var allAnswersParents: MutableList<Answer> = ArrayList()
+        questionnaires.map { questionnaire ->
+            val answersChild = questionnaire.childApplication?.answers!!.let {
+                it.values.sortedBy { answer -> answer.id }
             }
-
-            val categoryParentsPoints =
-                parentsAnswers?.filter { questions[it.id - 1].category == category.type }
-                    ?.sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
-            categoriesRow.createCell(answerColumnComparative + 1).apply {
-                setCellValue("$categoryParentsPoints")
-                setCellStyle(getStyleByCategory(category.type))
+            answersChild.map { ans ->
+                allAnswersChild.add(ans)
             }
-
-            categoriesPositionRow++
+            val answersParents = questionnaire.parentApplication?.answers!!.let {
+                it.values.sortedBy { answer -> answer.id }
+            }
+            answersParents.map { ans ->
+                allAnswersParents.add(ans)
+            }
         }
-        sheet.setColumnWidth(answerColumnComparative, 3500)
-        sheet.setColumnWidth(answerColumnComparative + 1, 3500)
+
+        var tempAswersChild: MutableList<Answer> = ArrayList()
+        var tempAswersParent: MutableList<Answer> = ArrayList()
+        var colC = 1
+        var colP = 2
+
+
+        for (index in 1..allAnswersChild?.size!!) {
+            var categoriesRow: HSSFRow
+            var categoriesPositionRow = 2
+
+            tempAswersChild.add(allAnswersChild[index - 1])
+            tempAswersParent.add(allAnswersParents[index - 1])
+
+            if (index % questions.size == 0) {
+                if(index > questions.size){
+                    colC += 2
+                    colP += 2
+                }
+
+                val subTotalHeaderChild = sheet.getRow(1).createCell(colC)
+                subTotalHeaderChild.setCellValue(resourceManager.getString(R.string.child))
+                subTotalHeaderChild.setCellStyle(boldStyle)
+
+                val subTotalHeaderParents = sheet.getRow(1).createCell(colP)
+                subTotalHeaderParents.setCellValue(resourceManager.getString(R.string.parent))
+                subTotalHeaderParents.setCellStyle(boldStyle)
+
+                for (category in categories) {
+                    categoriesRow = sheet.getRow(categoriesPositionRow)
+
+                    val categoryChildrenPoints =
+                        tempAswersChild?.filter { questions[it.id - 1].category == category.type }
+                            ?.sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
+                    categoriesRow.createCell(colC).apply {
+                        setCellValue("$categoryChildrenPoints")
+                        setCellStyle(getStyleByCategory(category.type))
+                    }
+
+                    val categoryParentsPoints =
+                        tempAswersParent?.filter { questions[it.id - 1].category == category.type }
+                            ?.sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
+                    categoriesRow.createCell(colP).apply {
+                        setCellValue("$categoryParentsPoints")
+                        setCellStyle(getStyleByCategory(category.type))
+                    }
+
+                    categoriesPositionRow++
+                }
+                tempAswersChild.clear()
+                tempAswersParent.clear()
+            }
+        }
+
     }
 
     private fun createMainHeaderComparativeSubQuestions( // header aba Subquestões CA x P
         sheet: HSSFSheet,
-        identifyCode: String?
+        questionnaires: Array<QuestionnaireReport>
     ) {
-        val subTotalHeaderSubQuestions = sheet.createRow(0).createCell(0)
-        sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 2))
-        subTotalHeaderSubQuestions.setCellValue(identifyCode)
-        subTotalHeaderSubQuestions.setCellStyle(boldStyle)
+        var children = 1
+        var parent = 2
+        var subTotalHeaderSubQuestions = sheet.createRow(0)
+        for (questionnaire in questionnaires) {
 
+            subTotalHeaderSubQuestions.createCell(children).apply {
+                setCellValue("${questionnaire.identifyCode} - ${questionnaire.patient?.name}")
+                setCellStyle(boldStyle)
+            }
+            sheet.addMergedRegion(CellRangeAddress(0, 0, children, parent))
+
+            children += 2
+            parent += 2
+        }
     }
 
     private fun createSubTotalsComparativeSubQuestions( // colunas aba Subquestões CA x P
         sheet: HSSFSheet,
         categories: List<Category>,
-        childrenAnswers: List<Answer>?,
-        parentsAnswers: List<Answer>?,
-        answerColumnComparative: Int,
-        answerColumn: Int
+        questionnaires: Array<QuestionnaireReport>
     ) {
-        val subTotalHeaderChild = sheet.getRow(1).createCell(answerColumn)
-        subTotalHeaderChild.setCellValue(resourceManager.getString(R.string.child))
-        subTotalHeaderChild.setCellStyle(boldStyle)
-
-        val subTotalHeaderParents = sheet.getRow(1).createCell(answerColumn + 1)
-        subTotalHeaderParents.setCellValue(resourceManager.getString(R.string.parent))
-        subTotalHeaderParents.setCellStyle(boldStyle)
-
-        var categoriesPositionRow = 2
-
-        var categoriesRow: HSSFRow
-        for (category in categories) {
-            categoriesRow = sheet.getRow(categoriesPositionRow)
-
-            val categoryChildrenPoints =
-                childrenAnswers?.filter { questions[it.id - 1].category == category.type }
-                    ?.sumBy { answer ->
-                        answer.subAnswers?.values?.sumBy { subAnswer ->
-                            subAnswer.alternatives?.values?.sumBy { alternative ->
-                                alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
-                            } ?: 0
-                        } ?: 0
-                    }
-            categoriesRow.createCell(answerColumnComparative).apply {
-                setCellValue("$categoryChildrenPoints")
-                setCellStyle(getStyleByCategory(category.type))
+        var allAnswersChild: MutableList<Answer> = ArrayList()
+        var allAnswersParents: MutableList<Answer> = ArrayList()
+        questionnaires.map { questionnaire ->
+            val answersChild = questionnaire.childApplication?.answers!!.let {
+                it.values.sortedBy { answer -> answer.id }
             }
-
-            val categoryParentsPoints =
-                parentsAnswers?.filter { questions[it.id - 1].category == category.type }
-                    ?.sumBy { answer ->
-                        answer.subAnswers?.values?.sumBy { subAnswer ->
-                            subAnswer.alternatives?.values?.sumBy { alternative ->
-                                alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
-                            } ?: 0
-                        } ?: 0
-                    }
-            categoriesRow.createCell(answerColumnComparative + 1).apply {
-                setCellValue("$categoryParentsPoints")
-                setCellStyle(getStyleByCategory(category.type))
+            answersChild.map { ans ->
+                allAnswersChild.add(ans)
             }
-
-            categoriesPositionRow++
+            val answersParents = questionnaire.parentApplication?.answers!!.let {
+                it.values.sortedBy { answer -> answer.id }
+            }
+            answersParents.map { ans ->
+                allAnswersParents.add(ans)
+            }
         }
-        sheet.setColumnWidth(answerColumnComparative, 3500)
-        sheet.setColumnWidth(answerColumnComparative + 1, 3500)
+
+        var tempAswersChild: MutableList<Answer> = ArrayList()
+        var tempAswersParent: MutableList<Answer> = ArrayList()
+        var colC = 1
+        var colP = 2
+
+
+        for (index in 1..allAnswersChild?.size!!) {
+            var categoriesRow: HSSFRow
+            var categoriesPositionRow = 2
+
+            tempAswersChild.add(allAnswersChild[index - 1])
+            tempAswersParent.add(allAnswersParents[index - 1])
+
+            if (index % questions.size == 0) {
+                if(index > questions.size){
+                    colC += 2
+                    colP += 2
+                }
+
+                val subTotalHeaderChild = sheet.getRow(1).createCell(colC)
+                subTotalHeaderChild.setCellValue(resourceManager.getString(R.string.child))
+                subTotalHeaderChild.setCellStyle(boldStyle)
+
+                val subTotalHeaderParents = sheet.getRow(1).createCell(colP)
+                subTotalHeaderParents.setCellValue(resourceManager.getString(R.string.parent))
+                subTotalHeaderParents.setCellStyle(boldStyle)
+
+                for (category in categories) {
+                    categoriesRow = sheet.getRow(categoriesPositionRow)
+
+                    val categoryChildrenPoints =
+                        tempAswersChild?.filter { questions[it.id - 1].category == category.type }
+                            ?.sumBy { answer ->
+                                answer.subAnswers?.values?.sumBy { subAnswer ->
+                                    subAnswer.alternatives?.values?.sumBy { alternative ->
+                                        alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
+                                    } ?: 0
+                                } ?: 0
+                            }
+                    categoriesRow.createCell(colC).apply {
+                        setCellValue("$categoryChildrenPoints")
+                        setCellStyle(getStyleByCategory(category.type))
+                    }
+
+                    val categoryParentsPoints =
+                        tempAswersParent?.filter { questions[it.id - 1].category == category.type }
+                            ?.sumBy { answer ->
+                                answer.subAnswers?.values?.sumBy { subAnswer ->
+                                    subAnswer.alternatives?.values?.sumBy { alternative ->
+                                        alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
+                                    } ?: 0
+                                } ?: 0
+                            }
+                    categoriesRow.createCell(colP).apply {
+                        setCellValue("$categoryParentsPoints")
+                        setCellStyle(getStyleByCategory(category.type))
+                    }
+
+                    categoriesPositionRow++
+                }
+                tempAswersChild.clear()
+                tempAswersParent.clear()
+            }
+        }
+
     }
 
     private fun generateFile(identifyCode: String?, listener: ExportListener) {
