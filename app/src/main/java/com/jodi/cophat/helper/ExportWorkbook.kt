@@ -128,6 +128,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                     answerColumnComparative += 2
                 }
             }
+//            generateFile(resourceManager.getString(R.string.cophat), listener)
             answerColumn++
         }
 
@@ -758,7 +759,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
     private fun generateFile(identifyCode: String?, listener: ExportListener) {
         val file = File(context.getExternalFilesDir(null), "$identifyCode.xls")
         try {
-            val os = FileOutputStream(file)
+            val os = FileOutputStream(file, true)
             workBook.write(os)
             os.close()
             listener.onExportSuccess()

@@ -1,5 +1,6 @@
 package com.jodi.cophat.feature.questionnaires.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
@@ -13,9 +14,9 @@ import com.jodi.cophat.helper.visibleOrGone
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.Duration
-import java.time.Instant
-import kotlin.time.ExperimentalTime
+import org.threeten.bp.Duration
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
 
 class QuestionnairesViewModel(
     private val repository: QuestionnairesRepository,
@@ -48,7 +49,6 @@ class QuestionnairesViewModel(
         }
     }
 
-    @ExperimentalTime
     fun convertToPresenter(questionnaire: QuestionnaireReport): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
 
@@ -113,7 +113,6 @@ class QuestionnairesViewModel(
         }
     }
 
-    @ExperimentalTime
     private fun generateApplicationsTime(questionnaire: QuestionnaireReport): String {
         var childrenTime = ""
         questionnaire.childApplication?.let { application ->
@@ -144,7 +143,6 @@ class QuestionnairesViewModel(
         }
     }
 
-    @ExperimentalTime
     private fun formatHour(endHour: Long, startHour: Long): String {
 
         val iInicial: Instant = Instant.ofEpochMilli(startHour)
