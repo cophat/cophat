@@ -94,10 +94,14 @@ class QuestionnairesRepository(
         val applicationsPeding = ArrayList<ItemPendingPresenter>()
         allQuestionnaires.map {q ->
             if(q.childApplication != null && q.childApplication?.status?.equals(ApplicationStatus.STARTED)!!){
-                var patient: String = listPatients.filter { it.identifyCode == q.identifyCode}.last().name
+                var filterPatient: List<Patient> = listPatients.filter { it.identifyCode == q.identifyCode}
+                var patientName: String = when(filterPatient.isNullOrEmpty()) {
+                    true -> "Paciente não identificado"
+                    false -> filterPatient.last().name
+                }
                 applicationsPeding.add(ItemPendingPresenter(
                     identifyCode = q.identifyCode,
-                    name = patient,
+                    name = patientName,
                     typeInterviewee = "Paciente",
                     admin = q.childApplication?.admin!!,
                     hospital = q.childApplication?.hospital!!,
