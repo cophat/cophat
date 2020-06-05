@@ -438,7 +438,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var subAnswerPoints: Int?
 
         var tempAswers: MutableList<Answer> = ArrayList()
-        for (index in 1..answers?.size!!) {
+        for (index in 1..answers.size!!) {
             var col = 0
             if (index % questions.size != 0) {
                 col = index.div(questions.size).plus(1)
@@ -901,7 +901,6 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                         setCellValue("$categoryParentsPoints")
                         setCellStyle(getStyleByCategory(category.type))
                     }
-
                     categoriesPositionRow++
                 }
                 tempAswersChild.clear()

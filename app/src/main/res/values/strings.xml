@@ -46,6 +46,8 @@
     <string name="choose_admin">Escolha o aplicador:</string>
     <string name="edit_or_remove_admin">Clique nos ícones para adicionar, editar ou remover
         qualquer aplicador no banco de dados da aplicação</string>
+    <string name="continue_or_remove_pending">Clique nos ícones para continuar ou remover
+        qualquer questionário pendente</string>
     <string name="edit_or_remove_patient">Clique nos ícones para adicionar, editar ou remover
         qualquer paciente no banco de dados da aplicação</string>
     <string name="edit">Editar</string>
@@ -172,5 +174,5 @@
     <string name="total">TOTAL</string>
     <string name="removed_application">Aplicação removida com sucesso</string>
     <string name="child">Criança</string>
-    <string name="parent">Pai/Mãe</string>
+    <string name="parent">Responsável</string>
 </resources>

@@ -26,4 +26,5 @@ interface ApplicationDao {
 
     @Query("DELETE FROM application")
     suspend fun deleteAllApplications()
+
 }

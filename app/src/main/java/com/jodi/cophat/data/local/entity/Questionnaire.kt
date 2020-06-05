@@ -8,5 +8,6 @@ import kotlinx.android.parcel.RawValue
 data class Questionnaire(
     var identifyCode: String = "",
     var childApplication: ApplicationEntity? = null,
-    var parentApplication: MutableList<ApplicationEntity> = ArrayList<ApplicationEntity>()
+    var parentApplication: MutableList<ApplicationEntity> = ArrayList<ApplicationEntity>(),
+    var key: String = ""
 ) : Parcelable

@@ -1,0 +1,54 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature.pending.fragment.PendingFragment">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/tvTitlePending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/pending_questionnaires"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSubtitlePending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_margin"
+            android:gravity="center"
+            android:text="@string/continue_or_remove_pending"
+            android:textSize="@dimen/large_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitlePending" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPending"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/big_margin"
+            android:maxHeight="560dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitlePending"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_pending" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

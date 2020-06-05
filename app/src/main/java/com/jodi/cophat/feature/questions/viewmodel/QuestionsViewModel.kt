@@ -65,7 +65,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
         runBlocking<Unit> {
             repository.getFamilyId()?.let {
                 identifyCode = it
-                questionnairePresenter = repository.getQuestionnaireByFamilyId(it)
+                questionnairePresenter = repository.getQuestionnaireByIdentifyCode(it)
             }
         }
     }

@@ -52,7 +52,6 @@ class QuestionnairesViewModel(
     fun convertToPresenter(questionnaire: QuestionnaireReport): ItemQuestionnairePresenter {
         val application = retrieveApplication(questionnaire)
 
-        // Verificar
         return ItemQuestionnairePresenter(
             applicationId = generateApplicationId(
                 application?.identifyCode,

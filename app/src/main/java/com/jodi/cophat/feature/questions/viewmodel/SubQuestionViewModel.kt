@@ -140,7 +140,7 @@ class SubQuestionViewModel(
 
     private suspend fun getUpdatedQuestionnaire(): QuestionnairePresenter? {
         return repository.getFamilyId()?.let {
-            repository.getQuestionnaireByFamilyId(it)
+            repository.getQuestionnaireByIdentifyCode(it)
         }
     }
 

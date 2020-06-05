@@ -92,10 +92,30 @@ abstract class BaseRepository {
                 .addOnFailureListener { d.resumeWithException(it) }
         }
 
-    suspend fun getQuestionnaireByFamilyId(identifyCode: String?): QuestionnairePresenter? {
+    suspend fun getQuestionnaireByIdentifyCode(identifyCode: String?): QuestionnairePresenter? {
         return getDatabaseChildHash(FirebaseChild.QUESTIONNAIRES, Questionnaire::class.java)
             .filter {  it.value.identifyCode == identifyCode }
             .map { (key, value) -> QuestionnairePresenter(value, key) }
             .firstOrNull()
     }
+
+    suspend fun removeChildOnQuestionnaire(child: FirebaseChild, key: String): Void? =
+        suspendCoroutine { d ->
+            val childUpdates = HashMap<String, Any?>()
+            childUpdates["/${child.pathName}/$key/childApplication"] = null
+
+            getDatabase().updateChildren(childUpdates)
+                .addOnCompleteListener { d.resume(null) }
+                .addOnFailureListener { d.resumeWithException(it) }
+        }
+
+    suspend fun removeParentOnQuestionnaire(child: FirebaseChild, key: String, position: Int): Void? =
+        suspendCoroutine { d ->
+            val childUpdates = HashMap<String, Any?>()
+            childUpdates["/${child.pathName}/$key/parentApplication/${position}"] = null
+
+            getDatabase().updateChildren(childUpdates)
+                .addOnCompleteListener { d.resume(null) }
+                .addOnFailureListener { d.resumeWithException(it) }
+        }
 }

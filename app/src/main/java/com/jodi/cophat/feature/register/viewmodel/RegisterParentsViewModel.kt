@@ -52,7 +52,7 @@ class RegisterParentsViewModel(
                 isLoading.postValue(true)
 
                 application?.let { application ->
-                    val questionnaire = repository.getQuestionnaireByFamilyId(application.identifyCode)
+                    val questionnaire = repository.getQuestionnaireByIdentifyCode(application.identifyCode)
 
                     questionnaire?.questionnaire?.parentApplication?.last()?.intervieweeName = presenter.intervieweeName
 

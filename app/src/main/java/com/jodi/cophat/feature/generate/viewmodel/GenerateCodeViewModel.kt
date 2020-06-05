@@ -64,7 +64,7 @@ class GenerateCodeViewModel(
                 val application = generateApplicationEntity(identifyCode)
                 val parentList: MutableList<ApplicationEntity> = arrayListOf()
                 parentList.add(application)
-                val questionnaire = repository.getQuestionnaireByFamilyId(identifyCode)
+                val questionnaire = repository.getQuestionnaireByIdentifyCode(identifyCode)
                 if (questionnaire == null) {
                     if (isChildren) {
                         repository.addChildQuestionnaire(
@@ -85,7 +85,7 @@ class GenerateCodeViewModel(
                             it.apply {
                                 it.childApplication = application
                             }
-                            repositoryRegister.updateChildrenQuestionnaire(questionnaire?.questionnaire?.childApplication!!, questionnaire)
+                            repositoryRegister.updateChildrenQuestionnaire(questionnaire.questionnaire.childApplication!!, questionnaire)
                             repository.saveApplicationLocally(it.childApplication!!)
                         }
 
@@ -95,7 +95,7 @@ class GenerateCodeViewModel(
                             it.apply {
                                 it.parentApplication.add(application)
                             }
-                            repositoryRegister.updateParentQuestionnaire(questionnaire?.questionnaire?.parentApplication!!, questionnaire)
+                            repositoryRegister.updateParentQuestionnaire(questionnaire.questionnaire.parentApplication, questionnaire)
                             repository.saveParentApplicationLocally(it.parentApplication)
                         }
                     }

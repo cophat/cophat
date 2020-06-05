@@ -36,6 +36,7 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
             binding.btCloseBegin,
             binding.btPatientBegin,
             binding.btListFormsBegin,
+            binding.btPendingQuestionnaires,
             binding.btConfigureBegin
         )
 
@@ -74,6 +75,10 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
 
         binding.btListFormsBegin.setOnClickListener {
             findNavController().navigate(R.id.action_beginFragment_to_questionnairesActivity)
+        }
+
+        binding.btPendingQuestionnaires.setOnClickListener {
+            findNavController().navigate(R.id.action_beginFragment_to_nav_pending)
         }
 
         binding.btConfigureBegin.setOnClickListener {

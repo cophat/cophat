@@ -4,6 +4,7 @@ import androidx.paging.PagedList
 import com.jodi.cophat.feature.configure.adapter.AdminRecyclerAdapter
 import com.jodi.cophat.feature.patient.adapter.PatientRecyclerAdapter
 import com.jodi.cophat.feature.patient.adapter.QuestionnaireRecyclerAdapter
+import com.jodi.cophat.feature.pending.adapter.PendingRecyclerAdapter
 import com.jodi.cophat.feature.questions.adapter.SubQuestionRecyclerAdapter
 import com.jodi.cophat.helper.ExportWorkbook
 import com.jodi.cophat.helper.ResourceManager
@@ -20,6 +21,10 @@ val appModule = module {
 
     factory {
         QuestionnaireRecyclerAdapter()
+    }
+
+    factory {
+        PendingRecyclerAdapter()
     }
 
     factory {
