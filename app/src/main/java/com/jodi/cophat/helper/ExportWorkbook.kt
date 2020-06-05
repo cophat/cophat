@@ -412,7 +412,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
     private fun createAnswers(sheet: HSSFSheet, answers: MutableList<Answer>) {
         var answerRow: HSSFRow
         var answer: Int?
-        for (position in 1..answers?.size!!) {
+        for (position in 1..answers.size) {
             var pos = position
             var col = 0
             while (pos > questions.size) {
@@ -424,7 +424,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                 col = position.div(questions.size)
             }
             answerRow = sheet.getRow(pos)
-            answer = answers?.get(position - 1)?.chosenAnswer?.chosenAnswerPoints
+            answer = answers.get(position - 1).chosenAnswer?.chosenAnswerPoints
             answerRow.createCell(col).apply {
                 setCellValue("$answer")
                 setCellStyle(getStyleByCategory(questions[pos - 1].category))
@@ -438,15 +438,11 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var subAnswerPoints: Int?
 
         var tempAswers: MutableList<Answer> = ArrayList()
-        for (index in 1..answers.size!!) {
+        for (index in 1..answers.size) {
             var col = 0
-            if (index % questions.size != 0) {
-                col = index.div(questions.size).plus(1)
-                tempAswers.add(answers[index - 1])
-            } else {
+            tempAswers.add(answers[index - 1])
+            if (index % questions.size == 0) {
                 col = index.div(questions.size)
-                tempAswers.add(answers[index - 1])
-
                 questions.map { question ->
                     question.subQuestions
                         ?.values
@@ -492,12 +488,10 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         val totalRow: HSSFRow = sheet.getRow(totalPositionRow)
 
         var total = 0
-        for (index in 1..answers?.size!!) {
+        for (index in 1..answers.size) {
             total += answers[index.minus(1)].chosenAnswer?.chosenAnswerPoints ?: 0
             var col = 0
-            if (index % questions.size != 0) {
-                col = index.div(questions.size).plus(1)
-            } else {
+            if (index % questions.size == 0) {
                 col = index.div(questions.size)
                 totalRow.createCell(col).apply {
                     setCellValue("$total")
@@ -516,16 +510,14 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         val totalRow: HSSFRow = sheet.getRow(totalPositionRow)
 
         var total = 0
-        for (index in 1..answers?.size!!) {
+        for (index in 1..answers.size) {
             total += (answers[index - 1].subAnswers?.values?.sumBy { subAnswer ->
                 subAnswer.alternatives?.values?.sumBy { alternative ->
                     alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
                 } ?: 0
             } ?: 0)
             var col = 0
-            if (index % questions.size != 0) {
-                col = index.div(questions.size).plus(1)
-            } else {
+            if (index % questions.size == 0) {
                 col = index.div(questions.size)
                 totalRow.createCell(col).apply {
                     setCellValue("$total")
@@ -566,7 +558,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
             var parentsTotal = 0
             var parentAnswers = questionnaire.parentApplication?.answers!!
-            parentAnswers?.let {
+            parentAnswers.let {
                 for (answer in parentAnswers) {
                     parentsTotal += (answer.value.chosenAnswer?.chosenAnswerPoints ?: 0)
                 }
@@ -598,7 +590,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         for(questionnaire in questionnaires){
             var childrenTotal = 0
             var childrenAnswer = questionnaire.childApplication?.answers!!
-            childrenAnswer?.let {
+            childrenAnswer.let {
                 for (answer in childrenAnswer) {
                     childrenTotal += (answer.value.subAnswers?.values?.sumBy { subAnswer ->
                         subAnswer.alternatives?.values?.sumBy { alternative ->
@@ -614,7 +606,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
             var parentsTotal = 0
             var parentAnswers = questionnaire.parentApplication?.answers!!
-            parentAnswers?.let {
+            parentAnswers.let {
                 for (answer in parentAnswers) {
                     parentsTotal += (answer.value.subAnswers?.values?.sumBy { subAnswer ->
                         subAnswer.alternatives?.values?.sumBy { alternative ->
@@ -639,16 +631,13 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         answers: List<Answer>
     ) {
         var tempAswers: MutableList<Answer> = ArrayList()
-        for (index in 1..answers?.size!!) {
+        for (index in 1..answers.size) {
             var categoriesPositionRow = questionsSize + 4
             var categoriesRow: HSSFRow
             var col = 0
-            if (index % questions.size != 0) {
-                col = index.div(questions.size).plus(1)
-                tempAswers.add(answers[index - 1])
-            } else {
+            tempAswers.add(answers[index - 1])
+            if (index % questions.size == 0) {
                 col = index.div(questions.size)
-                tempAswers.add(answers[index - 1])
                 for (category in categories) {
                     categoriesRow = sheet.getRow(categoriesPositionRow)
 
@@ -672,16 +661,13 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         answers: List<Answer>
     ) {
         var tempAswers: MutableList<Answer> = ArrayList()
-        for (index in 1..answers?.size!!) {
+        for (index in 1..answers.size) {
             var categoriesPositionRow = subQuestionsSize + 4
             var categoriesRow: HSSFRow
             var col = 0
-            if (index % questions.size != 0) {
-                col = index.div(questions.size).plus(1)
-                tempAswers.add(answers[index - 1])
-            } else {
+            tempAswers.add(answers[index - 1])
+            if (index % questions.size == 0) {
                 col = index.div(questions.size)
-                tempAswers.add(answers[index - 1])
                 for (category in categories) {
                     categoriesRow = sheet.getRow(categoriesPositionRow)
 
@@ -753,7 +739,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var colP = 2
 
 
-        for (index in 1..allAnswersChild?.size!!) {
+        for (index in 1..allAnswersChild.size) {
             var categoriesRow: HSSFRow
             var categoriesPositionRow = 2
 
@@ -778,16 +764,16 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                     categoriesRow = sheet.getRow(categoriesPositionRow)
 
                     val categoryChildrenPoints =
-                        tempAswersChild?.filter { questions[it.id - 1].category == category.type }
-                            ?.sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
+                        tempAswersChild.filter { questions[it.id - 1].category == category.type }
+                            .sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
                     categoriesRow.createCell(colC).apply {
                         setCellValue("$categoryChildrenPoints")
                         setCellStyle(getStyleByCategory(category.type))
                     }
 
                     val categoryParentsPoints =
-                        tempAswersParent?.filter { questions[it.id - 1].category == category.type }
-                            ?.sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
+                        tempAswersParent.filter { questions[it.id - 1].category == category.type }
+                            .sumBy { it.chosenAnswer?.chosenAnswerPoints ?: 0 }
                     categoriesRow.createCell(colP).apply {
                         setCellValue("$categoryParentsPoints")
                         setCellStyle(getStyleByCategory(category.type))
@@ -850,7 +836,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var colP = 2
 
 
-        for (index in 1..allAnswersChild?.size!!) {
+        for (index in 1..allAnswersChild.size) {
             var categoriesRow: HSSFRow
             var categoriesPositionRow = 2
 
@@ -875,8 +861,8 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                     categoriesRow = sheet.getRow(categoriesPositionRow)
 
                     val categoryChildrenPoints =
-                        tempAswersChild?.filter { questions[it.id - 1].category == category.type }
-                            ?.sumBy { answer ->
+                        tempAswersChild.filter { questions[it.id - 1].category == category.type }
+                            .sumBy { answer ->
                                 answer.subAnswers?.values?.sumBy { subAnswer ->
                                     subAnswer.alternatives?.values?.sumBy { alternative ->
                                         alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
@@ -889,8 +875,8 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
                     }
 
                     val categoryParentsPoints =
-                        tempAswersParent?.filter { questions[it.id - 1].category == category.type }
-                            ?.sumBy { answer ->
+                        tempAswersParent.filter { questions[it.id - 1].category == category.type }
+                            .sumBy { answer ->
                                 answer.subAnswers?.values?.sumBy { subAnswer ->
                                     subAnswer.alternatives?.values?.sumBy { alternative ->
                                         alternative.chosenSubAnswer?.chosenAnswerPoints ?: 0
