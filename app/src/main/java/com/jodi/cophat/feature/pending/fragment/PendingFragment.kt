@@ -10,6 +10,7 @@ import com.jodi.cophat.feature.pending.adapter.PendingRecyclerAdapter
 import com.jodi.cophat.feature.pending.viewmodel.PendingViewModel
 import com.jodi.cophat.ui.BaseFragment
 import com.jodi.cophat.ui.BaseViewModel
+import com.jodi.cophat.ui.base.view.BottomButtonsListener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -58,14 +59,13 @@ class PendingFragment : BaseFragment<FragmentPendingBinding>(), PendingListener 
             })
     }
 
-//    override fun onEdit(item: ItemPendingPresenter) {
-//        findNavController().navigate(
-//            PendingFragmentDirections.actionPendingFragmentToPendingDialog(
-//                viewModel.getEditPending(item),
-//                item.identifyCode
-//            )
-//        )
-//    }
+    override fun onEdit(item: ItemPendingPresenter) {
+        findNavController().navigate(
+            PendingFragmentDirections.actionPendingFragmentToPendingContinue(
+                item.keyQuestionnaire, item.parentPosition.toString(), item.typeInterviewee, item.identifyCode
+            )
+        )
+    }
 
     override fun onRemove(item: ItemPendingPresenter) {
         findNavController().navigate(

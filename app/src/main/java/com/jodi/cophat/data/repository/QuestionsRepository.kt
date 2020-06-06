@@ -21,7 +21,7 @@ class QuestionsRepository(
             ?.sortedBy { it.id }
     }
 
-    suspend fun getFamilyId(): String? {
+    suspend fun getIdentifyCode(): String? {
         return dao.getApplication()?.identifyCode
     }
 

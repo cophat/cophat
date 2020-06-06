@@ -5,10 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
-import com.jodi.cophat.data.presenter.ItemPatientPresenter
-import com.jodi.cophat.data.presenter.QuestionnairePresenter
-import com.jodi.cophat.data.presenter.QuestionsPresenter
-import com.jodi.cophat.data.presenter.SubQuestionPresenter
+import com.jodi.cophat.data.presenter.*
 import com.jodi.cophat.data.repository.FirebaseChild
 import com.jodi.cophat.data.repository.PatientRepository
 import com.jodi.cophat.data.repository.QuestionsRepository
@@ -18,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
 class QuestionsViewModel(private val repository: QuestionsRepository) : BaseViewModel() {
 
@@ -31,7 +29,9 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
     private var application: ApplicationEntity? = null
     private var questionnairePresenter: QuestionnairePresenter? = null
     private var hasSubQuestionToRespond: Boolean = false
-    lateinit var  identifyCode: String
+    private var  identifyCode: String? = null
+    private var parentPosition: Int? = null
+    private var typeInterviewee: String? = null
 
 
     override fun initialize() {
@@ -52,8 +52,14 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
         }
     }
 
+    fun setValues(parentPositionParam: String?, typeIntervieweeParam: String?, identifyCodeParam: String?) {
+        identifyCode = identifyCodeParam
+        parentPosition = parentPositionParam?.toInt()
+        typeInterviewee = typeIntervieweeParam
+    }
+
     private suspend fun getQuestions() {
-        val form = if (isChildren) {
+        val form = if (isChildren || typeInterviewee.equals("Paciente")) {
             repository.getForms(FormType.CHILDREN)
         } else {
             repository.getForms(FormType.PARENTS)
@@ -63,19 +69,32 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
 
     private suspend fun getUpdatedQuestionnaire() {
         runBlocking<Unit> {
-            repository.getFamilyId()?.let {
-                identifyCode = it
-                questionnairePresenter = repository.getQuestionnaireByIdentifyCode(it)
+            if(identifyCode == null) {
+                repository.getIdentifyCode()?.let {
+                    identifyCode = it
+                    questionnairePresenter = repository.getQuestionnaireByIdentifyCode(it)
+                }
+            }else{
+                questionnairePresenter = repository.getQuestionnaireByIdentifyCode(identifyCode)
             }
         }
     }
 
     private fun getApplication() {
-        application = if (isChildren) {
-            questionnairePresenter?.questionnaire?.childApplication
-        } else {
-            questionnairePresenter?.questionnaire?.parentApplication?.last()
+        if(typeInterviewee.isNullOrEmpty()){
+            application = if (isChildren) {
+                questionnairePresenter?.questionnaire?.childApplication
+            } else {
+                questionnairePresenter?.questionnaire?.parentApplication?.last()
+            }
+        }else{
+            if(typeInterviewee.equals("Paciente")){
+                application = questionnairePresenter?.questionnaire?.childApplication
+            }else{
+                application = questionnairePresenter?.questionnaire?.parentApplication?.get(parentPosition!!)
+            }
         }
+
     }
 
     private fun retrievePositionInQuestionnaire() {
@@ -151,18 +170,28 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
 
     private suspend fun completeApplication() {
         questionnairePresenter?.let {
-            if (isChildren) {
+            if (isChildren || typeInterviewee.equals("Paciente")) {
                 it.questionnaire.childApplication?.status = ApplicationStatus.COMPLETED
                 it.questionnaire.childApplication?.endHour =
                     Calendar.getInstance().timeInMillis
                 repository.updateChildrenQuestionnaire(it)
             } else {
-                it.questionnaire.parentApplication.last().status = ApplicationStatus.COMPLETED
-                it.questionnaire.parentApplication.last().endHour =
-                    Calendar.getInstance().timeInMillis
+                if(parentPosition != null){
+                    it.questionnaire.parentApplication.get(parentPosition!!).status = ApplicationStatus.COMPLETED
+                    it.questionnaire.parentApplication.get(parentPosition!!).endHour =
+                        Calendar.getInstance().timeInMillis
+                }else{
+                    it.questionnaire.parentApplication.last().status = ApplicationStatus.COMPLETED
+                    it.questionnaire.parentApplication.last().endHour =
+                        Calendar.getInstance().timeInMillis
+                }
                 repository.updateParentQuestionnaire(it)
             }
-            completeQuestionnaire.postValue(R.id.action_questionsFragment_to_completeFragment)
+            if(typeInterviewee != null || parentPosition != null){
+                completeQuestionnaire.postValue(R.id.action_pendingFragment_to_completeFragment)
+            }else{
+                completeQuestionnaire.postValue(R.id.action_questionsFragment_to_completeFragment)
+            }
         }
     }
 
@@ -213,13 +242,18 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
     }
 
     private fun getCurrentAnswerPath(): String {
-        return if (isChildren) {
-            FirebaseChild.QUESTIONNAIRES.pathName +
+        if (isChildren || typeInterviewee.equals("Paciente")) {
+            return FirebaseChild.QUESTIONNAIRES.pathName +
                     "/" +
                     questionnairePresenter?.questionnaireFirebaseKey +
                     "/childApplication/answers"
-        } else {
-            FirebaseChild.QUESTIONNAIRES.pathName +
+        } else if(parentPosition != null){
+            return FirebaseChild.QUESTIONNAIRES.pathName +
+                    "/" +
+                    questionnairePresenter?.questionnaireFirebaseKey +
+                    "/parentApplication/" + questionnairePresenter?.questionnaire?.parentApplication?.get(parentPosition!!) + "/answers"
+        }else{
+            return FirebaseChild.QUESTIONNAIRES.pathName +
                     "/" +
                     questionnairePresenter?.questionnaireFirebaseKey +
                     "/parentApplication/" + questionnairePresenter?.questionnaire?.parentApplication?.lastIndex + "/answers"

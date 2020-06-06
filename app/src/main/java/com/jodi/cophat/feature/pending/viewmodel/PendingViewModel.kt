@@ -42,16 +42,6 @@ class PendingViewModel(
         }
     }
 
-//    fun getEditPending(pending: ItemPendingPresenter): PendingConfigurePresenter {
-//        return PendingConfigurePresenter(
-//            resourceManager.getString(R.string.edit_admin),
-//            resourceManager.getString(R.string.edit_desc_admin),
-//            pending.identifyCode,
-//            pending.name
-//        )
-//    }
-
-
     fun removePending(keyQuestionnaire: String?, position: Int?, typeInterviewee: String?) {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {

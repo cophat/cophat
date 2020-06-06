@@ -18,14 +18,14 @@
         android:paddingEnd="@dimen/default_padding">
 
         <TextView
-            android:id="@+id/tvIdentifyCodeItemPatient"
+            android:id="@+id/tvIdentifyCodeItemPending"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{presenter.identifyCode}"
             android:textSize="@dimen/large_size"
-            app:layout_constraintBottom_toTopOf="@+id/tvNameItemPatient"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPatient"
+            app:layout_constraintBottom_toTopOf="@+id/tvNameItemPending"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,16 +33,16 @@
             tools:text="IdentifyCode" />
 
         <TextView
-            android:id="@+id/tvNameItemPatient"
+            android:id="@+id/tvNameItemPending"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{presenter.name}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPatient"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvIdentifyCodeItemPatient"
+            app:layout_constraintTop_toBottomOf="@+id/tvIdentifyCodeItemPending"
             app:layout_constraintBottom_toTopOf="@+id/tvIntervieweeItemPending"
             tools:text="Name" />
 
@@ -53,10 +53,10 @@
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{presenter.typeInterviewee}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPatient"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameItemPatient"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameItemPending"
             app:layout_constraintBottom_toTopOf="@+id/tvAdminItemPending"
             tools:text="interviewee_name" />
 
@@ -67,7 +67,7 @@
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{presenter.admin}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPatient"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvIntervieweeItemPending"
@@ -81,7 +81,7 @@
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{presenter.hospital}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPatient"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAdminItemPending"
@@ -95,14 +95,14 @@
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{presenter.date}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPatient"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvHospitalItemPending"
             tools:text="01/01/2001" />
 
         <ImageView
-            android:id="@+id/ivEditItemPatient"
+            android:id="@+id/ivEditItemPending"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="@dimen/big_margin"
@@ -125,7 +125,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/vDividerItemPatient"
+            android:id="@+id/vDividerItemPending"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/colorWhite"
