@@ -5,13 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
-import com.jodi.cophat.data.presenter.ItemPatientPresenter
-import com.jodi.cophat.data.presenter.QuestionnairePresenter
-import com.jodi.cophat.data.presenter.QuestionsPresenter
-import com.jodi.cophat.data.presenter.SubQuestionPresenter
-import com.jodi.cophat.data.repository.FirebaseChild
-import com.jodi.cophat.data.repository.PatientRepository
-import com.jodi.cophat.data.repository.QuestionsRepository
+import com.jodi.cophat.data.presenter.*
+import com.jodi.cophat.data.repository.*
+import com.jodi.cophat.helper.ResourceManager
+import com.jodi.cophat.helper.visibleOrGone
 import com.jodi.cophat.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +16,12 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
 
-class QuestionsViewModel(private val repository: QuestionsRepository) : BaseViewModel() {
+class QuestionsViewModel(
+    private val repository: QuestionsRepository,
+    private val repositoryQuestionnaire: QuestionnairesRepository,
+    private val resourceManager: ResourceManager,
+    private val repositoryGenerateCode: GenerateCodeRepository
+) : BaseViewModel() {
 
     val questions = ArrayList<Question>()
     val presenter = QuestionsPresenter()
@@ -29,21 +31,32 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
     private var subQuestionPosition = 0
     lateinit var gender: String
     private var application: ApplicationEntity? = null
+    private var applicationLocally: ApplicationEntity? = null
     private var questionnairePresenter: QuestionnairePresenter? = null
     private var hasSubQuestionToRespond: Boolean = false
-    lateinit var  identifyCode: String
 
+    var continueQuestionnaire = false
+    var identifyCode: String? = ""
+    var pendingItem: ItemPendingPresenter? = null
+
+    val applicationPending = MutableLiveData<ApplicationEntity>()
+    val pendingPresenter = MutableLiveData<PendingPresenter>()
+    val statusPending = MutableLiveData<String>()
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
 
-                getQuestions()
-                getUpdatedQuestionnaire()
-                getApplication()
-                retrievePositionInQuestionnaire()
-                verifyStep()
+                if(continueQuestionnaire == true){
+                    getPendingQuestionnaires()
+                }else{
+                    getApplicationLocally()
+                    getQuestions()
+                    getUpdatedQuestionnaire()
+                    retrievePositionInQuestionnaire()
+                    verifyStep()
+                }
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {
@@ -52,8 +65,46 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
         }
     }
 
+    private fun getApplicationLocally(){
+        runBlocking {
+            applicationLocally = repository.getApplication()
+            if(applicationLocally != null){
+                identifyCode = applicationLocally?.identifyCode
+                pendingItem = ItemPendingPresenter(
+                    keyQuestionnaire = applicationLocally?.keyQuestionnaire!!,
+                    parentPosition = applicationLocally?.parentPosition!!,
+                    identifyCode = applicationLocally?.identifyCode!!,
+                    typeInterviewee = applicationLocally?.typeInterviewee!!,
+                    name = applicationLocally?.name!!,
+                    admin = applicationLocally?.admin,
+                    hospital = applicationLocally?.hospital,
+                    date = applicationLocally?.date
+                )
+            }
+        }
+    }
+
+    fun setValues(item: ItemPendingPresenter) {
+        viewModelScope.launch(context = Dispatchers.IO) {
+            identifyCode = item.identifyCode
+            pendingItem = item
+            getUpdatedQuestionnaire()
+        }
+    }
+
+    suspend fun getPendingQuestionnaires() {
+        val list = repositoryQuestionnaire.getPendingQuestionnaires()
+        for (i in list) {
+            i.pendingDividerVisibility = (i != list.last()).visibleOrGone()
+        }
+
+        pendingPresenter.postValue(
+            PendingPresenter(list.isEmpty().visibleOrGone(), list)
+        )
+    }
+
     private suspend fun getQuestions() {
-        val form = if (isChildren) {
+        val form = if (isChildren || pendingItem?.typeInterviewee.equals("Paciente")) {
             repository.getForms(FormType.CHILDREN)
         } else {
             repository.getForms(FormType.PARENTS)
@@ -61,20 +112,44 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
         form?.let { questions.addAll(it) }
     }
 
-    private suspend fun getUpdatedQuestionnaire() {
-        runBlocking<Unit> {
-            repository.getFamilyId()?.let {
-                identifyCode = it
-                questionnairePresenter = repository.getQuestionnaireByIdentifyCode(it)
+    private fun getUpdatedQuestionnaire() {
+        runBlocking {
+            if(identifyCode == null || identifyCode == "") {
+                repository.getIdentifyCode()?.let {
+                    identifyCode = it
+                    questionnairePresenter = repository.getQuestionnaireByIdentifyCode(it)
+                }
+            }else{
+                questionnairePresenter = repository.getQuestionnaireByIdentifyCode(identifyCode)
             }
+            getApplication()
         }
     }
 
     private fun getApplication() {
-        application = if (isChildren) {
-            questionnairePresenter?.questionnaire?.childApplication
-        } else {
-            questionnairePresenter?.questionnaire?.parentApplication?.last()
+        runBlocking {
+            if(pendingItem?.typeInterviewee.isNullOrEmpty()){
+                application = (if (isChildren) {
+                    questionnairePresenter?.questionnaire?.childApplication
+                } else {
+                    questionnairePresenter?.questionnaire?.parentApplication?.last()
+                })
+            }else {
+                if (pendingItem?.typeInterviewee.equals("Paciente")) {
+                    application = questionnairePresenter?.questionnaire?.childApplication
+                } else {
+                    application =
+                        questionnairePresenter?.questionnaire?.parentApplication?.get(pendingItem?.parentPosition!!)
+                }
+            }
+            if(application != null){
+                application?.keyQuestionnaire = pendingItem?.keyQuestionnaire!!
+                application?.parentPosition = pendingItem?.parentPosition!!
+                application?.typeInterviewee = pendingItem?.typeInterviewee!!
+                application?.name = pendingItem?.name!!
+                repositoryGenerateCode.saveApplicationLocally(application!!)
+                applicationPending.postValue(application)
+            }
         }
     }
 
@@ -151,15 +226,21 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
 
     private suspend fun completeApplication() {
         questionnairePresenter?.let {
-            if (isChildren) {
+            if (isChildren || pendingItem?.typeInterviewee.equals("Paciente")) {
                 it.questionnaire.childApplication?.status = ApplicationStatus.COMPLETED
                 it.questionnaire.childApplication?.endHour =
                     Calendar.getInstance().timeInMillis
                 repository.updateChildrenQuestionnaire(it)
             } else {
-                it.questionnaire.parentApplication.last().status = ApplicationStatus.COMPLETED
-                it.questionnaire.parentApplication.last().endHour =
-                    Calendar.getInstance().timeInMillis
+                if(!pendingItem?.typeInterviewee.equals("")){
+                    it.questionnaire.parentApplication.get(pendingItem?.parentPosition!!).status = ApplicationStatus.COMPLETED
+                    it.questionnaire.parentApplication.get(pendingItem?.parentPosition!!).endHour =
+                        Calendar.getInstance().timeInMillis
+                }else{
+                    it.questionnaire.parentApplication.last().status = ApplicationStatus.COMPLETED
+                    it.questionnaire.parentApplication.last().endHour =
+                        Calendar.getInstance().timeInMillis
+                }
                 repository.updateParentQuestionnaire(it)
             }
             completeQuestionnaire.postValue(R.id.action_questionsFragment_to_completeFragment)
@@ -195,7 +276,6 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
                 if (!hasSubQuestionToRespond) {
                     repository.addChild(getCurrentAnswerPath(), generateAnswer())
                     getUpdatedQuestionnaire()
-                    getApplication()
                 }
                 if (hasSubQuestionToRespond() &&
                     presenter.answer != AnswerType.NEVER
@@ -213,13 +293,18 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
     }
 
     private fun getCurrentAnswerPath(): String {
-        return if (isChildren) {
-            FirebaseChild.QUESTIONNAIRES.pathName +
+        if ((isChildren && !(pendingItem?.typeInterviewee?.contains("Responsável -")!!)) || pendingItem?.typeInterviewee.equals("Paciente")) {
+            return FirebaseChild.QUESTIONNAIRES.pathName +
                     "/" +
                     questionnairePresenter?.questionnaireFirebaseKey +
                     "/childApplication/answers"
-        } else {
-            FirebaseChild.QUESTIONNAIRES.pathName +
+        } else if(!pendingItem?.typeInterviewee.equals("")){
+            return FirebaseChild.QUESTIONNAIRES.pathName +
+                    "/" +
+                    questionnairePresenter?.questionnaireFirebaseKey +
+                    "/parentApplication/" + pendingItem?.parentPosition + "/answers"
+        }else{
+            return FirebaseChild.QUESTIONNAIRES.pathName +
                     "/" +
                     questionnairePresenter?.questionnaireFirebaseKey +
                     "/parentApplication/" + questionnairePresenter?.questionnaire?.parentApplication?.lastIndex + "/answers"
@@ -272,6 +357,24 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : BaseView
                         subQuestionPosition + 1
                     )
                 )
+            }
+        }
+    }
+
+    fun removePending(keyQuestionnaire: String?, position: Int?, typeInterviewee: String?) {
+        viewModelScope.launch(context = Dispatchers.IO) {
+            try {
+                isLoading.postValue(true)
+                if(typeInterviewee.equals("Paciente")){
+                    repositoryQuestionnaire.removePendingChild(keyQuestionnaire!!)
+                }else{
+                    repositoryQuestionnaire.removePendingParent(keyQuestionnaire!!, position!!)
+                }
+                statusPending.postValue(resourceManager.getString(R.string.success_remove))
+            } catch (e: DatabaseException) {
+                handleError.postValue(e)
+            } finally {
+                isLoading.postValue(false)
             }
         }
     }

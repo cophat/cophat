@@ -32,9 +32,6 @@ class IntroViewModel(
                 val presenterTitle: String
                 val presenterSubtitle: String
                 val hasRepository = !repository.isEmpty()
-                val presenterButton: String = if (!hasRepository)
-                    resourceManager.getString(R.string.initiate_questionnaire) else
-                    resourceManager.getString(R.string.continue_questionnaire)
 
                 if (isChildren) {
                     presenterImage = R.drawable.ic_launcher
@@ -51,7 +48,6 @@ class IntroViewModel(
                         presenterImage,
                         presenterTitle,
                         presenterSubtitle,
-                        presenterButton,
                         hasRepository.visibleOrGone()
                     )
                 )
@@ -76,7 +72,7 @@ class IntroViewModel(
                 application?.identifyCode == null ->
                     StepsPresenter.REGISTER_PARENTS_STEP_1
                 else ->
-                    StepsPresenter.CONTINUE_QUESTIONNAIRE
+                    StepsPresenter.GENERATE_CODE_STEP_0
             }
         } catch (e: DatabaseException) {
             handleError.postValue(e)
@@ -92,7 +88,7 @@ class IntroViewModel(
                 isLoading.postValue(true)
 
                 repository.clearLocally()
-                statusApplication.postValue(resourceManager.getString(R.string.removed_application))
+
             } catch (e: DatabaseException) {
                 handleError.postValue(e)
             } finally {

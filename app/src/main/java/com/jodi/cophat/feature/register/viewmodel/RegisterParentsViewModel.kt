@@ -54,12 +54,23 @@ class RegisterParentsViewModel(
                 application?.let { application ->
                     val questionnaire = repository.getQuestionnaireByIdentifyCode(application.identifyCode)
 
-                    questionnaire?.questionnaire?.parentApplication?.last()?.intervieweeName = presenter.intervieweeName
+                    if(application.name.equals("Não informado")){
 
-                    if(presenter.relationshipType.equals(RelationshipType.OTHER)){
-                        questionnaire?.questionnaire?.parentApplication?.last()?.relationship = presenter.relationship
+                        questionnaire?.questionnaire?.parentApplication?.get(application.parentPosition)?.intervieweeName = presenter.intervieweeName
+
+                        if(presenter.relationshipType.equals(RelationshipType.OTHER)){
+                            questionnaire?.questionnaire?.parentApplication?.get(application.parentPosition)?.relationship = presenter.relationship
+                        }else{
+                            questionnaire?.questionnaire?.parentApplication?.get(application.parentPosition)?.relationship = presenter.relationshipType.relationship
+                        }
                     }else{
-                        questionnaire?.questionnaire?.parentApplication?.last()?.relationship = presenter.relationshipType.relationship
+                        questionnaire?.questionnaire?.parentApplication?.last()?.intervieweeName = presenter.intervieweeName
+
+                        if(presenter.relationshipType.equals(RelationshipType.OTHER)){
+                            questionnaire?.questionnaire?.parentApplication?.last()?.relationship = presenter.relationship
+                        }else{
+                            questionnaire?.questionnaire?.parentApplication?.last()?.relationship = presenter.relationshipType.relationship
+                        }
                     }
 
                     repository.updateParentQuestionnaire(questionnaire?.questionnaire?.parentApplication!!, questionnaire)

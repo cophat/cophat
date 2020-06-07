@@ -4,7 +4,7 @@ import com.jodi.cophat.feature.configure.viewmodel.ConfigureViewModel
 import com.jodi.cophat.feature.patient.viewmodel.PatientViewModel
 import com.jodi.cophat.feature.generate.viewmodel.GenerateCodeViewModel
 import com.jodi.cophat.feature.intro.viewmodel.IntroViewModel
-import com.jodi.cophat.feature.pending.viewmodel.PendingViewModel
+//import com.jodi.cophat.feature.questions.viewmodel.PendingViewModel
 import com.jodi.cophat.feature.questionnaires.viewmodel.ExportExcelViewModel
 import com.jodi.cophat.feature.questionnaires.viewmodel.QuestionnairesViewModel
 import com.jodi.cophat.feature.questions.viewmodel.CompleteViewModel
@@ -31,13 +31,11 @@ val viewModelModule = module {
 
     viewModel { ConfigureViewModel(get(), get()) }
 
-    viewModel { PendingViewModel(get(), get()) }
-
     viewModel { GenerateCodeViewModel(get(), get()) }
 
     viewModel { RegisterParentsViewModel(get()) }
 
-    viewModel { QuestionsViewModel(get()) }
+    viewModel { QuestionsViewModel(get(), get(), get(), get()) }
 
     viewModel { SubQuestionViewModel(get(), get()) }
 

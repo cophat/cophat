@@ -1,4 +1,4 @@
-package com.jodi.cophat.feature.pending.adapter
+package com.jodi.cophat.feature.questions.adapter
 
 import android.view.View
 import com.jodi.cophat.R
@@ -15,7 +15,10 @@ class PendingRecyclerAdapter :
     }
 
     override fun getViewHolderInstance(itemView: View, viewType: Int): PendingViewHolder {
-        return PendingViewHolder(itemView, pendingListener)
+        return PendingViewHolder(
+            itemView,
+            pendingListener
+        )
     }
 
     override fun onBindViewHolder(

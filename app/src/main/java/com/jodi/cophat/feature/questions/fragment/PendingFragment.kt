@@ -1,21 +1,25 @@
-package com.jodi.cophat.feature.pending.fragment
+package com.jodi.cophat.feature.questions.fragment
 
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.jodi.cophat.R
 import com.jodi.cophat.data.presenter.ItemPendingPresenter
+import com.jodi.cophat.data.repository.RegisterRepository
 import com.jodi.cophat.databinding.FragmentPendingBinding
-import com.jodi.cophat.feature.pending.adapter.PendingListener
-import com.jodi.cophat.feature.pending.adapter.PendingRecyclerAdapter
-import com.jodi.cophat.feature.pending.viewmodel.PendingViewModel
+import com.jodi.cophat.feature.intro.fragment.BeginFragmentDirections
+import com.jodi.cophat.feature.questions.adapter.PendingListener
+import com.jodi.cophat.feature.questions.adapter.PendingRecyclerAdapter
+import com.jodi.cophat.feature.questions.viewmodel.QuestionsViewModel
 import com.jodi.cophat.ui.BaseFragment
 import com.jodi.cophat.ui.BaseViewModel
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PendingFragment : BaseFragment<FragmentPendingBinding>(), PendingListener {
+class PendingFragment : BaseFragment<FragmentPendingBinding>(),
+    PendingListener {
 
-    private val viewModel: PendingViewModel by viewModel()
+    private val viewModel: QuestionsViewModel by viewModel()
 
     private val adapter: PendingRecyclerAdapter by inject()
 
@@ -34,6 +38,7 @@ class PendingFragment : BaseFragment<FragmentPendingBinding>(), PendingListener 
             binding.rvPending
         )
 
+        viewModel.continueQuestionnaire = true
         viewModel.initialize()
 
         configureObservers()
@@ -47,25 +52,36 @@ class PendingFragment : BaseFragment<FragmentPendingBinding>(), PendingListener 
     }
 
     private fun configureListener() {
-
-
     }
 
     private fun configureObservers() {
+        viewModel.applicationPending.observe(this,
+        Observer {
+            if(!it.typeInterviewee.equals("Paciente") && it.name.equals("Não informado")){
+                findNavController().navigate(
+                    BeginFragmentDirections.actionBeginFragmentToRegisterActivity(1)
+                )
+            }else{
+                findNavController().navigate(R.id.action_beginFragment_to_nav_questions)
+            }
+
+        })
+
         viewModel.pendingPresenter.observe(this,
             Observer {
                 adapter.setItems(it.pendings)
             })
+
+        viewModel.completeQuestionnaire.observe(this, Observer {
+            findNavController().navigate(it)
+        })
     }
 
-//    override fun onEdit(item: ItemPendingPresenter) {
-//        findNavController().navigate(
-//            PendingFragmentDirections.actionPendingFragmentToPendingDialog(
-//                viewModel.getEditPending(item),
-//                item.identifyCode
-//            )
-//        )
-//    }
+    override fun onEdit(item: ItemPendingPresenter) {
+        runBlocking {
+            viewModel.setValues(item)
+        }
+    }
 
     override fun onRemove(item: ItemPendingPresenter) {
         findNavController().navigate(

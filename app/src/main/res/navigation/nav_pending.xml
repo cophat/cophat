@@ -6,7 +6,7 @@
     app:startDestination="@id/pendingFragment">
     <fragment
         android:id="@+id/pendingFragment"
-        android:name="com.jodi.cophat.feature.pending.fragment.PendingFragment"
+        android:name="com.jodi.cophat.feature.questions.fragment.PendingFragment"
         android:label="PendingFragment"
         tools:layout="@layout/fragment_pending">
         <action
@@ -16,10 +16,43 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_beginFragment_to_nav_questions"
+            app:destination="@id/nav_questions"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_beginFragment_to_registerActivity"
+            app:destination="@id/registerActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_questionsFragment_to_completeFragment"
+            app:destination="@id/completeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_questions"
+            app:popUpToInclusive="true" />
     </fragment>
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.jodi.cophat.feature.register.activity.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register">
+        <argument
+            android:name="step"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </activity>
     <dialog
         android:id="@+id/configureExcludeDialog"
-        android:name="com.jodi.cophat.feature.pending.fragment.PendingExcludeDialog"
+        android:name="com.jodi.cophat.feature.questions.fragment.PendingExcludeDialog"
         android:label="ConfigureExcludeDialog"
         tools:layout="@layout/dialog_configure_exclude">
         <argument
@@ -47,4 +80,9 @@
             app:popUpTo="@+id/nav_pending"
             app:popUpToInclusive="true" />
     </dialog>
+    <fragment
+        android:id="@+id/completeFragment"
+        android:name="com.jodi.cophat.feature.questions.fragment.CompleteFragment"
+        android:label="fragment_complete"
+        tools:layout="@layout/fragment_complete" />
 </navigation>

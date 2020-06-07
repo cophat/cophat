@@ -3,6 +3,7 @@ package com.jodi.cophat.data.repository
 import com.google.firebase.database.DatabaseReference
 import com.jodi.cophat.data.local.entity.*
 import com.jodi.cophat.data.presenter.ItemPendingPresenter
+import com.jodi.cophat.data.presenter.QuestionnairePresenter
 
 
 class QuestionnairesRepository(
@@ -106,21 +107,25 @@ class QuestionnairesRepository(
                     admin = q.childApplication?.admin!!,
                     hospital = q.childApplication?.hospital!!,
                     date = q.childApplication?.date!!,
-                    keyQuestionnaire = q.key
+                    keyQuestionnaire = q.key!!
 
                 ))
             }
             q.parentApplication.mapIndexed { index, app ->
-                if(app.status.equals(ApplicationStatus.STARTED)){
+                if(app != null && app.status.equals(ApplicationStatus.STARTED)){
+                    var parentName = when(app.intervieweeName.isNullOrEmpty()){
+                        true -> "Não informado"
+                        false -> app.intervieweeName!!
+                    }
                     applicationsPeding.add(ItemPendingPresenter(
                         identifyCode = q.identifyCode,
-                        name = app.intervieweeName!!,
+                        name = parentName,
                         typeInterviewee = "Responsável - ${app.relationship}",
                         admin = app.admin!!,
                         hospital = app.hospital!!,
                         date = app.date!!,
                         parentPosition = index,
-                        keyQuestionnaire = q.key
+                        keyQuestionnaire = q.key!!
 
                     ))
                 }

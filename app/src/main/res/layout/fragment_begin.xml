@@ -59,23 +59,23 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_marginTop="@dimen/extra_margin"
-            android:text="@{presenter.beginButton}"
+            android:text="@string/initiate_questionnaire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSubtitleBegin"
             tools:text="@string/initiate_questionnaire" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btCloseBegin"
+            android:id="@+id/btFormContinue"
             style="@style/AppTheme.ButtonTheme"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_marginTop="@dimen/big_margin"
-            android:text="@string/done_questionnaire"
-            android:visibility="@{presenter.beginVisibility}"
+            android:text="@string/pending_questionnaires"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btFormBegin" />
+            app:layout_constraintTop_toBottomOf="@+id/btFormBegin"
+            tools:text="@string/initiate_questionnaire" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btPatientBegin"
@@ -86,7 +86,7 @@
             android:text="@string/patients"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btCloseBegin" />
+            app:layout_constraintTop_toBottomOf="@+id/btFormContinue" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btListFormsBegin"
@@ -100,17 +100,6 @@
             app:layout_constraintTop_toBottomOf="@+id/btPatientBegin" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btPendingQuestionnaires"
-            style="@style/AppTheme.ButtonTheme"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginTop="@dimen/big_margin"
-            android:text="@string/pending_questionnaires"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btListFormsBegin" />
-
-        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btConfigureBegin"
             style="@style/AppTheme.ButtonTheme"
             android:layout_width="0dp"
@@ -119,7 +108,7 @@
             android:text="@string/configurations"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btPendingQuestionnaires" />
+            app:layout_constraintTop_toBottomOf="@+id/btListFormsBegin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.AnswerType
+import com.jodi.cophat.data.presenter.ItemPendingPresenter
 import com.jodi.cophat.databinding.FragmentQuestionsBinding
 import com.jodi.cophat.feature.questions.viewmodel.QuestionsViewModel
 import com.jodi.cophat.ui.BaseFragment
@@ -54,7 +55,7 @@ class QuestionsFragment : BaseFragment<FragmentQuestionsBinding>() {
             }
 
             override fun onSecondaryClick() {
-                activity?.onBackPressed()
+                findNavController().navigate(R.id.splashFragment)
             }
         })
     }
@@ -69,4 +70,5 @@ class QuestionsFragment : BaseFragment<FragmentQuestionsBinding>() {
             findNavController().navigate(it)
         })
     }
+
 }

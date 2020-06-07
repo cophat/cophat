@@ -40,15 +40,15 @@ class ExcludeApplicationDialog : BaseDialog<DialogExcludeApplicationBinding>() {
     }
 
     private fun configureListeners() {
-        binding.bbvExclude.setBottomButtonsListener(object :
-            BottomButtonsListener {
-            override fun onPrimaryClick() {
-                viewModel.deleteApplication()
-            }
-
-            override fun onSecondaryClick() {
-                dismiss()
-            }
-        })
+//        binding.bbvExclude.setBottomButtonsListener(object :
+//            BottomButtonsListener {
+//            override fun onPrimaryClick() {
+//                viewModel.deleteApplication()
+//            }
+//
+//            override fun onSecondaryClick() {
+//                dismiss()
+//            }
+//        })
     }
 }

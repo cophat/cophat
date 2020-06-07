@@ -33,10 +33,9 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
             binding.tvTitleBegin,
             binding.tvSubtitleBegin,
             binding.btFormBegin,
-            binding.btCloseBegin,
+            binding.btFormContinue,
             binding.btPatientBegin,
             binding.btListFormsBegin,
-            binding.btPendingQuestionnaires,
             binding.btConfigureBegin
         )
 
@@ -50,6 +49,7 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
     private fun configureListeners() {
         binding.btFormBegin.setOnClickListener {
             lifecycleScope.launch {
+                viewModel.deleteApplication()
                 when (viewModel.chooseNavigation()) {
                     StepsPresenter.GENERATE_CODE_STEP_0 ->
                         findNavController().navigate(R.id.action_beginFragment_to_nav_generate)
@@ -59,14 +59,15 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
                         findNavController().navigate(
                             BeginFragmentDirections.actionBeginFragmentToRegisterActivity(1)
                         )
-                    StepsPresenter.CONTINUE_QUESTIONNAIRE ->
-                        findNavController().navigate(R.id.action_beginFragment_to_nav_questions)
                 }
             }
         }
 
-        binding.btCloseBegin.setOnClickListener {
-            findNavController().navigate(R.id.action_beginFragment_to_excludeApplicationDialog)
+        binding.btFormContinue.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.deleteApplication()
+                findNavController().navigate(R.id.action_beginFragment_to_nav_pending)
+            }
         }
 
         binding.btPatientBegin.setOnClickListener {
@@ -75,10 +76,6 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
 
         binding.btListFormsBegin.setOnClickListener {
             findNavController().navigate(R.id.action_beginFragment_to_questionnairesActivity)
-        }
-
-        binding.btPendingQuestionnaires.setOnClickListener {
-            findNavController().navigate(R.id.action_beginFragment_to_nav_pending)
         }
 
         binding.btConfigureBegin.setOnClickListener {

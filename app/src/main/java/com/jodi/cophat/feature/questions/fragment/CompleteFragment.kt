@@ -2,10 +2,12 @@ package com.jodi.cophat.feature.questions.fragment
 
 import android.animation.ValueAnimator
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.jodi.cophat.R
 import com.jodi.cophat.databinding.FragmentCompleteBinding
+import com.jodi.cophat.feature.intro.activity.IntroActivity
 import com.jodi.cophat.feature.questions.viewmodel.CompleteViewModel
 import com.jodi.cophat.ui.BaseFragment
 import com.jodi.cophat.ui.BaseViewModel
@@ -40,7 +42,8 @@ class CompleteFragment : BaseFragment<FragmentCompleteBinding>() {
 
     private fun configureListeners() {
         binding.btComplete.setOnClickListener {
-            activity?.onBackPressed()
+            findNavController().navigate(R.id.splashFragment)
+
         }
     }
 

@@ -1,13 +1,11 @@
-package com.jodi.cophat.feature.pending.fragment
+package com.jodi.cophat.feature.questions.fragment
 
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.jodi.cophat.R
-import com.jodi.cophat.databinding.DialogConfigureExcludeBinding
 import com.jodi.cophat.databinding.DialogPendingExcludeBinding
-import com.jodi.cophat.feature.configure.fragment.ConfigureExcludeDialogArgs
-import com.jodi.cophat.feature.pending.viewmodel.PendingViewModel
+import com.jodi.cophat.feature.questions.viewmodel.QuestionsViewModel
 import com.jodi.cophat.helper.showToast
 import com.jodi.cophat.ui.BaseDialog
 import com.jodi.cophat.ui.BaseViewModel
@@ -16,7 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PendingExcludeDialog : BaseDialog<DialogPendingExcludeBinding>() {
 
-    private val viewModel: PendingViewModel by viewModel()
+    private val viewModel: QuestionsViewModel by viewModel()
 
     private val args: PendingExcludeDialogArgs by navArgs()
 

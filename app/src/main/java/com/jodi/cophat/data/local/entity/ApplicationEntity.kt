@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
+import com.jodi.cophat.data.presenter.ItemPendingPresenter
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -24,5 +25,9 @@ data class ApplicationEntity(
     var date: String? = null,
     var startHour: Long? = null,
     var endHour: Long? = null,
-    var status: ApplicationStatus = ApplicationStatus.STARTED
+    var status: ApplicationStatus = ApplicationStatus.STARTED,
+    @get:Exclude @set:Exclude var keyQuestionnaire: String = "",
+    @get:Exclude @set:Exclude var parentPosition: Int = 0,
+    @get:Exclude @set:Exclude var typeInterviewee: String = "",
+    @get:Exclude @set:Exclude var name: String = ""
 ) : Parcelable
