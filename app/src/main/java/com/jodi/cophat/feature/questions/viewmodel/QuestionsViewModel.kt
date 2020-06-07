@@ -104,7 +104,7 @@ class QuestionsViewModel(
     }
 
     private suspend fun getQuestions() {
-        val form = if (isChildren || pendingItem?.typeInterviewee.equals("Paciente")) {
+        val form = if (isChildren && !(pendingItem?.typeInterviewee?.contains("Responsável -")!!) || pendingItem?.typeInterviewee.equals("Paciente")) {
             repository.getForms(FormType.CHILDREN)
         } else {
             repository.getForms(FormType.PARENTS)
@@ -226,7 +226,7 @@ class QuestionsViewModel(
 
     private suspend fun completeApplication() {
         questionnairePresenter?.let {
-            if (isChildren || pendingItem?.typeInterviewee.equals("Paciente")) {
+            if (isChildren && !(pendingItem?.typeInterviewee?.contains("Responsável -")!!) || pendingItem?.typeInterviewee.equals("Paciente")) {
                 it.questionnaire.childApplication?.status = ApplicationStatus.COMPLETED
                 it.questionnaire.childApplication?.endHour =
                     Calendar.getInstance().timeInMillis
