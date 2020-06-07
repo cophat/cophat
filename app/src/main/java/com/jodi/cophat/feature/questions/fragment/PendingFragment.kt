@@ -1,4 +1,4 @@
-package com.jodi.cophat.feature.pending.fragment
+package com.jodi.cophat.feature.questions.fragment
 
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
