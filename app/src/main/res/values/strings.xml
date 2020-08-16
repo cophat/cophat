@@ -71,7 +71,7 @@
     <string name="success_remove">Remoção realizada com sucesso!</string>
     <string name="id_form">Ficha de Identificação</string>
     <string name="patient_parents">Primeiramente, me conte um pouco sobre a pessoa entrevistada.</string>
-    <string name="interviewee_name">Qual o nome do entrevistado?</string>
+    <string name="interviewee_name">Nome do entrevistado</string>
     <string name="relationship">Qual o grau de parentesco com a criança?</string>
     <string name="father">Pai</string>
     <string name="mother">Mãe</string>
