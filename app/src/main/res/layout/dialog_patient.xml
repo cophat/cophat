@@ -68,7 +68,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilIdentifyCodePatient"
+                android:id="@+id/tilIdentificationCodePatient"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/extra_margin"
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences"
-                    android:text="@={presenter.identifyCode}" />
+                    android:text="@={presenter.identificationCode}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +94,7 @@
                 android:hint="@string/medical_records"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilIdentifyCodePatient">
+                app:layout_constraintTop_toBottomOf="@+id/tilIdentificationCodePatient">
 
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/AppTheme.EditTextTheme"

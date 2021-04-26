@@ -20,7 +20,7 @@ data class PatientConfigurePresenter(
     private var _religion: String = "",
     private var _name: String = "",
     private var _medicalRecords: String = "",
-    private var _identifyCode: String = "",
+    private var _identificationCode: String = "",
     private var _birthday: String = "",
     private var _age: String = "",
     private var _gender: String = "",
@@ -129,11 +129,11 @@ data class PatientConfigurePresenter(
 
     @IgnoredOnParcel
     @get:Bindable
-    var identifyCode
-        get() = _identifyCode
+    var identificationCode
+        get() = _identificationCode
         set(value) {
-            _identifyCode = value
-            notifyPropertyChanged(BR.identifyCode)
+            _identificationCode = value
+            notifyPropertyChanged(BR.identificationCode)
         }
 
     @IgnoredOnParcel

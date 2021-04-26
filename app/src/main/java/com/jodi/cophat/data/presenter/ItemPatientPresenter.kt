@@ -9,7 +9,7 @@ data class ItemPatientPresenter(
     var patientReligion: String = "",
     var patientName: String = "",
     var patientMedicalRecords: String = "",
-    var patientIdentifyCode: String = "",
+    var patientIdentificationCode: String = "",
     var patientBirthday: String = "",
     var patientAge: Int = 0,
     var patientGender: String = "",

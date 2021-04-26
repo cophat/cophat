@@ -30,22 +30,22 @@ class GenerateCodeRepository(
     }
 
     suspend fun addChildQuestionnaire(
-        identifyCode: String,
+        identificationCode: String,
         application: ApplicationEntity
     ) {
         addChild(
             FirebaseChild.QUESTIONNAIRES,
-            Questionnaire(identifyCode, childApplication = application)
+            Questionnaire(identificationCode, childApplication = application)
         )
     }
 
     suspend fun addParentQuestionnaire(
-        identifyCode: String,
+        identificationCode: String,
         application: MutableList<ApplicationEntity>
     ) {
         addChild(
             FirebaseChild.QUESTIONNAIRES,
-            Questionnaire(identifyCode, parentApplication = application)
+            Questionnaire(identificationCode, parentApplication = application)
         )
     }
 }

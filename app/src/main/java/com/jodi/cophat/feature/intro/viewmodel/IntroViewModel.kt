@@ -69,7 +69,7 @@ class IntroViewModel(
                     StepsPresenter.GENERATE_CODE_STEP_0
                 isChildren ->
                     StepsPresenter.CHILD_QUESTIONS
-                application?.identifyCode == null ->
+                application?.identificationCode == null ->
                     StepsPresenter.REGISTER_PARENTS_STEP_1
                 else ->
                     StepsPresenter.GENERATE_CODE_STEP_0

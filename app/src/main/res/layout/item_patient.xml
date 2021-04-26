@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/medium_margin"
-            android:text="@{presenter.patientIdentifyCode}"
+            android:text="@{presenter.patientIdentificationCode}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivEditItemPatient"
             app:layout_constraintHorizontal_bias="0.5"

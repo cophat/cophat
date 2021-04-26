@@ -52,7 +52,7 @@ class RegisterParentsViewModel(
                 isLoading.postValue(true)
 
                 application?.let { application ->
-                    val questionnaire = repository.getQuestionnaireByIdentifyCode(application.identifyCode)
+                    val questionnaire = repository.getQuestionnaireByIdentificationCode(application.identificationCode)
 
                     if(application.name.equals("Não informado")){
 

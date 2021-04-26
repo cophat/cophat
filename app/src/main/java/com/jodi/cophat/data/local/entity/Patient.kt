@@ -14,7 +14,7 @@ data class Patient(
     var religion: String = "",
     var name: String = "",
     var medicalRecords: String = "",
-    var identifyCode: String = "",
+    var identificationCode: String = "",
     var birthday: String = "",
     var age: Int = 0,
     var gender: String = "",

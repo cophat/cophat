@@ -17,7 +17,7 @@ class PatientRepository(private val database: DatabaseReference) : BaseRepositor
             .forEach { (key, value) ->
                 list.add(ItemPatientPresenter(value.intervieweeName, value.relationship,
                     value.motherProfession, value.fatherProfession, value.maritalStatus,
-                    value.religion, value.name, value.medicalRecords, value.identifyCode,
+                    value.religion, value.name, value.medicalRecords, value.identificationCode,
                     value.birthday, value.age, value.gender, value.diagnosis,
                     value.diagnosticTime, value.internedDays, value.hospitalizations,
                     value.schooling, value.schoolFrequency, value.liveInThisCity, value.address,
@@ -27,20 +27,20 @@ class PatientRepository(private val database: DatabaseReference) : BaseRepositor
     }
 
     suspend fun savePatient(intervieweeName: String ,relationship: String,motherProfession: String ,fatherProfession: String,maritalStatus: String,
-                            religion: String,name: String, medicalRecords: String,identifyCode: String ,birthday: String ,age: Int,gender: String,
+                            religion: String,name: String, medicalRecords: String,identificationCode: String ,birthday: String ,age: Int,gender: String,
                             diagnosis: String,diagnosticTime: Int,internedDays: Int,hospitalizations: Int,schooling: String,schoolFrequency: String,
                             liveInThisCity: String,address: String,monthlyIncome: String, educationDegree: String, hospital: String, admin: String) {
         addChild(FirebaseChild.PATIENTS, Patient(intervieweeName, relationship, motherProfession,fatherProfession,
-            maritalStatus, religion, name, medicalRecords, identifyCode, birthday, age, gender, diagnosis, diagnosticTime,
+            maritalStatus, religion, name, medicalRecords, identificationCode, birthday, age, gender, diagnosis, diagnosticTime,
             internedDays, hospitalizations, schooling, schoolFrequency, liveInThisCity, address, monthlyIncome, educationDegree, hospital, admin))
     }
 
     suspend fun updatePatient(intervieweeName: String ,relationship: String,motherProfession: String ,fatherProfession: String,maritalStatus: String,
-                              religion: String,name: String, medicalRecords: String,identifyCode: String ,birthday: String ,age: Int,gender: String,
+                              religion: String,name: String, medicalRecords: String,identificationCode: String ,birthday: String ,age: Int,gender: String,
                               diagnosis: String,diagnosticTime: Int,internedDays: Int,hospitalizations: Int,schooling: String,schoolFrequency: String,
                               liveInThisCity: String,address: String,monthlyIncome: String, educationDegree: String, hospital: String, admin: String, key: String) {
         updateChild(FirebaseChild.PATIENTS, key, Patient(intervieweeName, relationship, motherProfession,fatherProfession,
-            maritalStatus, religion, name, medicalRecords, identifyCode, birthday, age, gender, diagnosis, diagnosticTime,
+            maritalStatus, religion, name, medicalRecords, identificationCode, birthday, age, gender, diagnosis, diagnosticTime,
             internedDays, hospitalizations, schooling, schoolFrequency, liveInThisCity, address, monthlyIncome, educationDegree, hospital, admin))
     }
 

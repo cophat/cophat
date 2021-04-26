@@ -8,7 +8,7 @@ data class ItemPendingPresenter(
     var keyQuestionnaire: String = "",
     var parentPosition: Int = 0,
     var typeInterviewee: String = "",
-    var identifyCode: String = "",
+    var identificationCode: String = "",
     var name: String? = null,
     var admin: String? = null,
     var hospital: String? = null,

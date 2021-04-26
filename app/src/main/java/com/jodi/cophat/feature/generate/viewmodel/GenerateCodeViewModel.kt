@@ -44,7 +44,7 @@ class GenerateCodeViewModel(
     }
 
     fun validatePresenter() {
-        if (presenter.identifyCode.trim().isNotEmpty() &&
+        if (presenter.identificationCode.trim().isNotEmpty() &&
             presenter.admin.name.trim().isNotEmpty() &&
             presenter.gender.trim().isNotEmpty() &&
             presenter.hospital.name.trim().isNotEmpty()
@@ -60,20 +60,20 @@ class GenerateCodeViewModel(
             try {
                 isLoading.postValue(true)
 
-                val identifyCode = presenter.identifyCode
-                val application = generateApplicationEntity(identifyCode)
+                val identificationCode = presenter.identificationCode
+                val application = generateApplicationEntity(identificationCode)
                 val parentList: MutableList<ApplicationEntity> = arrayListOf()
                 parentList.add(application)
-                val questionnaire = repository.getQuestionnaireByIdentifyCode(identifyCode)
+                val questionnaire = repository.getQuestionnaireByIdentificationCode(identificationCode)
                 if (questionnaire == null) {
                     if (isChildren) {
                         repository.addChildQuestionnaire(
-                            identifyCode,
+                            identificationCode,
                             application
                         )
                     } else {
                         repository.addParentQuestionnaire(
-                            identifyCode,
+                            identificationCode,
                             parentList
                         )
                     }
@@ -109,9 +109,9 @@ class GenerateCodeViewModel(
         }
     }
 
-    private fun generateApplicationEntity(identifyCode: String): ApplicationEntity {
+    private fun generateApplicationEntity(identificationCode: String): ApplicationEntity {
         return ApplicationEntity(
-            identifyCode = identifyCode,
+            identificationCode = identificationCode,
             gender = presenter.gender,
             admin = presenter.admin.name,
             hospital = presenter.hospital.name,

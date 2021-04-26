@@ -25,7 +25,7 @@ class SubQuestionViewModel(
     val statement = MutableLiveData<String>()
     lateinit var gender: String
     private var application: ApplicationEntity? = null
-    private lateinit var identifyCode: String
+    private lateinit var identificationCode: String
 
     override fun initialize() {
         viewModelScope.launch(context = Dispatchers.IO) {
@@ -139,8 +139,8 @@ class SubQuestionViewModel(
     }
 
     private suspend fun getUpdatedQuestionnaire(): QuestionnairePresenter? {
-        return repository.getIdentifyCode()?.let {
-            repository.getQuestionnaireByIdentifyCode(it)
+        return repository.getIdentificationCode()?.let {
+            repository.getQuestionnaireByIdentificationCode(it)
         }
     }
 

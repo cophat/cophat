@@ -29,7 +29,7 @@ class QuestionnairesRepository(
         val list = ArrayList<Questionnaire>()
         getDatabaseChildHash(FirebaseChild.QUESTIONNAIRES, Questionnaire::class.java)
             .forEach { (_, value) ->
-                list.add(Questionnaire(value.identifyCode, value.childApplication,
+                list.add(Questionnaire(value.identificationCode, value.childApplication,
                     value.parentApplication))
             }
 
@@ -39,7 +39,7 @@ class QuestionnairesRepository(
                 listPatients.add(
                     Patient(value.intervieweeName, value.relationship,
                     value.motherProfession, value.fatherProfession, value.maritalStatus,
-                    value.religion, value.name, value.medicalRecords, value.identifyCode,
+                    value.religion, value.name, value.medicalRecords, value.identificationCode,
                     value.birthday, value.age, value.gender, value.diagnosis,
                     value.diagnosticTime, value.internedDays, value.hospitalizations,
                     value.schooling, value.schoolFrequency, value.liveInThisCity, value.address,
@@ -49,13 +49,13 @@ class QuestionnairesRepository(
 
         var listQuestionnaireReport = ArrayList<QuestionnaireReport>()
         list.map {q ->
-            var patient: List<Patient?> = listPatients.filter { it.identifyCode == q.identifyCode}
+            var patient: List<Patient?> = listPatients.filter { it.identificationCode == q.identificationCode}
             if (q.childApplication != null && q.childApplication?.status == ApplicationStatus.COMPLETED && !q.parentApplication.isEmpty() && !patient.isEmpty()) {
                 q.parentApplication.map { pa ->
                     if(pa.status == ApplicationStatus.COMPLETED){
                         listQuestionnaireReport.add(
                             QuestionnaireReport(
-                                pa.identifyCode,
+                                pa.identificationCode,
                                 patient.last(),
                                 q.childApplication,
                                 pa
@@ -74,7 +74,7 @@ class QuestionnairesRepository(
         val allQuestionnaires = ArrayList<Questionnaire>()
         getDatabaseChildHash(FirebaseChild.QUESTIONNAIRES, Questionnaire::class.java)
             .forEach { (key, value) ->
-                allQuestionnaires.add(Questionnaire(value.identifyCode, value.childApplication,
+                allQuestionnaires.add(Questionnaire(value.identificationCode, value.childApplication,
                     value.parentApplication, key))
             }
 
@@ -84,7 +84,7 @@ class QuestionnairesRepository(
                 listPatients.add(
                     Patient(value.intervieweeName, value.relationship,
                         value.motherProfession, value.fatherProfession, value.maritalStatus,
-                        value.religion, value.name, value.medicalRecords, value.identifyCode,
+                        value.religion, value.name, value.medicalRecords, value.identificationCode,
                         value.birthday, value.age, value.gender, value.diagnosis,
                         value.diagnosticTime, value.internedDays, value.hospitalizations,
                         value.schooling, value.schoolFrequency, value.liveInThisCity, value.address,
@@ -95,13 +95,13 @@ class QuestionnairesRepository(
         val applicationsPeding = ArrayList<ItemPendingPresenter>()
         allQuestionnaires.map {q ->
             if(q.childApplication != null && q.childApplication?.status?.equals(ApplicationStatus.STARTED)!!){
-                var filterPatient: List<Patient> = listPatients.filter { it.identifyCode == q.identifyCode}
+                var filterPatient: List<Patient> = listPatients.filter { it.identificationCode == q.identificationCode}
                 var patientName: String = when(filterPatient.isNullOrEmpty()) {
                     true -> "Paciente não identificado"
                     false -> filterPatient.last().name
                 }
                 applicationsPeding.add(ItemPendingPresenter(
-                    identifyCode = q.identifyCode,
+                    identificationCode = q.identificationCode,
                     name = patientName,
                     typeInterviewee = "Paciente",
                     admin = q.childApplication?.admin!!,
@@ -118,7 +118,7 @@ class QuestionnairesRepository(
                         false -> app.intervieweeName!!
                     }
                     applicationsPeding.add(ItemPendingPresenter(
-                        identifyCode = q.identifyCode,
+                        identificationCode = q.identificationCode,
                         name = parentName,
                         typeInterviewee = "Responsável - ${app.relationship}",
                         admin = app.admin!!,

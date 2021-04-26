@@ -54,7 +54,7 @@ class QuestionnairesViewModel(
 
         return ItemQuestionnairePresenter(
             applicationId = generateApplicationId(
-                application?.identifyCode,
+                application?.identificationCode,
                 questionnaire.patient?.name
             ),
             parentInformation = generateParentInformation(questionnaire.parentApplication?.intervieweeName, questionnaire.parentApplication?.relationship),
@@ -81,8 +81,8 @@ class QuestionnairesViewModel(
         }
     }
 
-    private fun generateApplicationId(identifyCode: String?, childName: String?): String {
-        return "$identifyCode - $childName"
+    private fun generateApplicationId(identificationCode: String?, childName: String?): String {
+        return "$identificationCode - $childName"
     }
 
     private fun generateChildrenDrawable(gender: String?): Int {
@@ -189,15 +189,15 @@ class QuestionnairesViewModel(
 
     fun getArrayByQuestionnaire(questionnaire: QuestionnaireReport): Array<QuestionnaireReport> {
         return arrayOf(questionnaire.apply {
-            childApplication?.identifyCode = this.childApplication?.identifyCode
-            parentApplication?.identifyCode = this.parentApplication?.identifyCode
+            childApplication?.identificationCode = this.childApplication?.identificationCode
+            parentApplication?.identificationCode = this.parentApplication?.identificationCode
         })
     }
 
     fun getArgsByQuestionnaire(questionnaire: QuestionnaireReport?): QuestionnaireReport? {
         return questionnaire?.apply {
-            childApplication?.identifyCode = this.childApplication?.identifyCode
-            parentApplication?.identifyCode = this.parentApplication?.identifyCode
+            childApplication?.identificationCode = this.childApplication?.identificationCode
+            parentApplication?.identificationCode = this.parentApplication?.identificationCode
         }
     }
 }

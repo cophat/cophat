@@ -90,7 +90,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         if (questionnaires.size > 1) {
             generateFile(resourceManager.getString(R.string.cophat), listener)
         } else {
-            generateFile(questionnaires[0].identifyCode, listener)
+            generateFile(questionnaires[0].identificationCode, listener)
         }
     }
 
@@ -260,12 +260,12 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         for (questionnaire in questionnaires) {
             if (type.equals("children")) {
                 headerRow.createCell(answerColumn).apply {
-                    setCellValue("${questionnaire.identifyCode} - ${questionnaire.patient?.name}")
+                    setCellValue("${questionnaire.identificationCode} - ${questionnaire.patient?.name}")
                     setCellStyle(boldStyle)
                 }
             } else {
                 headerRow.createCell(answerColumn).apply {
-                    setCellValue("${questionnaire.identifyCode} - ${questionnaire.parentApplication?.intervieweeName}")
+                    setCellValue("${questionnaire.identificationCode} - ${questionnaire.parentApplication?.intervieweeName}")
                     setCellStyle(boldStyle)
                 }
             }
@@ -285,7 +285,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         var subAnswerColumn = descriptionColumn + 1
         for (questionnaire in questionnaires) {
             headerRow.createCell(subAnswerColumn).apply {
-                setCellValue(questionnaire.identifyCode)
+                setCellValue(questionnaire.identificationCode)
                 setCellStyle(boldStyle)
             }
             sheet.setColumnWidth(subAnswerColumn, 6000)
@@ -701,7 +701,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         for (questionnaire in questionnaires) {
 
             subTotalHeader.createCell(children).apply {
-                setCellValue("${questionnaire.identifyCode} - ${questionnaire.patient?.name}")
+                setCellValue("${questionnaire.identificationCode} - ${questionnaire.patient?.name}")
                 setCellStyle(boldStyle)
             }
             sheet.addMergedRegion(CellRangeAddress(0, 0, children, parent))
@@ -798,7 +798,7 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
         for (questionnaire in questionnaires) {
 
             subTotalHeaderSubQuestions.createCell(children).apply {
-                setCellValue("${questionnaire.identifyCode} - ${questionnaire.patient?.name}")
+                setCellValue("${questionnaire.identificationCode} - ${questionnaire.patient?.name}")
                 setCellStyle(boldStyle)
             }
             sheet.addMergedRegion(CellRangeAddress(0, 0, children, parent))
@@ -896,8 +896,8 @@ class ExportWorkbook(private val context: Context, private val resourceManager: 
 
     }
 
-    private fun generateFile(identifyCode: String?, listener: ExportListener) {
-        val file = File(context.getExternalFilesDir(null), "$identifyCode.xls")
+    private fun generateFile(identificationCode: String?, listener: ExportListener) {
+        val file = File(context.getExternalFilesDir(null), "$identificationCode.xls")
         try {
             val os = FileOutputStream(file, true)
             workBook.write(os)

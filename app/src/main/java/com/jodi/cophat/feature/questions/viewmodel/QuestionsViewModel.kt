@@ -36,7 +36,7 @@ class QuestionsViewModel(
     private var hasSubQuestionToRespond: Boolean = false
 
     var continueQuestionnaire = false
-    var identifyCode: String? = ""
+    var identificationCode: String? = ""
     var pendingItem: ItemPendingPresenter? = null
 
     val applicationPending = MutableLiveData<ApplicationEntity>()
@@ -69,11 +69,11 @@ class QuestionsViewModel(
         runBlocking {
             applicationLocally = repository.getApplication()
             if(applicationLocally != null){
-                identifyCode = applicationLocally?.identifyCode
+                identificationCode = applicationLocally?.identificationCode
                 pendingItem = ItemPendingPresenter(
                     keyQuestionnaire = applicationLocally?.keyQuestionnaire!!,
                     parentPosition = applicationLocally?.parentPosition!!,
-                    identifyCode = applicationLocally?.identifyCode!!,
+                    identificationCode = applicationLocally?.identificationCode!!,
                     typeInterviewee = applicationLocally?.typeInterviewee!!,
                     name = applicationLocally?.name!!,
                     admin = applicationLocally?.admin,
@@ -86,7 +86,7 @@ class QuestionsViewModel(
 
     fun setValues(item: ItemPendingPresenter) {
         viewModelScope.launch(context = Dispatchers.IO) {
-            identifyCode = item.identifyCode
+            identificationCode = item.identificationCode
             pendingItem = item
             getUpdatedQuestionnaire()
         }
@@ -114,13 +114,13 @@ class QuestionsViewModel(
 
     private fun getUpdatedQuestionnaire() {
         runBlocking {
-            if(identifyCode == null || identifyCode == "") {
-                repository.getIdentifyCode()?.let {
-                    identifyCode = it
-                    questionnairePresenter = repository.getQuestionnaireByIdentifyCode(it)
+            if(identificationCode == null || identificationCode == "") {
+                repository.getIdentificationCode()?.let {
+                    identificationCode = it
+                    questionnairePresenter = repository.getQuestionnaireByIdentificationCode(it)
                 }
             }else{
-                questionnairePresenter = repository.getQuestionnaireByIdentifyCode(identifyCode)
+                questionnairePresenter = repository.getQuestionnaireByIdentificationCode(identificationCode)
             }
             getApplication()
         }
@@ -218,7 +218,7 @@ class QuestionsViewModel(
     }
 
     private fun generatePresenter() {
-        presenter.code = identifyCode
+        presenter.code = identificationCode
         presenter.state = retrieveState()
         presenter.progress = retrieveProgress()
         presenter.statement = retrieveStatementByGender()

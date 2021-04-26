@@ -7,7 +7,7 @@ import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class Questionnaire(
-    var identifyCode: String = "",
+    var identificationCode: String = "",
     var childApplication: ApplicationEntity? = null,
     var parentApplication: MutableList<ApplicationEntity> = ArrayList<ApplicationEntity>(),
     @set:Exclude @get:Exclude var key: String? = null

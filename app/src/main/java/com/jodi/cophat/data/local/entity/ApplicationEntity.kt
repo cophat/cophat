@@ -15,7 +15,7 @@ import kotlinx.android.parcel.Parcelize
 data class ApplicationEntity(
     @PrimaryKey(autoGenerate = true)
     @get:Exclude @set:Exclude var id: Int? = null,
-    var identifyCode: String? = "",
+    var identificationCode: String? = "",
     var hospital: String? = null,
     var intervieweeName: String? = null,
     var gender: String? = null,

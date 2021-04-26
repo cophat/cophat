@@ -18,11 +18,11 @@
             android:paddingEnd="@dimen/default_padding">
 
             <TextView
-                android:id="@+id/tvIdentifyCodeItemPending"
+                android:id="@+id/tvIdentificationCodeItemPending"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/medium_margin"
-                android:text="@{presenter.identifyCode}"
+                android:text="@{presenter.identificationCode}"
                 android:textSize="@dimen/large_size"
                 app:layout_constraintBottom_toTopOf="@+id/tvNameItemPending"
                 app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
@@ -30,7 +30,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:text="IdentifyCode" />
+                tools:text="IdentificationCode" />
 
             <TextView
                 android:id="@+id/tvNameItemPending"
@@ -43,7 +43,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/ivEditItemPending"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvIdentifyCodeItemPending"
+                app:layout_constraintTop_toBottomOf="@+id/tvIdentificationCodeItemPending"
                 tools:text="Name" />
 
             <TextView

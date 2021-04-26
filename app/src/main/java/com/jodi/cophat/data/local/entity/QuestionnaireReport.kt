@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class QuestionnaireReport(
-    var identifyCode: String? = "",
+    var identificationCode: String? = "",
     var patient: Patient? = null,
     var childApplication: ApplicationEntity? = null,
     var parentApplication: ApplicationEntity? = null,

@@ -67,7 +67,7 @@ class PatientViewModel(
             resourceManager.getString(R.string.edit_desc_patient),
             patient.patientIntervieweeName, patient.patientRelationship,
             patient.patientMotherProfession, patient.patientFatherProfession, patient.patientMaritalStatus,
-            patient.patientReligion, patient.patientName, patient.patientMedicalRecords, patient.patientIdentifyCode,
+            patient.patientReligion, patient.patientName, patient.patientMedicalRecords, patient.patientIdentificationCode,
             patient.patientBirthday, patient.patientAge.toString(), patient.patientGender, patient.patientDiagnosis,
             patient.patientDiagnosticTime.toString(), patient.patientInternedDays.toString(), patient.patientHospitalizations.toString(),
             patient.patientSchooling, patient.patientSchoolFrequency, patient.patientLiveInThisCity, patient.patientHome,
@@ -83,12 +83,12 @@ class PatientViewModel(
                 patient?.let {
                     if (key != null) {
                         repository.updatePatient(it.intervieweeName, it.relationship, it.motherProfession,it.fatherProfession,
-                            it.maritalStatus, it.religion, it.name, it.medicalRecords, it.identifyCode, it.birthday, it.age.toInt(), it.gender, it.diagnosis, it.diagnosticTime.toInt(),
+                            it.maritalStatus, it.religion, it.name, it.medicalRecords, it.identificationCode, it.birthday, it.age.toInt(), it.gender, it.diagnosis, it.diagnosticTime.toInt(),
                             it.internedDays.toInt(), it.hospitalizations.toInt(), it.schooling, it.schoolFrequency, it.liveInThisCity, it.address, it.monthlyIncome, it.educationDegree, it.hospital, it.admin, key)
                         statusPatient.postValue(resourceManager.getString(R.string.success_update))
                     } else {
                         repository.savePatient(it.intervieweeName, it.relationship, it.motherProfession,it.fatherProfession,
-                            it.maritalStatus, it.religion, it.name, it.medicalRecords, it.identifyCode, it.birthday, it.age.toInt(), it.gender, it.diagnosis, it.diagnosticTime.toInt(),
+                            it.maritalStatus, it.religion, it.name, it.medicalRecords, it.identificationCode, it.birthday, it.age.toInt(), it.gender, it.diagnosis, it.diagnosticTime.toInt(),
                             it.internedDays.toInt(), it.hospitalizations.toInt(), it.schooling, it.schoolFrequency, it.liveInThisCity, it.address, it.monthlyIncome, it.educationDegree, it.hospital, it.admin
                         )
                         statusPatient.postValue(resourceManager.getString(R.string.success_register))
