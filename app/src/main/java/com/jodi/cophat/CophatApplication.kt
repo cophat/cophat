@@ -19,8 +19,8 @@ class CophatApplication : Application() {
             androidFileProperties()
             modules(listOf(networkModule, dataModule, appModule, viewModelModule, repositoryModule))
             FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-//            val ref = FirebaseDatabase.getInstance().getReference("src/main/java/com/jodi/cophat/data/local/entity")
-//            ref.keepSynced(true)
+            val ref = FirebaseDatabase.getInstance().reference
+            ref.keepSynced(true)
         }
     }
 }
