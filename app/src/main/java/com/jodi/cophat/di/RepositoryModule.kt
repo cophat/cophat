@@ -14,6 +14,10 @@ val repositoryModule = module {
     }
 
     single {
+        HospitalRepository(get())
+    }
+
+    single {
         PatientRepository(get())
     }
 

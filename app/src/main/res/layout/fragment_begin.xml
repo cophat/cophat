@@ -58,7 +58,7 @@
             style="@style/AppTheme.ButtonTheme"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
-            android:layout_marginTop="@dimen/extra_margin"
+            android:layout_marginTop="@dimen/big_margin"
             android:text="@string/initiate_questionnaire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,6 +109,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btListFormsBegin" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btHospitalBegin"
+            style="@style/AppTheme.ButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/big_margin"
+            android:text="@string/hospital"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btConfigureBegin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

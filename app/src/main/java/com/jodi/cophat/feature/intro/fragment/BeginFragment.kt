@@ -36,7 +36,8 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
             binding.btFormContinue,
             binding.btPatientBegin,
             binding.btListFormsBegin,
-            binding.btConfigureBegin
+            binding.btConfigureBegin,
+            binding.btHospitalBegin
         )
 
         configureListeners()
@@ -80,6 +81,10 @@ class BeginFragment : BaseFragment<FragmentBeginBinding>() {
 
         binding.btConfigureBegin.setOnClickListener {
             findNavController().navigate(R.id.action_beginFragment_to_nav_configure)
+        }
+
+        binding.btHospitalBegin.setOnClickListener {
+            findNavController().navigate(R.id.action_beginFragment_to_nav_hospital)
         }
     }
 }

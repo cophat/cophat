@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_hospital"
+    app:startDestination="@id/hospitalFragment">
+    <fragment
+        android:id="@+id/hospitalFragment"
+        android:name="com.jodi.cophat.feature.hospital.fragment.HospitalFragment"
+        android:label="HospitalFragment"
+        tools:layout="@layout/fragment_hospital">
+        <action
+            android:id="@+id/action_hospitalFragment_to_hospitalDialog"
+            app:destination="@id/hospitalDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_hospitalFragment_to_hospitalExcludeDialog"
+            app:destination="@id/hospitalExcludeDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <dialog
+        android:id="@+id/hospitalDialog"
+        android:name="com.jodi.cophat.feature.hospital.fragment.HospitalDialog"
+        android:label="HospitalDialog"
+        tools:layout="@layout/dialog_hospital">
+        <argument
+            android:name="presenter"
+            app:argType="com.jodi.cophat.data.presenter.HospitalConfigurePresenter" />
+        <argument
+            android:name="key"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_hospitalDialog_to_hospitalFragment"
+            app:destination="@id/hospitalFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_hospital"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/hospitalExcludeDialog"
+        android:name="com.jodi.cophat.feature.hospital.fragment.HospitalExcludeDialog"
+        android:label="HospitalExcludeDialog"
+        tools:layout="@layout/dialog_hospital_exclude">
+        <argument
+            android:name="key"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_hospitalExcludeDialog_to_hospitalFragment"
+            app:destination="@id/hospitalFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/nav_hospital"
+            app:popUpToInclusive="true" />
+    </dialog>
+</navigation>

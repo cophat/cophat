@@ -17,7 +17,7 @@
     <string name="continue_questionnaire">Continuar questionário</string>
     <string name="list_questionnaires">Relatórios</string>
     <string name="pending_questionnaires">Questionários pendentes</string>
-    <string name="configurations">Configurações</string>
+    <string name="configurations">Aplicadores</string>
     <string name="patients">Pacientes</string>
     <string name="emotions">Emoções</string>
     <string name="emotions_description">O que cada carinha significa?</string>
@@ -43,9 +43,12 @@
     <string name="female">Feminino</string>
     <string name="complete_name">Nome completo</string>
     <string name="choose_hospital">Escolha o hospital:</string>
+    <string name="hospital">Hospitais</string>
     <string name="choose_admin">Escolha o aplicador:</string>
     <string name="edit_or_remove_admin">Clique nos ícones para adicionar, editar ou remover
         qualquer aplicador no banco de dados da aplicação</string>
+    <string name="edit_or_remove_hospital">Clique nos ícones para adicionar, editar ou remover
+        qualquer hospital no banco de dados da aplicação</string>
     <string name="continue_or_remove_pending">Clique nos ícones para continuar ou remover
         qualquer questionário pendente</string>
     <string name="edit_or_remove_patient">Clique nos ícones para adicionar, editar ou remover
@@ -55,10 +58,14 @@
     <string name="add">Adicionar</string>
     <string name="add_admin">Adicionar aplicador</string>
     <string name="edit_admin">Editar aplicador</string>
+    <string name="add_hospital">Adicionar hospital</string>
+    <string name="edit_hospital">Editar hospital</string>
     <string name="add_patient">Adicionar paciente</string>
     <string name="edit_patient">Editar paciente</string>
     <string name="add_desc_admin">Insira abaixo o nome e o e-mail do aplicador que deseja cadastrar</string>
     <string name="edit_desc_admin">Altere abaixo o nome ou o e-mail do aplicador selecionado</string>
+    <string name="add_desc_hospital">Insira abaixo o nome e o código do hospital que deseja cadastrar</string>
+    <string name="edit_desc_hospital">Altere abaixo o nome ou o código do hospital selecionado</string>
     <string name="add_desc_patient">Insira abaixo os dados do paciente que deseja cadastrar</string>
     <string name="edit_desc_patient">Altere abaixo os dados do paciente selecionado</string>
     <string name="email">E-mail</string>
@@ -103,11 +110,11 @@
     <string name="medical_records">Prontuário</string>
     <string name="identify_code">Código de Identificação</string>
     <string name="birth_patient">Nascimento</string>
-    <string name="age_patient">Idade</string>
+    <string name="age_patient">Idade (meses)</string>
     <string name="gender_patient">Sexo</string>
     <string name="about_internal">Sobre a internação</string>
     <string name="diagnosis">Diagnóstico</string>
-    <string name="diagnosis_time">Tempo de diagnóstico (meses)</string>
+    <string name="diagnosis_time">Tempo de diagnóstico (dias)</string>
     <string name="days_hospitalized">Dias internado</string>
     <string name="hospitalizations">Internações</string>
     <string name="finalize_register">Para finalizar o cadastro, insira os últimos dados</string>
@@ -175,4 +182,6 @@
     <string name="removed_application">Aplicação removida com sucesso</string>
     <string name="child">Criança</string>
     <string name="parent">Responsável</string>
+    <string name="hospital_code">Código do Hospital</string>
+    <string name="hospital_name">Nome do Hospital</string>
 </resources>

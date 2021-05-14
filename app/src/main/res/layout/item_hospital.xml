@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".feature.configure.adapter.AdminViewHolder">
+    tools:context=".feature.hospital.adapter.HospitalViewHolder">
 
     <data>
 
         <variable
             name="presenter"
-            type="com.jodi.cophat.data.presenter.ItemAdminPresenter" />
+            type="com.jodi.cophat.data.presenter.ItemHospitalPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,14 +18,14 @@
         android:paddingEnd="@dimen/default_padding">
 
         <TextView
-            android:id="@+id/tvNameItemAdmin"
+            android:id="@+id/tvNameItemHospital"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/medium_margin"
-            android:text="@{presenter.adminName}"
+            android:text="@{presenter.hospitalName}"
             android:textSize="@dimen/large_size"
-            app:layout_constraintBottom_toTopOf="@+id/tvCodeItemAdmin"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemAdmin"
+            app:layout_constraintBottom_toTopOf="@+id/tvCodeItemHospital"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemHospital"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,20 +33,20 @@
             tools:text="JODI DEE HUNT FERREIRA DO AMARAL" />
 
         <TextView
-            android:id="@+id/tvCodeItemAdmin"
+            android:id="@+id/tvCodeItemHospital"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/medium_margin"
-            android:text="@{presenter.adminContact}"
+            android:text="@{presenter.hospitalCode}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivEditItemAdmin"
+            app:layout_constraintEnd_toStartOf="@+id/ivEditItemHospital"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameItemAdmin"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameItemHospital"
             tools:text="cophatjodi@gmail.com" />
 
         <ImageView
-            android:id="@+id/ivEditItemAdmin"
+            android:id="@+id/ivEditItemHospital"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="@dimen/big_margin"
@@ -54,11 +54,11 @@
             android:contentDescription="@string/edit"
             android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivRemoveItemAdmin"
+            app:layout_constraintEnd_toStartOf="@+id/ivRemoveItemHospital"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivRemoveItemAdmin"
+            android:id="@+id/ivRemoveItemHospital"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="?android:selectableItemBackgroundBorderless"
@@ -69,11 +69,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/vDividerItemAdmin"
+            android:id="@+id/vDividerItemHospital"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/colorWhite"
-            android:visibility="@{presenter.adminDividerVisibility}"
+            android:visibility="@{presenter.hospitalDividerVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

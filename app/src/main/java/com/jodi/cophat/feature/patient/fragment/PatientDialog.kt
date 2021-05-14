@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
-import androidx.core.view.isVisible
 import androidx.databinding.Observable
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -18,8 +16,9 @@ import com.jodi.cophat.helper.*
 import com.jodi.cophat.ui.BaseDialog
 import com.jodi.cophat.ui.BaseViewModel
 import com.jodi.cophat.ui.base.view.BottomButtonsListener
-import kotlinx.android.synthetic.main.dialog_patient.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PatientDialog : BaseDialog<DialogPatientBinding>() {
 
@@ -90,6 +89,27 @@ class PatientDialog : BaseDialog<DialogPatientBinding>() {
         MoneyMask(binding.etIncomeSchool)
         DateMask(binding.etBirthdayPatient)
 
+        //Birthday
+        binding.etBirthdayPatient.setOnFocusChangeListener{ v, hasFocus ->
+                if(!hasFocus){
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val date = sdf.parse(binding.presenter?.birthday)
+                    val startTime = sdf.calendar
+
+                    startTime.time = date;
+
+                    val endTime = Calendar.getInstance()
+
+                    val difMes = endTime.get(Calendar.MONTH) - startTime.get(Calendar.MONTH)
+                    val difAno = ((endTime.get(Calendar.YEAR) - startTime.get(Calendar.YEAR)) * 12)
+                    val res = difMes+difAno
+
+                    binding.presenter?.age = res.toString()
+                }
+        }
+
+        //binding.root.setOnFocusChangeListener { v, hasFocus -> if (hasFocus) v.hideKeyboard() }
+
         // RelationShip
         binding.rgRelationship.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -109,7 +129,8 @@ class PatientDialog : BaseDialog<DialogPatientBinding>() {
                     tempRelationship = RelationshipType.OTHER.relationship
             }
             when (checkedId) {
-                binding.rbOtherRelationshipRegister.id -> binding.etOtherRelationshipRegister.isEnabled = true
+                binding.rbOtherRelationshipRegister.id -> binding.etOtherRelationshipRegister.isEnabled =
+                    true
                 else -> {
                     binding.etOtherRelationshipRegister.isEnabled = false
                     binding.presenter?.relationship = ""
@@ -125,7 +146,8 @@ class PatientDialog : BaseDialog<DialogPatientBinding>() {
                 binding.rbAmassedRegister.id ->
                     binding.presenter?.maritalStatus = MaritalStatusType.AMASSED.maritalStatus
                 binding.rbDivorcedRegister.id ->
-                    binding.presenter?.maritalStatus = MaritalStatusType.DIVORCED_SEPARATED.maritalStatus
+                    binding.presenter?.maritalStatus =
+                        MaritalStatusType.DIVORCED_SEPARATED.maritalStatus
                 binding.rbSingleRegister.id ->
                     binding.presenter?.maritalStatus = MaritalStatusType.SINGLE.maritalStatus
                 binding.rbWidowerRegister.id ->
@@ -192,9 +214,11 @@ class PatientDialog : BaseDialog<DialogPatientBinding>() {
                 binding.rbIlliterateSchool.id ->
                     binding.presenter?.educationDegree = EducationType.ILLITERATE.education
                 binding.rbFundamental1School.id ->
-                    binding.presenter?.educationDegree = EducationType.COMPLETE_FUNDAMENTAL_I.education
+                    binding.presenter?.educationDegree =
+                        EducationType.COMPLETE_FUNDAMENTAL_I.education
                 binding.rbFundamental2School.id ->
-                    binding.presenter?.educationDegree = EducationType.COMPLETE_FUNDAMENTAL_II.education
+                    binding.presenter?.educationDegree =
+                        EducationType.COMPLETE_FUNDAMENTAL_II.education
                 binding.rbMediumSchool.id ->
                     binding.presenter?.educationDegree = EducationType.COMPLETE_MEDIUM.education
                 binding.rbGraduatedSchool.id ->
@@ -232,10 +256,13 @@ class PatientDialog : BaseDialog<DialogPatientBinding>() {
 
         binding.bbvPatient.setBottomButtonsListener(object : BottomButtonsListener {
             override fun onPrimaryClick() {
-                if(!tempRelationship.equals(RelationshipType.OTHER.relationship) && !tempRelationship.equals("")) {
+                if (!tempRelationship.equals(RelationshipType.OTHER.relationship) && !tempRelationship.equals(
+                        ""
+                    )
+                ) {
                     binding.presenter?.relationship = tempRelationship
                 }
-                if(!tempReligion.equals(ReligionType.OTHER.religion) && !tempReligion.equals("")){
+                if (!tempReligion.equals(ReligionType.OTHER.religion) && !tempReligion.equals("")) {
                     binding.presenter?.religion = tempReligion
                 }
                 viewModel.saveOrUpdatePatient(binding.presenter, args.key)
@@ -319,7 +346,8 @@ class PatientDialog : BaseDialog<DialogPatientBinding>() {
         when(binding.presenter?.maritalStatus) {
             MaritalStatusType.MARRIED.maritalStatus -> binding.rbMarriedRegister.isChecked = true
             MaritalStatusType.AMASSED.maritalStatus -> binding.rbAmassedRegister.isChecked = true
-            MaritalStatusType.DIVORCED_SEPARATED.maritalStatus -> binding.rbDivorcedRegister.isChecked = true
+            MaritalStatusType.DIVORCED_SEPARATED.maritalStatus -> binding.rbDivorcedRegister.isChecked =
+                true
             MaritalStatusType.SINGLE.maritalStatus -> binding.rbSingleRegister.isChecked = true
             MaritalStatusType.WIDOWER.maritalStatus -> binding.rbWidowerRegister.isChecked = true
         }
@@ -358,8 +386,10 @@ class PatientDialog : BaseDialog<DialogPatientBinding>() {
         // EducationDegree
         when(binding.presenter?.educationDegree) {
             EducationType.ILLITERATE.education -> binding.rbIlliterateSchool.isChecked = true
-            EducationType.COMPLETE_FUNDAMENTAL_I.education -> binding.rbFundamental1School.isChecked = true
-            EducationType.COMPLETE_FUNDAMENTAL_II.education -> binding.rbFundamental2School.isChecked = true
+            EducationType.COMPLETE_FUNDAMENTAL_I.education -> binding.rbFundamental1School.isChecked =
+                true
+            EducationType.COMPLETE_FUNDAMENTAL_II.education -> binding.rbFundamental2School.isChecked =
+                true
             EducationType.COMPLETE_MEDIUM.education -> binding.rbMediumSchool.isChecked = true
             EducationType.GRADUATED.education -> binding.rbGraduatedSchool.isChecked = true
         }

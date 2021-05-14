@@ -1,6 +1,7 @@
 package com.jodi.cophat.di
 
 import com.jodi.cophat.feature.configure.viewmodel.ConfigureViewModel
+import com.jodi.cophat.feature.hospital.viewmodel.HospitalViewModel
 import com.jodi.cophat.feature.patient.viewmodel.PatientViewModel
 import com.jodi.cophat.feature.generate.viewmodel.GenerateCodeViewModel
 import com.jodi.cophat.feature.intro.viewmodel.IntroViewModel
@@ -40,4 +41,6 @@ val viewModelModule = module {
     viewModel { SubQuestionViewModel(get(), get()) }
 
     viewModel { CompleteViewModel(get()) }
+
+    viewModel { HospitalViewModel(get(), get()) }
 }

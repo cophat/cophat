@@ -2,6 +2,7 @@ package com.jodi.cophat.di
 
 import androidx.paging.PagedList
 import com.jodi.cophat.feature.configure.adapter.AdminRecyclerAdapter
+import com.jodi.cophat.feature.hospital.adapter.HospitalRecyclerAdapter
 import com.jodi.cophat.feature.patient.adapter.PatientRecyclerAdapter
 import com.jodi.cophat.feature.patient.adapter.QuestionnaireRecyclerAdapter
 import com.jodi.cophat.feature.questions.adapter.PendingRecyclerAdapter
@@ -29,6 +30,10 @@ val appModule = module {
 
     factory {
         AdminRecyclerAdapter()
+    }
+
+    factory {
+        HospitalRecyclerAdapter()
     }
 
     factory {
