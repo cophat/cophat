@@ -1,5 +1,6 @@
 package com.jodi.cophat.feature.questions.viewmodel
 
+import androidx.fragment.app.FragmentManager.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DatabaseException
@@ -7,9 +8,12 @@ import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.*
 import com.jodi.cophat.data.presenter.*
 import com.jodi.cophat.data.repository.*
+import com.jodi.cophat.feature.questions.fragment.QuestionsFragment
 import com.jodi.cophat.helper.ResourceManager
 import com.jodi.cophat.helper.visibleOrGone
 import com.jodi.cophat.ui.BaseViewModel
+import com.jodi.cophat.ui.base.view.BottomButtonsView
+import com.jodi.cophat.ui.base.view.ThermometerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -184,6 +188,7 @@ class QuestionsViewModel(
                             position = lastAnswer.id
                         }
                     }
+
                 }
             }
         }
@@ -277,9 +282,7 @@ class QuestionsViewModel(
                     repository.addChild(getCurrentAnswerPath(), generateAnswer())
                     getUpdatedQuestionnaire()
                 }
-                if (hasSubQuestionToRespond() &&
-                    presenter.answer != AnswerType.NEVER
-                ) {
+                if (hasSubQuestionToRespond() && presenter.answer != AnswerType.NEVER) {
                     generateSubQuestionPresenter()
                 } else {
                     continueQuestionnaire()

@@ -7,6 +7,7 @@ import com.jodi.cophat.data.local.entity.AnswerType
 import com.jodi.cophat.data.presenter.ItemPendingPresenter
 import com.jodi.cophat.databinding.FragmentQuestionsBinding
 import com.jodi.cophat.feature.questions.viewmodel.QuestionsViewModel
+import com.jodi.cophat.helper.showToast
 import com.jodi.cophat.ui.BaseFragment
 import com.jodi.cophat.ui.BaseViewModel
 import com.jodi.cophat.ui.base.view.BottomButtonsListener
@@ -16,6 +17,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class QuestionsFragment : BaseFragment<FragmentQuestionsBinding>() {
 
     private val viewModel: QuestionsViewModel by viewModel()
+
+    var checked: Boolean = false
 
     override fun getLayout(): Int {
         return R.layout.fragment_questions
@@ -46,11 +49,20 @@ class QuestionsFragment : BaseFragment<FragmentQuestionsBinding>() {
         binding.vQuestions.setThermometerListener(object : ThermometerListener {
             override fun onAnswerChanged(answerType: AnswerType) {
                 viewModel.presenter.answer = answerType
+                if(!checked){
+                    binding.bbvQuestions.updatePrimaryButton(true)
+                }else{
+                    binding.bbvQuestions.updatePrimaryButton(false)
+                    checked = false
+                }
             }
         })
 
         binding.bbvQuestions.setBottomButtonsListener(object : BottomButtonsListener {
             override fun onPrimaryClick() {
+                checked = true
+                binding.vQuestions.binding.rgThermometer.clearCheck()
+                binding.vQuestions.binding.ivThermometer.setImageResource(R.drawable.ic_thermometer1)
                 viewModel.updateApplication()
             }
 

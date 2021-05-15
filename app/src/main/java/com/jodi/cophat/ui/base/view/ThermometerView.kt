@@ -5,9 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.findFragment
 import com.jodi.cophat.R
 import com.jodi.cophat.data.local.entity.AnswerType
 import com.jodi.cophat.databinding.ViewThermometerBinding
+import com.jodi.cophat.feature.questions.fragment.QuestionsFragment
+import kotlinx.android.synthetic.main.fragment_questions.view.*
 
 class ThermometerView  @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

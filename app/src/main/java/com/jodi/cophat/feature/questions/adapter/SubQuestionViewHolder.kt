@@ -54,6 +54,7 @@ class SubQuestionViewHolder(itemView: View, private val subQuestionListener: Sub
                     binding.etAlternative.isEnabled = true
             }
             subQuestionListener.onSubAnswerChanged(presenter)
+
         }
     }
 }
